@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.qst.mapper.TbFileMapper" >
+  <resultMap id="BaseResultMap" type="cn.qst.pojo.TbFile" >
+    <id column="fid" property="fid" jdbcType="CHAR" />
+    <result column="fname" property="fname" jdbcType="VARCHAR" />
+    <result column="fsize" property="fsize" jdbcType="DOUBLE" />
+    <result column="furl" property="furl" jdbcType="VARCHAR" />
+    <result column="suffix" property="suffix" jdbcType="CHAR" />
+    <result column="isdir" property="isdir" jdbcType="BIT" />
+    <result column="uploadtime" property="uploadtime" jdbcType="TIMESTAMP" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="parentid" property="parentid" jdbcType="CHAR" />
+    <result column="uid" property="uid" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    fid, fname, fsize, furl, suffix, isdir, uploadtime, updatetime, parentid, uid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.qst.pojo.TbFileExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_file
+    where fid = #{fid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_file
+    where fid = #{fid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.qst.pojo.TbFileExample" >
+    delete from tb_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.qst.pojo.TbFile" >
+    insert into tb_file (fid, fname, fsize, 
+      furl, suffix, isdir, uploadtime, 
+      updatetime, parentid, uid
+      )
+    values (#{fid,jdbcType=CHAR}, #{fname,jdbcType=VARCHAR}, #{fsize,jdbcType=DOUBLE}, 
+      #{furl,jdbcType=VARCHAR}, #{suffix,jdbcType=CHAR}, #{isdir,jdbcType=BIT}, #{uploadtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{parentid,jdbcType=CHAR}, #{uid,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.qst.pojo.TbFile" >
+    insert into tb_file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="fname != null" >
+        fname,
+      </if>
+      <if test="fsize != null" >
+        fsize,
+      </if>
+      <if test="furl != null" >
+        furl,
+      </if>
+      <if test="suffix != null" >
+        suffix,
+      </if>
+      <if test="isdir != null" >
+        isdir,
+      </if>
+      <if test="uploadtime != null" >
+        uploadtime,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="parentid != null" >
+        parentid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=CHAR},
+      </if>
+      <if test="fname != null" >
+        #{fname,jdbcType=VARCHAR},
+      </if>
+      <if test="fsize != null" >
+        #{fsize,jdbcType=DOUBLE},
+      </if>
+      <if test="furl != null" >
+        #{furl,jdbcType=VARCHAR},
+      </if>
+      <if test="suffix != null" >
+        #{suffix,jdbcType=CHAR},
+      </if>
+      <if test="isdir != null" >
+        #{isdir,jdbcType=BIT},
+      </if>
+      <if test="uploadtime != null" >
+        #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=CHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.qst.pojo.TbFileExample" resultType="java.lang.Integer" >
+    select count(*) from tb_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_file
+    <set >
+      <if test="record.fid != null" >
+        fid = #{record.fid,jdbcType=CHAR},
+      </if>
+      <if test="record.fname != null" >
+        fname = #{record.fname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fsize != null" >
+        fsize = #{record.fsize,jdbcType=DOUBLE},
+      </if>
+      <if test="record.furl != null" >
+        furl = #{record.furl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suffix != null" >
+        suffix = #{record.suffix,jdbcType=CHAR},
+      </if>
+      <if test="record.isdir != null" >
+        isdir = #{record.isdir,jdbcType=BIT},
+      </if>
+      <if test="record.uploadtime != null" >
+        uploadtime = #{record.uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null" >
+        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.parentid != null" >
+        parentid = #{record.parentid,jdbcType=CHAR},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_file
+    set fid = #{record.fid,jdbcType=CHAR},
+      fname = #{record.fname,jdbcType=VARCHAR},
+      fsize = #{record.fsize,jdbcType=DOUBLE},
+      furl = #{record.furl,jdbcType=VARCHAR},
+      suffix = #{record.suffix,jdbcType=CHAR},
+      isdir = #{record.isdir,jdbcType=BIT},
+      uploadtime = #{record.uploadtime,jdbcType=TIMESTAMP},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      parentid = #{record.parentid,jdbcType=CHAR},
+      uid = #{record.uid,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.qst.pojo.TbFile" >
+    update tb_file
+    <set >
+      <if test="fname != null" >
+        fname = #{fname,jdbcType=VARCHAR},
+      </if>
+      <if test="fsize != null" >
+        fsize = #{fsize,jdbcType=DOUBLE},
+      </if>
+      <if test="furl != null" >
+        furl = #{furl,jdbcType=VARCHAR},
+      </if>
+      <if test="suffix != null" >
+        suffix = #{suffix,jdbcType=CHAR},
+      </if>
+      <if test="isdir != null" >
+        isdir = #{isdir,jdbcType=BIT},
+      </if>
+      <if test="uploadtime != null" >
+        uploadtime = #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentid != null" >
+        parentid = #{parentid,jdbcType=CHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=CHAR},
+      </if>
+    </set>
+    where fid = #{fid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.qst.pojo.TbFile" >
+    update tb_file
+    set fname = #{fname,jdbcType=VARCHAR},
+      fsize = #{fsize,jdbcType=DOUBLE},
+      furl = #{furl,jdbcType=VARCHAR},
+      suffix = #{suffix,jdbcType=CHAR},
+      isdir = #{isdir,jdbcType=BIT},
+      uploadtime = #{uploadtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      parentid = #{parentid,jdbcType=CHAR},
+      uid = #{uid,jdbcType=CHAR}
+    where fid = #{fid,jdbcType=CHAR}
+  </update>
+</mapper>
