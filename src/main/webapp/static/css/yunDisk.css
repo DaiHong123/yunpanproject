@@ -204,7 +204,7 @@ body {
 #headIn {
 	position: relative;
 	float: left;
-	margin-right: 15px;
+	margin-right: 133px;
 	height: 42px;
 	vertical-align: middle;
 }
@@ -422,7 +422,7 @@ body {
 .wrap {
 	position: relative;
 	width: 100%;
-	/*高度需要js设置*/
+	/*楂樺害闇�瑕乯s璁剧疆*/
 	overflow: hidden;
 	z-index: 1;
 }
@@ -837,7 +837,7 @@ body {
 	background: url(../img/filesIcon.png) no-repeat 0 -120px;
 }
 .files span {
-	font-family: arial,'宋体';
+	font-family: arial,'瀹嬩綋';
 	color: #424e67;
 }
 .filesFns {
