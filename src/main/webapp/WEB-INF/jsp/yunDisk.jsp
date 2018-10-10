@@ -18,15 +18,15 @@
 		<div class="headRight right">
 			<div id="headIn">
 				<div class="headInfo">
-					<span class="headImg"><img /></span>
-					<span class="headName">天使120</span>
+					<span class="headImg"><img src="${imgstr}"/></span>
+					<span class="headName">${user.uname}</span>
 					<span class="headGradeIcon"><a href="javascript:;"></a></span>
 					<i class="icon icon-dropdown-arrow"></i>
 				</div>
 				<div class="headInfoCaption">
 					<mark></mark>
 					<div class="top">
-						<span class="headImg"><img /></span><span class="headName">天使120</span><span class="headGradeIcon"><a href="javascript:;"></a></span>
+						<span class="headImg"><img src="${imgstr}" /></span><span class="headName">${user.uname}</span><span class="headGradeIcon"><a href="javascript:;"></a></span>
 					</div>
 					<div class="bottom">
 						<div class="bottomHead">

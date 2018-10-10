@@ -17,9 +17,10 @@ function userCityInfo(address) {
         data: {addressId: address},
         success: function (data) {
             var str = "";
-            str += "        " + data.pname + "   " + data.name;
+            //<em>手机号：</em><i>${user.phone}</i>
+            str += "<i>" + data.pname + "   " + data.name + "</i>";
             str += "&nbsp;&nbsp;&nbsp;&nbsp;";
-            str += "<button onclick=\"allCityInfo()\">立即修改</button>";
+            str += "<a style=\"text-decoration: none;\" onclick=\"allCityInfo()\">立即修改</a>";
             $("#province").html(str);
         }
     })

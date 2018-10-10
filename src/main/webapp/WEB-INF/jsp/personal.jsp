@@ -88,7 +88,7 @@
 
 	<!--当前位置-->
 	<div class="now_positionm">
-		<span>当前位置：</span><a href="/index"
+		<span>当前位置：</span><a href="/yunDisk"
 			style="text-decoration: none; cursor: pointer;">首页></a> <a href="#"
 			style="text-decoration: none;">个人中心</a>
 	</div>
@@ -146,7 +146,7 @@
 		<!--right-->
 		<div class="centers_mr">
 			<h1 class="welcom_tm">
-				欢迎您，爱唱
+				欢迎您，网盘
 				<c:choose>
 					<c:when test="${user.vip == 1}">
 						<span style="color: red">会员</span>
@@ -381,7 +381,7 @@
 								<c:choose>
 									<c:when test="${user.vip == 0 }">
 										<!-- 充值会员 暂时不做-->
-                                    非会员，赶紧成为我们的<span><a href="">充值</a></span>，享受更多资源
+                                  <em>非会员，</em><a href="">充值&nbsp;&nbsp;</a>成为我们的会员，享受更大的空间,更快的速度
                                     <input type="text" name="vip"
 											value="0" style="display: none">
 									</c:when>
@@ -428,7 +428,6 @@
 								<em>居住城市：</em> <span> <span id="province"> <c:choose>
 											<c:when
 												test="${userInfo.uid != null && userInfo.uid != user.uid}">
-
 											</c:when>
 											<c:otherwise>
 												<span><a onclick="allCityInfo()">立即添加</a></span>

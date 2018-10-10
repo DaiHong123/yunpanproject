@@ -53,11 +53,11 @@ public class SendEmail {
                     send.setAuthentication("963087276@qq.com", "puuyqttsagdzbcce"); //第一个参数是发送者的QQEamil   第二个参数是刚刚获取的授权码
             if (sendFlag.equals("register")) {
             	send.setSubject("注册u唱"); //Eamil的标题
-                send.setMsg("欢迎注u唱平台，此次注册验证码:   " + resultCode + "   请妥善保管"
+                send.setMsg("欢迎注册百度网盘，此次注册验证码:   " + resultCode + "   请妥善保管"
                 		+ "   验证码三分钟内有效，三分钟内不重复发送"); //Eamil的内容
             } else if (sendFlag.equals("changePassword")) {
             	send.setSubject("修改密码");
-            	send.setMsg("欢迎使用u唱平台，您正在修改密码，此次验证码：          " + resultCode + "    请妥善保管"
+            	send.setMsg("欢迎使用百度网盘，您正在修改密码，此次验证码：          " + resultCode + "    请妥善保管"
             			+ "   验证码三分钟内有效，三分钟内不重复发送");
             } 
             send.send(); //发送
