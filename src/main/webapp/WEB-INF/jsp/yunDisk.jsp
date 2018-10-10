@@ -41,7 +41,7 @@
 							<a href="javascript:;">开通超级会员</a>
 						</div>
 						<ul class="bottomDesc">
-							<li><a href="javascript:;">个人资料</a></li>
+							<li><a href="/personal">个人资料</a></li>
 							<li><a href="javascript:;">帮助中心</a></li>
 							<li><a href="javascript:;">退出</a></li>
 						</ul>

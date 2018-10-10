@@ -18,4 +18,12 @@ public class PageController {
 		map.put("menuid", menuid);
 		return page;
 	}
+	/**
+	 * 跳转到登陆界面，主页
+	 * @return
+	 */
+	@RequestMapping("/")
+	public String pageLogin() {
+		return "login";
+	}
 }

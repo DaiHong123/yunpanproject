@@ -151,7 +151,7 @@ function sentPhone(){
          success: function(json){//如果调用servlet成功，响应200。请求成功后回调函数。这个方法有两个参数：服务器返回数据，返回状态(可以缺省)。
 			var flag = json;
 			if (flag == true) {
-				$("#yanzheng2").html("发送成功，请查收短信，并填写短信中的验证码");
+				$("#yanzheng2").html("发送成功，请查收邮箱中的验证码");
 				invokeSettime("#verifyYz");
 			} else if (flag == false) {
 				$("#yanzheng2").html("发送失败，请稍后再试");
@@ -171,7 +171,7 @@ function sentPhone(){
 function yanzhengma(){
 	var reEmail = false;
 	$.ajax({
-	    url : "User/verifyCode", //(默认: 当前页地址) 发送请求的地址
+	    url : "/User/verifyCode", //(默认: 当前页地址) 发送请求的地址
 		type: "post", //(默认: "get") 请求方式 ("post" 或 "get")， 默认为 "get"。注意：其它 http请求方法，如 put和 delete也可以使用，但仅部分浏览器支持。
 		async:false,//(默认: true) 默认设置下，所有请求均为异步请求。如果需要发送同步请求，请将此选项设置为 false。注意，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行。
 		contentType:"application/x-www-form-urlencoded",//(默认: "application/x-www-form-urlencoded") 发送信息至服务器时内容编码类型。默认值适合大多数应用场合。
@@ -205,7 +205,7 @@ function yanzhengma(){
 //修改密码
 function modifyPassWord(){
 	$.ajax({
-	    url : "User/changePassword", //(默认: 当前页地址) 发送请求的地址
+	    url : "/User/changePassword", //(默认: 当前页地址) 发送请求的地址
 		type: "post", //(默认: "get") 请求方式 ("post" 或 "get")， 默认为 "get"。注意：其它 http请求方法，如 put和 delete也可以使用，但仅部分浏览器支持。
 		async:false,//(默认: true) 默认设置下，所有请求均为异步请求。如果需要发送同步请求，请将此选项设置为 false。注意，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行。
 		contentType:"application/x-www-form-urlencoded",//(默认: "application/x-www-form-urlencoded") 发送信息至服务器时内容编码类型。默认值适合大多数应用场合。

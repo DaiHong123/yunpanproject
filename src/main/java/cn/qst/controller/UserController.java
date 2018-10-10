@@ -193,7 +193,6 @@ public class UserController {
 	public Boolean login(String userName, String passWord, HttpSession session, HttpServletRequest request) {
 		// 验证用户状态
 		if (!userService.verfiyUserStatus(userName)) {
-			request.setAttribute("userStatus", "账号异常，请联系管理员");
 			return null;
 		}
 		TbUser user = userService.login(userName, passWord);
