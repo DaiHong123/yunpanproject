@@ -26,7 +26,6 @@ import javax.servlet.http.HttpSession;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -193,7 +192,6 @@ public class UserController {
 	public Boolean login(String userName, String passWord, HttpSession session, HttpServletRequest request) {
 		// 验证用户状态
 		if (!userService.verfiyUserStatus(userName)) {
-			request.setAttribute("userStatus", "账号异常，请联系管理员");
 			return null;
 		}
 		TbUser user = userService.login(userName, passWord);
@@ -219,8 +217,8 @@ public class UserController {
 		user.setUid(UUID.randomUUID().toString().replace("-", "").toLowerCase());
 		user.setPassword(MD5Utils.md5(user.getPassword()));
 		user.setVip((byte) 0);
-		// /source/images/headPhoto/user.png 默认头像
-		user.setImage("/images/headPhoto/user.png");
+		// 默认头像
+		user.setImage("/static/img/user.png");
 		user.setStatus(true);
 		return userService.regist(user);
 	}
