@@ -196,6 +196,7 @@ public class UserController {
 				session.setAttribute("username", user.getUname());
 				session.setAttribute("imgstr", user.getImage());
 				session.setAttribute("user", user);
+				session.setAttribute("fparentId", "-1");
 				return true;
 			} else {
 				return null;

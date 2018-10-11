@@ -12,5 +12,7 @@
 	
 	<!-- 配置包扫描器，扫描所有带@Service注解的类 -->
 	<context:component-scan base-package="cn.qst.service"/>
+	<!-- 加载配置文件 -->
+	<context:property-placeholder location="classpath:properties/resource.properties" ignore-unresolvable="true" />
 	
 </beans>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -53,26 +54,26 @@
 	<section class="wrap clear" id="tBody">
 	<div class="contRight">
 		<ul id="aside">
-			<a onclick="asideAll()">
+			<a onclick="asideAll()" href="javascript:void(0);">
 				<li id="asideAll" class="asideAll active"><i
 					class="icon icon-disk"></i><span>全部文件</span></li>
 			</a>
-			<a onclick="asideImg()">
+			<a onclick="asideImg()" href="javascript:void(0);">
 				<li id="asideImg" class="asideImg"><span>图片</span></li>
 			</a>
-			<a onclick="asideText()">
+			<a onclick="asideText()" href="javascript:void(0);">
 				<li id="asideText" class="asideText"><span>文档</span></li>
 			</a>
-			<a onclick="asidevideo()">
+			<a onclick="asidevideo()" href="javascript:void(0);">
 				<li id="asidevideo" class="asidevideo"><span>视频</span></li>
 			</a>
-			<a onclick="asideSeed()">
+			<a onclick="asideSeed()" href="javascript:void(0);">
 				<li id="asideSeed" class="asideSeed"><span>种子</span></li>
 			</a>
-			<a onclick="asideMusic()">
+			<a onclick="asideMusic()" href="javascript:void(0);">
 				<li id="asideMusic" class="asideMusic"><span>音乐</span></li>
 			</a>
-			<a onclick="asideOther()">
+			<a onclick="asideOther()" href="javascript:void(0);">
 				<li id="asideOther" class="asideOther"><span>其他</span></li>
 			</a>
 			<li class="asideMyShare"><i class="icon icon-my-share"></i><span>我的分享</span></li>
@@ -101,15 +102,15 @@
 	</div>
 	<section id="filesList"> <header class="filesListHeader">
 	<div class="filesListHeadBtnsR left">
-		<div class="filesListHeadChangBtn">
+		<div class="filesListHeadChangBtn" id="filesListHeadChangBtn">
 			<span class="filesUpLoad"><i class="icon icon-upload"></i>上传</span> <span
-				class="filesCreate"><i class="icon icon-newfolder"></i>新建文件夹</span>
+				class="filesCreate" onclick="createFile()" ><i class="icon icon-newfolder" ></i>新建文件夹</span>
 		</div>
-		<div class="filesListHeadChangChose">
+		<div class="filesListHeadChangChose" id="filesListHeadChangChose">
 			<span class="headShare"><i class="icon icon-share"></i>分享</span> <span
 				class="headDownLoad"><i class="icon icon-download"></i>下载</span> <span
 				class="headDelete"><i class="icon icon-delete"></i>删除</span> <span
-				class="headResetName">重命名</span> <span class="headCopy">复制到</span> <span
+				class="headResetName" id="headResetName" onclick="check()">重命名</span> <span class="headCopy">复制到</span> <span
 				class="headMyDevice"><i class="icon icon-more"></i>更多</span>
 		</div>
 	</div>
@@ -128,22 +129,23 @@
 		</span>
 		<!--<span class="filesShowStyle icon icon-grid"></span>-->
 		<span id="showList" class="filesShowStyle icon icon-grid"></span>
-
 	</div>
 	</header>
-	<div class="filesPath" id="filesHead">
-		<div class="filesListRoute left"></div>
-		<div class="filesListCount right">
-			<span>已加载10个</span>
+		<div class="filesPath" id="filesHead">
+			<div class="filesListRoute left">
+				<span>全部文件</span>
+			</div>
+			<div class="filesListCount right">
+				
+			</div>
 		</div>
-	</div>
 	<div class="filesBody">
 		<div class="blankBg"></div>
 		<div id="fileScrollBar">
 			<span></span>
 		</div>
 		<ul id="tHead">
-			<li><em class="filesBtn"></em> <span>文件名</span> <i
+			<li><input type="checkbox" id="allChecks"  onclick="ckAll(),display()" /> 全选/全不选</span> <i
 				class="icon downtitle-icon icon-downtitle"></i></li>
 			<li><span>大小</span></li>
 			<li><span>修改日期</span></li>
@@ -151,17 +153,7 @@
 		</ul>
 		<table class="files">
 			<tbody id="filesTab">
-				<tr data-file-id="1" class="active">
-					<td><em class="filesBtn"></em><i class="fileIcon"></i> <span
-						class="fileTitle">1</span>
-						<div class="filesFns right">
-							<a class="icon icon-share" href="javascript:;">分享</a> <a
-								class="icon icon-download" href="javascript:;">下载</a> <a
-								class="icon icon-more" href="javascript:;">更多</a>
-						</div></td>
-					<td><span>1</span></td>
-					<td><span class="fileChangeDate">1</span></td>
-				</tr>
+					
 			</tbody>
 		</table>
 		<div id="moduleFlieName">
@@ -180,4 +172,6 @@
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>
 <script src="../../static/js/search.js"></script>
+<script src="../../static/js/yunDisk.js"></script>
+<script src="../../static/js/file.js"></script>
 </html>
