@@ -421,7 +421,7 @@ body {
 .wrap {
 	position: relative;
 	width: 100%;
-	/*楂樺害闇�瑕乯s璁剧疆*/
+	/*妤傛ê瀹抽棁锟界憰涔痵鐠佸墽鐤�*/
 	overflow: hidden;
 	z-index: 1;
 }
@@ -836,7 +836,7 @@ body {
 	background: url(../img/filesIcon.png) no-repeat 0 -120px;
 }
 .files span {
-	font-family: arial,'瀹嬩綋';
+	font-family: arial,'鐎瑰缍�';
 	color: #424e67;
 }
 .filesFns {
@@ -940,3 +940,22 @@ body {
 	background-color: rgba(192,217,254,.3);
 	z-index: 100;
 }
+.checkstyle{
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	padding: 11px 14px;
+	margin: 15px;
+	float: left;
+}
+
+
+#allChecks{
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	padding: 5px 0px;
+	margin: 10px 5px 10px 15px;
+	float: left;
+}
+
