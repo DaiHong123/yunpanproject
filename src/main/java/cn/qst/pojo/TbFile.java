@@ -102,4 +102,11 @@ public class TbFile {
     public void setUid(String uid) {
         this.uid = uid == null ? null : uid.trim();
     }
+
+	@Override
+	public String toString() {
+		return "TbFile [fid=" + fid + ", fname=" + fname + ", fsize=" + fsize + ", furl=" + furl + ", suffix=" + suffix
+				+ ", isdir=" + isdir + ", uploadtime=" + uploadtime + ", updatetime=" + updatetime + ", parentid="
+				+ parentid + ", uid=" + uid + "]";
+	}
 }
