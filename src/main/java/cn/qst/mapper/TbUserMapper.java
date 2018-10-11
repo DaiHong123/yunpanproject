@@ -114,10 +114,4 @@ public interface TbUserMapper {
      */
     TbUser selectUserInfo(String uid);
 
-    /**
-     * 效验用户状态
-     * @param uname
-     * @return
-     */
-    int verfiyUserStatus(String uname);
 }
