@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.qst.service.FileService;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cn.qst.pojo.FileResult;
@@ -48,4 +49,15 @@ public class FileController {
 		return result;
 	}
 	
+	
+	//添加文件夹
+	@RequestMapping("/createFile")
+	@ResponseBody
+	public TbFile createFile(String fname,HttpSession session) {
+		TbUser user = (TbUser)session.getAttribute("user");
+		String parentid = (String)session.getAttribute("fparentId");
+		TbFile createFile = fileService.createFile(fname, user.getUid(), parentid);
+		return createFile;
+		//return null;
+	}
 }
