@@ -51,7 +51,7 @@ function fundFileByParentId(parentId,isdir){
 	        		if(file.fsize){
 	        			str+=file.fsize+"</span></td>";
 	        		}else{
-	        			str+="-</span></td>";
+	        			str+="——</span></td>";
 	        		}
 	        		str+="<td><span class=\"fileChangeDate\">"+dateFmt("yyyy-MM-dd",new Date(file.updatetime))+"</span></td></tr>";
 	        		$("#filesTab").append(str);

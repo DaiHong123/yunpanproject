@@ -103,8 +103,8 @@
 	<section id="filesList"> <header class="filesListHeader">
 	<div class="filesListHeadBtnsR left">
 		<div class="filesListHeadChangBtn" id="filesListHeadChangBtn">
-			<span class="filesUpLoad"><i class="icon icon-upload"></i>上传</span> <span
-				class="filesCreate" onclick="createFile()" ><i class="icon icon-newfolder" ></i>新建文件夹</span>
+			<span class="filesUpLoad" onclick="uploadFile()"><i class="icon icon-upload"></i>上传</span> 
+			<span class="filesCreate" onclick="createFile()" ><i class="icon icon-newfolder" ></i>新建文件夹</span>
 		</div>
 		<div class="filesListHeadChangChose" id="filesListHeadChangChose">
 			<span class="headShare"><i class="icon icon-share"></i>分享</span> <span
