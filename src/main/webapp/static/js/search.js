@@ -59,8 +59,8 @@ function asideOther(){
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asidevideo").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideSeed").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
-	$(".asideMusic").css({"background":"rgba(0,0,0,.05)","color":"#424e67"});
-	$(".asideOther").css({"background":"rgba(0,0,0,.01)","color":"#3b8cff"});
+	$(".asideMusic").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
+	$(".asideOther").css({"background":"rgba(0,0,0,.05)","color":"#3b8cff"});
 }
 
 function fundFile(type){

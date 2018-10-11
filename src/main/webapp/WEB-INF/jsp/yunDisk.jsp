@@ -9,41 +9,46 @@
 <script src="../../static/js/jquery-1.8.3.min.js"></script>
 </head>
 <body>
-	<header id="header" class="clear">
-	<h1 class="headerLogo left">
-		<a href="javascript:;">百度网盘</a>
-	</h1>
-	<nav class="headNav left"> <a href="javascript:;" class="active">网盘<i></i></a>
-	<a href="#">分享<i></i></a> <a href="#">更多<i></i></a> </nav>
-	<div class="headRight right">
-		<div id="headIn">
-			<div class="headInfo">
-				<span class="headImg"><img /></span> <span class="headName">天使120</span>
-				<span class="headGradeIcon"><a href="javascript:;"></a></span> <i
-					class="icon icon-dropdown-arrow"></i>
-			</div>
-			<div class="headInfoCaption">
-				<mark></mark>
-				<div class="top">
-					<span class="headImg"><img /></span><span class="headName">天使120</span><span
-						class="headGradeIcon"><a href="javascript:;"></a></span>
+		<header id="header" class="clear">
+		<h1 class="headerLogo left"><a href="javascript:;">百度网盘</a></h1>
+		<nav class="headNav left">
+			<a href="javascript:;" class="active">网盘<i></i></a>
+			<a href="#">分享<i></i></a>
+			<a href="#">更多<i></i></a>
+		</nav>
+		<div class="headRight right">
+			<div id="headIn">
+				<div class="headInfo">
+					<span class="headImg"><img src="${imgstr}"/></span>
+					<span class="headName">${user.uname}</span>
+					<span class="headGradeIcon"><a href="javascript:;"></a></span>
+					<i class="icon icon-dropdown-arrow"></i>
 				</div>
-				<div class="bottom">
-					<div class="bottomHead">超级会员尊享特权：</div>
-					<div class="bottomPrivilege">
-						<a href="javascript:;">开通超级会员</a> <a href="javascript:;">开通超级会员</a>
-						<a href="javascript:;">开通超级会员</a> <a href="javascript:;">开通超级会员</a>
-						<a href="javascript:;">开通超级会员</a>
+				<div class="headInfoCaption">
+					<mark></mark>
+					<div class="top">
+						<span class="headImg"><img src="${imgstr}" /></span><span class="headName">${user.uname}</span><span class="headGradeIcon"><a href="javascript:;"></a></span>
 					</div>
-					<ul class="bottomDesc">
-						<li><a href="javascript:;">个人资料</a></li>
-						<li><a href="javascript:;">帮助中心</a></li>
-						<li><a href="javascript:;">退出</a></li>
-					</ul>
+					<div class="bottom">
+						<div class="bottomHead">
+							超级会员尊享特权：
+						</div>
+						<div class="bottomPrivilege">
+							<a href="javascript:;">开通超级会员</a>
+							<a href="javascript:;">开通超级会员</a>
+							<a href="javascript:;">开通超级会员</a>
+							<a href="javascript:;">开通超级会员</a>
+							<a href="javascript:;">开通超级会员</a>
+						</div>
+						<ul class="bottomDesc">
+							<li><a href="/personal">个人资料</a></li>
+							<li><a href="javascript:;">帮助中心</a></li>
+							<li><a href="/User/exit">退出</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</header>
 	<section class="wrap clear" id="tBody">
 	<div class="contRight">

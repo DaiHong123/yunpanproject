@@ -10,16 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class PageController {
-
-	// 主页跳转
-	@RequestMapping("/")
-	public String indexJsp() {
-		return "index";
-	}
-
 	// 页面跳转
 	@RequestMapping("/{page}")
 	public String pageJsp(String page) {
 		return page;
+	}
+	/**
+	 * 跳转到登陆界面，主页
+	 * @return
+	 */
+	@RequestMapping("/")
+	public String pageLogin() {
+		return "login";
 	}
 }
