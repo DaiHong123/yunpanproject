@@ -327,7 +327,7 @@ public class UserController {
 
 	/**
 	 * 从sessino中获取验证码，效验邮件验证码是否正确, 同时取得验证码超时的时间 判断验证码是否超时 每次效验成功即销毁验证码对象
-	 *
+	 * 有一个bug 解决不了     效验验证码会效验两次，所以清楚session中的信息会出现验证失败的问题
 	 * @param verifyNo
 	 *            用户输入验证码
 	 * @return 确认是否正确
