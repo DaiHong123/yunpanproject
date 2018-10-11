@@ -24,6 +24,7 @@ public class FileController {
 	@ResponseBody
 	public List<TbFile> fundFileByType(String type , HttpSession session){
 		//获取用户id
+		session.setAttribute("fparentId", "-1");
 		TbUser user = (TbUser)session.getAttribute("user");
 		List<TbFile> fileList = fileService.fundFileByType(type , user.getUid());
 		return fileList;
@@ -32,12 +33,12 @@ public class FileController {
 	@RequestMapping("/fundFileByParentId")
 	@ResponseBody
 	public FileResult fundFileByParentId(String parentId , HttpSession session){
+		session.setAttribute("fparentId", parentId);
 		TbUser user = (TbUser)session.getAttribute("user");
 		//获取该文件夹的子文件
 		List<TbFile> fileList = fileService.funFileByParentId(parentId , user.getUid());
 		//获取该文件的父文件
 		List<TbFile> parent = fileService.fundFileParentsById(parentId);
-		System.err.println(parent);
 		//创建返回结果集
 		FileResult result = new FileResult();
 		//添加子文件
