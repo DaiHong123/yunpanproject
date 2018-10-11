@@ -117,7 +117,7 @@ body::-webkit-scrollbar-track-piece {
 			error : function(XMLHttpRequest, textStatus, errorThrown) {//如果调用servlet出现问题，响应非200（这里响应405）。通常情况下textStatus和errorThown只有其中一个有值 。(默认: 自动判断 (xml 或 html)) 请求失败时将调用此方法。这个方法有三个参数：XMLHttpRequest 对象，错误信息，（可能）捕获的错误对象。
 				console.log(textStatus);
 				$(".login-error").show();
-				$(".login-error").html($.i18n.prop("用户名或密码错误"));
+				$(".login-error").html($.i18n.prop("请求失败"));
 			}
 		});
 	}

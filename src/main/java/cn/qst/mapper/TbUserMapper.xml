@@ -382,10 +382,6 @@
     	select * from tb_user where uid = #{value}
     </select>
     
-    <select id="verfiyUserStatus" parameterType="java.lang.String" resultType="java.lang.Integer">
-    	select `status` from `tb_user` where `uname` = #{value}
-    </select>
-	
 </mapper>
 
 
