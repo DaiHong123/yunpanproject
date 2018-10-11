@@ -1,7 +1,6 @@
 function createFile() {
 	this.obj = document.getElementById('filesTab');
 	this.child = this.obj.children;
-
 	var str = "<tr data-file-id='2' class='active' >";
 	str += "<td>";
 	str += "<input type='checkbox' class='checkstyle' value='2' onclick='allcheck(),display()' />";
@@ -17,7 +16,7 @@ function createFile() {
 	str += "<span></span>";
 	str += "</td>";
 	str += "<td>";
-	str += "<span class='fileChangeDate'>2</span>";
+	str += "<span class='fileChangeDate'>"+getNowFormatDate()+"	</span>";
 	str += "</tr>";
 	this.obj.innerHTML = str + this.obj.innerHTML;
 	var obj = {
@@ -29,22 +28,27 @@ function createFile() {
 	});
 }
 
+
+//重命名
 function rename(domObj, dataObj, success, fail) {
 	var _this = this;
 	var moduleName = document.getElementById('moduleFlieName');
 	var topNum = domObj.offsetTop,
 		leftNum = domObj.offsetLeft;
+	//控制输入框的位置
 	moduleName.style.display = 'block';
 	moduleName.style.top = topNum + 37 + 'px';
 	moduleName.style.left = leftNum + 'px';
 	var oInput = moduleName.getElementsByTagName('input')[0];
 	var aSpans = moduleName.getElementsByTagName('span');
 	oInput.value = dataObj.title;
+	//将输入框中的东西全选中
 	oInput.select();
 	aSpans[0].onclick = function() {
 		var newName = oInput.value;
 		dataObj.title = newName;
 		var a = document.getElementsByClassName('fileTitle');
+		//判断是否有重名现象
 		var s = 0;
 		var b = 0;
 		var count = 0;
@@ -97,6 +101,7 @@ function rename(domObj, dataObj, success, fail) {
 	}
 }
 
+//获取当前的所有className
 function getByClass(className, parent) {
 	parent = parent ? parent : document;
 	if(parent.getElementsByClassName) {
@@ -117,6 +122,8 @@ function addClass(obj, className) {
 	obj.className = className;
 }
 
+
+//选择并重命名
 function check() {
 	var obj = {
 		title: "1"
@@ -143,7 +150,7 @@ function deletefile(){
 	
 }
 
-
+//全选和全不选
 function ckAll(){
         var flag=document.getElementById("allChecks").checked;
         var cks=document.getElementsByClassName('checkstyle');
@@ -152,7 +159,7 @@ function ckAll(){
         }
     }
 
-
+//控制全选和部分选后的全选按钮的改变
 function allcheck(){
 	var cks=document.getElementsByClassName('checkstyle');
 	var s = 0;
@@ -169,6 +176,8 @@ function allcheck(){
 	 }
 }
 
+
+//展示和隐藏前端的下载和重命名等
 function display(){
 	var cks=document.getElementsByClassName('checkstyle');
 	var dis=document.getElementById('filesListHeadChangChose');
@@ -194,4 +203,20 @@ function display(){
 		 dis.style.display = 'none';
 		 adis.style.display='block'
 	 }
+}
+
+//获取当前时间
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+    return currentdate;
 }
