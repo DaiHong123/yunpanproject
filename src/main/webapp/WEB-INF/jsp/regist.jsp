@@ -252,7 +252,7 @@
 						<h3 id="xianshisuccess"></h3>
 						<p class="c-666 f-mt30 f-mb50" id="low">
 							页面将在 <strong id="times" class="f-size18">5</strong> 秒钟后，跳转到登录界面，若未跳转 <a
-								href="login.jsp" class="c-blue">点击此处</a>手动跳转
+								href="/login" class="c-blue">点击此处</a>手动跳转
 						</p>
 					</div>
 				</div>

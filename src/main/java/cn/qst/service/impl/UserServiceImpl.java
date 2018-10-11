@@ -190,17 +190,4 @@ public class UserServiceImpl implements UserService {
 		return tbUserMapper.selectUserInfo(uid);
 	}
 	
-	/**
-	 * 效验用户状态
-	 * @param uname
-	 * @return
-	 */
-	@Override
-	public Boolean verfiyUserStatus(String uname) {
-		// TODO Auto-generated method stub
-		return tbUserMapper.verfiyUserStatus(uname)==1?true:false;
-	}
-	
-	
-	
 }

@@ -345,6 +345,13 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
+        <!--缩略图-->
+        <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
         
   </dependencies>
   	<!-- 插件配置 -->
