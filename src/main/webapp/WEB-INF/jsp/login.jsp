@@ -144,7 +144,7 @@ body::-webkit-scrollbar-track-piece {
 						<div class="loginbox-title">
 							<h3>登录</h3>
 						</div>
-						<form id="signupForm" action="/file/findIndexFile" method="post">
+						<form id="signupForm" action="/yunDisk" method="post">
 							<div class="login-error"></div>
 							<div class="row" style="margin-left: 25px;">
 								<label class="field">用户名：</label> <input
