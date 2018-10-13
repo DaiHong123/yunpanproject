@@ -21,4 +21,6 @@ public interface FileService {
 	void deleteFile(String fid);
 	
 	List<TreeFile> treeFiles(String fid);
+
+	int downFile(String fileurl, String fileName, String suffix, String savePath) throws Exception;
 }
