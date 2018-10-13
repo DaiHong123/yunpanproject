@@ -1,14 +1,20 @@
 package cn.qst.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import cn.qst.service.FileService;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
+import cn.qst.service.FileService;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 
+import cn.qst.comman.fastdfs.FileUploadUtils;
 import cn.qst.pojo.FileResult;
 import cn.qst.pojo.TbFile;
 import cn.qst.pojo.TbUser;
@@ -16,6 +22,10 @@ import cn.qst.pojo.TbUser;
 @Controller
 @RequestMapping("/file")
 public class FileController {
+	
+	//上传文件的url地址
+	@Value("${IMAGE_SERVER_URL}")
+	private String IMAGE_SERVER_URL;
 	
 	@Autowired
 	private FileService fileService;
@@ -49,7 +59,6 @@ public class FileController {
 		return result;
 	}
 	
-	
 	//添加文件夹
 	@RequestMapping("/createFile")
 	@ResponseBody
@@ -59,5 +68,48 @@ public class FileController {
 		TbFile createFile = fileService.createFile(fname, user.getUid(), parentid);
 		return createFile;
 		//return null;
+	}
+
+	@RequestMapping("/fileUpload")
+	@ResponseBody
+	public boolean fileUpload() {
+		
+		return true;
+	}
+	
+		
+	//文件上传
+	@RequestMapping("/uploadFile")
+	@ResponseBody
+	public TbFile picUpload(MultipartFile uploadFile , HttpSession session) {
+		TbUser user = (TbUser)session.getAttribute("user");
+		try {
+			//上传文件获取服务器相对路径
+			String path = FileUploadUtils.fileUpload(uploadFile);
+			//截取文件名
+			String originalFilename = uploadFile.getOriginalFilename();
+			String fileName = originalFilename.substring(0,originalFilename.lastIndexOf('.'));
+			//获取文件大小
+			Double size = uploadFile.getSize()*1.0;
+			//新建文件对象
+			TbFile file = new TbFile();
+			file.setFid(UUID.randomUUID().toString().replace("-", ""));
+			file.setFname(fileName);
+			file.setFsize(size);
+			file.setSuffix(originalFilename.substring(originalFilename.lastIndexOf(".")+1));
+			file.setParentid((String)session.getAttribute("fparentId"));
+			file.setIsdir(false);
+			file.setUid(user.getUid());
+			file.setFurl(path);
+			Date date = new Date();
+			file.setUpdatetime(date);
+			file.setUploadtime(date);
+			//保存到数据库中
+			return fileService.saveFile(file);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

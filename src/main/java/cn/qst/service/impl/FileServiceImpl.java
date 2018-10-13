@@ -100,4 +100,11 @@ public class FileServiceImpl implements FileService {
 		int insert = fileMapper.insert(tbFile);
 		return insert==1?tbFile:null;
 	}
+
+	@Override
+	public TbFile saveFile(TbFile file) {
+		fileMapper.insertSelective(file);
+		return file;
+	}
+	
 }

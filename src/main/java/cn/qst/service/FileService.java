@@ -12,4 +12,6 @@ public interface FileService {
 	
 	TbFile createFile(String fname,String uid,String parentid);
 
+	TbFile saveFile(TbFile file);
+
 }
