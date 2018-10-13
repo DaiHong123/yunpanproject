@@ -123,7 +123,8 @@ function fundFileByTyPe(type){
         		if(file.isdir){
         			str+="<i class=\"fileIcon\"></i>";
         		}else if(file.suffix == "jpg"){
-        			str+="<i class=\"imgIcon\"></i>";
+        			str+="<input id = \""+file.fname+"\" value = \""+file.furl+"\" style=\" display:none \">"
+        			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'"+file.fname+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
         		}else if(file.suffix == "txt"){
         			str+="<i class=\"txtIcon\"></i>";
         		}else if(file.suffix == "mp4"){
