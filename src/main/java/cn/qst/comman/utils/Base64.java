@@ -57,38 +57,4 @@ public class Base64 {
 			return null;
 		}
 	}
-	/**
-	 * 将url加密，存入数据库之前
-	 * @param url
-	 * @return
-	 */
-	public static String urlToString(String url) {
-		BASE64Encoder encoder = new BASE64Encoder();
-		String urlBase = null;
-		try {
-			urlBase = encoder.encode(url.getBytes("utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return urlBase;
-	}
-	/**
-	 * 前台传回url之后，对url进行解密，查找文件
-	 * @param string
-	 * @return
-	 */
-	public static String stringToUrl(String string) {
-		BASE64Decoder decoder = new BASE64Decoder();
-		byte[] b;
-		String fileUrl = null;
-		try {
-			b = decoder.decodeBuffer(string);
-			fileUrl = new String(b, "UTF-8");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return fileUrl;
-	}
 }

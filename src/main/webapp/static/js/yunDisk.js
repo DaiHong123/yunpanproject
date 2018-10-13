@@ -30,7 +30,7 @@ function fundFileByParentId(parentId,isdir){
 	        		if(file.isdir){
 	        			str+="<i class=\"fileIcon\"></i>";
 	        		}else if(file.suffix == "jpg"){
-	        			str+="<input id = \"furl\" value = \" "+file.furl+" \" style=\" display:none \">"
+	        			str+="<input id = \"furl\" value = \""+file.furl+"\" style=\" display:none \">"
 	        			str+="<i id=\"btn\" onMouseOver=\"showInform(event)\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
 	        		}else if(file.suffix == "txt"){
 	        			str+="<i class=\"txtIcon\"></i>";
@@ -78,8 +78,8 @@ function showInform(event) {
         	 $("#informImg").attr("src", data);   
         }
 	})
-	var x = event.clientX / 10 + 12;
-	var y = event.clientY / 10 - 10;
+	var x = event.clientX / 10 + 15;
+	var y = event.clientY / 10 - 4;
 	var top = parseInt(info.offsetTop); 
 	var left = parseInt(info.offsetLeft); 
 	top = (y + top) * 10;

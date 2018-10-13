@@ -12,13 +12,16 @@ import net.coobird.thumbnailator.Thumbnails;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -71,26 +74,42 @@ public class FileController {
 	 * @param request
 	 * @param url
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@ResponseBody
 	@RequestMapping("/thumbnail")
 	public String thumbnail(HttpSession session, HttpServletRequest request, String furl) throws IOException {
-		final Integer WIDTH = 100;
-		final Integer HEIGHT = 100;
-		//初始化缩略图的路径
+		// 初始化缩略图的路径
 		String uploadPath = "/static/thum_img";
 		String realUploadPath = session.getServletContext().getRealPath(uploadPath);
-		File file = new File(furl + "");
-		String thumbImageUrl = uploadPath + "/thum_" + file.getName();
-		String des = realUploadPath + "/thum_" + file.getName();
-		// 判断缩略图是否存在
-		if (new File(des).exists()) {
-			return thumbImageUrl;
-		} else {
+		File file = new File(furl);
+		BufferedImage sourceImg = null;
+		FileInputStream fileInputStream = null;
+		String thumbImageUrl = null;
+		try {
+			fileInputStream = new FileInputStream(file);
+			sourceImg = ImageIO.read(fileInputStream);
+			Integer WIDTH = sourceImg.getWidth();
+			Integer HEIGHT = sourceImg.getHeight();
+			thumbImageUrl = uploadPath + "/thum_" + file.getName();
+			String des = realUploadPath + "/thum_" + file.getName();
+			// 判断缩略图是否存在
+			if (new File(des).exists()) {
+				return thumbImageUrl;
+			} else {
+				Thumbnails.of(furl).size(WIDTH, HEIGHT).toFile(des);
+			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} finally {
 			try {
-				Thumbnails.of(new BufferedInputStream(new FileInputStream(file))).size(WIDTH, HEIGHT).toFile(des);
-			} catch (Exception e) {
+				fileInputStream.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

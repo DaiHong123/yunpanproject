@@ -7,7 +7,6 @@ body, h1, p, form {
 	position: absolute;
 	top: 10px;
 	left: 10px;
-	width: 150px;
 	max-height: 250px;
 	/* 设置最大高度，当高度达到此值时出现滚动条 */
 	z-index: 100;
