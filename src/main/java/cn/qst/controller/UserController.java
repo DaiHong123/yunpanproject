@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -163,6 +164,21 @@ public class UserController {
 		session.removeAttribute("username");
 		session.removeAttribute("imgstr");
 		session.removeAttribute("user");
+		String uploadPath = "/static/thum_img";
+		String imgFile = session.getServletContext().getRealPath(uploadPath);
+		File file = new File(imgFile);
+		File[] files = file.listFiles();
+		for (File file2 : files) {
+			if ((file2.getName()).contains("thum_")) {
+				System.out.println(file2.getName());
+				StringBuffer imgUrl = new StringBuffer(imgFile);
+				imgUrl.append("\\");
+				imgUrl.append(file2.getName());
+				System.out.println(imgUrl);
+				File img = new File(imgUrl.toString());
+				img.delete();
+			} 
+		}
 		return "login";
 	}
 
