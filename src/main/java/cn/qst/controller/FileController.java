@@ -161,12 +161,6 @@ public class FileController {
 		return true;
 	}
 
-	@RequestMapping("/fileUpload")
-	@ResponseBody
-	public boolean fileUpload() {
-		
-		return true;
-	}
 	
 		
 	//文件上传
