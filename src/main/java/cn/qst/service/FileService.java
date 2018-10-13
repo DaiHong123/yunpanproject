@@ -14,15 +14,25 @@ public interface FileService {
 	
 	TbFile createFile(String fname,String uid,String parentid);
 	
+	String selectNameByFid(String fid);
+	
+	TbFile selectById(String id);
+	
 	TbFile saveFile(TbFile file);
 	
 	boolean rename(String fname,String fid,String uid);
 
 	void deleteFile(String fid);
 	
+
 	List<TbFile> treeFiles(String uid);
 	
 	boolean copyFile(String fid,String pid);
 	
 	boolean moveFile(String fid,String pid);
+
+
+
+	int downFile(String fileurl, String fileName, String suffix, String savePath) throws Exception;
+
 }

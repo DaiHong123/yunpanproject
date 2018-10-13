@@ -1,6 +1,6 @@
 package cn.qst.controller;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,18 +9,28 @@ import org.springframework.web.multipart.MultipartFile;
 
 import cn.qst.service.FileService;
 
-import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.awt.image.BufferedImage;
+import net.coobird.thumbnailator.Thumbnails;
+
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
+
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.io.UnsupportedEncodingException;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+
 import java.util.Date;
+
 import java.util.List;
 import java.util.UUID;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,60 +44,123 @@ import cn.qst.pojo.TbUser;
 @Controller
 @RequestMapping("/file")
 public class FileController {
-	
-	//上传文件的url地址
-	@Value("${IMAGE_SERVER_URL}")
-	private String IMAGE_SERVER_URL;
+
 	
 	@Autowired
 	private FileService fileService;
-	
-	//右侧功能栏搜索,根据类型查询文件
+
+	// 右侧功能栏搜索,根据类型查询文件
 	@RequestMapping("/fundFile")
 	@ResponseBody
-	public List<TbFile> fundFileByType(String type , HttpSession session){
-		//获取用户id
+	public List<TbFile> fundFileByType(String type, HttpSession session) {
+		// 获取用户id
 		session.setAttribute("fparentId", "-1");
-		TbUser user = (TbUser)session.getAttribute("user");
-		List<TbFile> fileList = fileService.fundFileByType(type , user.getUid());
+		TbUser user = (TbUser) session.getAttribute("user");
+		List<TbFile> fileList = fileService.fundFileByType(type, user.getUid());
 		return fileList;
 	}
-	//根据父类id查询子文件
+
+	// 根据父类id查询子文件
 	@RequestMapping("/fundFileByParentId")
 	@ResponseBody
-	public FileResult fundFileByParentId(String parentId , HttpSession session){
+	public FileResult fundFileByParentId(String parentId, HttpSession session) {
 		session.setAttribute("fparentId", parentId);
-		TbUser user = (TbUser)session.getAttribute("user");
-		//获取该文件夹的子文件
-		List<TbFile> fileList = fileService.funFileByParentId(parentId , user.getUid());
-		//获取该文件的父文件
+		TbUser user = (TbUser) session.getAttribute("user");
+		// 获取该文件夹的子文件
+		List<TbFile> fileList = fileService.funFileByParentId(parentId, user.getUid());
+		// 获取该文件的父文件
 		List<TbFile> parent = fileService.fundFileParentsById(parentId);
-		//创建返回结果集
+		// 创建返回结果集
 		FileResult result = new FileResult();
-		//添加子文件
+		// 添加子文件
 		result.setFiles(fileList);
-		//添加符文件
+		// 添加符文件
 		result.setParent(parent);
 		return result;
 	}
-	
+
+	/**
+	 * 接受图片url地址，生成图片缩略图，并返回缩略图url
+	 * 
+	 * @param session
+	 * @param request
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 */
+	@ResponseBody
+	@RequestMapping("/thumbnail")
+	public String thumbnail(HttpSession session, HttpServletRequest request, String furl) throws IOException {
+		// 初始化缩略图的路径
+		String uploadPath = "/static/thum_img";
+		String realUploadPath = session.getServletContext().getRealPath(uploadPath);
+		File file = new File(furl);
+		String des = realUploadPath + "/thum_" + file.getName();
+		String thumbImageUrl = uploadPath + "/thum_" + file.getName();
+		if (new File(des).exists()) {
+			return thumbImageUrl;
+		} else {
+			BufferedImage sourceImg = null;
+			FileInputStream fileInputStream = null;
+			try {
+				fileInputStream = new FileInputStream(file);
+				sourceImg = ImageIO.read(fileInputStream);
+				Integer width = sourceImg.getWidth();
+				Integer height = sourceImg.getHeight();
+				if (width > 100 || height > 100) {
+					width = width / 2;
+					height = height / 2;
+				} else if (width > 450 || height > 450) {
+					width = width / 3;
+					height = height / 3;
+				} else if (width > 800 || height > 800) {
+					width = width / 4;
+					height = height / 4;
+				}
+				Thumbnails.of(furl).size(width, height).toFile(des);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} finally {
+				try {
+					fileInputStream.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return thumbImageUrl;
+	}
+
 	//添加文件夹
 	@RequestMapping("/createFile")
 	@ResponseBody
-	public TbFile createFile(String fname,HttpSession session) {
-		TbUser user = (TbUser)session.getAttribute("user");
-		String parentid = (String)session.getAttribute("fparentId");
+	public TbFile createFile(String fname, HttpSession session) {
+		TbUser user = (TbUser) session.getAttribute("user");
+		String parentid = (String) session.getAttribute("fparentId");
 		TbFile createFile = fileService.createFile(fname, user.getUid(), parentid);
 		return createFile;
-		//return null;
 	}
 
-	@RequestMapping("/fileUpload")
+	// 重命名文件
+	@RequestMapping("/rename")
 	@ResponseBody
-	public boolean fileUpload() {
-		
+	public boolean rename(String fname, String fid, HttpSession session) {
+		TbUser user = (TbUser) session.getAttribute("user");
+		try {
+			fname = new String(fname.getBytes("iso8859-1"),"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		fileService.rename(fname, fid, user.getUid());
 		return true;
 	}
+
 	
 		
 	//文件上传
@@ -128,67 +201,16 @@ public class FileController {
 	//文件下载
 	@RequestMapping("/downlowd")
 	@ResponseBody
-    public String downlowd(String musicurl,@RequestParam(defaultValue="musicfile.mp3")String fileName,@RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop")String savePath) throws IOException {
-    	URL httpUrl = new URL(musicurl);  
-		HttpURLConnection conn = (HttpURLConnection)httpUrl.openConnection();  
-                //设置超时间为3秒
-		conn.setConnectTimeout(3*1000);
-		//防止屏蔽程序抓取而返回403错误
-		conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
- 
-		//得到输入流
-		InputStream inputStream = conn.getInputStream();  
-		//获取自己数组
-		byte[] getData = readInputStream(inputStream);    
- 
-		//文件保存位置
-		File saveDir = new File(savePath);
-		if(!saveDir.exists()){
-			saveDir.mkdir();
-		}
-		File file = new File(saveDir+File.separator+fileName);    
-		FileOutputStream fos = new FileOutputStream(file);     
-		fos.write(getData); 
-		if(fos!=null){
-			fos.close();  
-		}
-		if(inputStream!=null){
-			inputStream.close();
-		}
-		if(file!=null) {
-			return "200";
-		}
-		return "500";
+    public Integer downlowd(String fileurl,@RequestParam(defaultValue="default")String fileName,@RequestParam(defaultValue="txt")String suffix,@RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop")String savePath) throws Exception {
+		return fileService.downFile(fileurl,fileName,suffix,savePath);
     }
 	
-	//读取文件
-	private  byte[] readInputStream(InputStream inputStream) throws IOException {
-        byte[] buffer = new byte[1024];
-        int len = 0;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        while((len = inputStream.read(buffer)) != -1) {
-            bos.write(buffer, 0, len);
-        }
-        bos.close();
-        return bos.toByteArray();
-    }
 	
-	//重命名文件
-	@RequestMapping("/rename")
-	@ResponseBody
-	public boolean rename(String fname,String fid,HttpSession session) throws UnsupportedEncodingException {
-		TbUser user = (TbUser)session.getAttribute("user");
-		fname = new String(fname.getBytes("iso8859-1"),"UTF-8");
-		fileService.rename(fname, fid, user.getUid());
-		return true;
-	}
-	
-	
-	//删除文件
+	// 删除文件
 	@RequestMapping("/deleteFile")
 	@ResponseBody
 	public boolean deleteFile(@RequestParam(value = "fids[]") String[] fids) {
-		for(String fid:fids) {
+		for (String fid : fids) {
 			fileService.deleteFile(fid);
 		}
 		return true;

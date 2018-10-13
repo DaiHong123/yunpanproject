@@ -1,5 +1,12 @@
 package cn.qst.service.impl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -30,6 +37,10 @@ public class FileServiceImpl implements FileService {
 	
 	@Value("${TOP_PARENT_ID}")
 	private String TOP_PARERNT_ID;
+	
+	//上传文件的url地址前半段
+	@Value("${IMAGE_SERVER_URL}")
+	private String IMAGE_SERVER_URL;
 	
 	//根据文件类型查询文件
 	@Override
@@ -141,7 +152,14 @@ public class FileServiceImpl implements FileService {
 				fileMapper.deleteByPrimaryKey(fid);		
 	}
 
-	//查找文件夹
+	@Override
+	public String selectNameByFid(String fid) {
+		TbFile file = fileMapper.selectByPrimaryKey(fid);
+		if( file == null ) return null;
+		else return file.getFname();
+	}
+	
+	//查找文件夹树
 	@Override
 	public List<TbFile> treeFiles(String uid) {
 		// TODO Auto-generated method stub
@@ -149,11 +167,14 @@ public class FileServiceImpl implements FileService {
 		Criteria criteria = example.createCriteria();
 		criteria.andUidEqualTo(uid);
 		criteria.andIsdirEqualTo(true);
+
 		List<TbFile> files = fileMapper.selectByExample(example );
 		return files;
 		
 	}
 
+	
+	//复制文件
 	@Override
 	public boolean copyFile(String fid, String pid) {
 		// TODO Auto-generated method stub		
@@ -170,6 +191,8 @@ public class FileServiceImpl implements FileService {
 		return selective==1?true:false;
 	}
 
+	
+	//移动文件
 	@Override
 	public boolean moveFile(String fid, String pid) {
 		// TODO Auto-generated method stub
@@ -178,5 +201,56 @@ public class FileServiceImpl implements FileService {
 		tbFile.setParentid(pid);
 		int selective = fileMapper.updateByPrimaryKeySelective(tbFile);
 		return selective==1?true:false;
+	}
+
+	@Override
+	public int downFile(String fileurl, String fileName,String suffix, String savePath) throws Exception {
+		URL httpUrl = new URL(IMAGE_SERVER_URL+fileurl);  
+		HttpURLConnection conn = (HttpURLConnection)httpUrl.openConnection();  
+                //设置超时间为3秒
+		conn.setConnectTimeout(3*1000);
+		//防止屏蔽程序抓取而返回403错误
+		conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+ 
+		//得到输入流
+		InputStream inputStream = conn.getInputStream();  
+		//获取字节数组
+		byte[] getData = readInputStream(inputStream);    
+ 
+		//文件保存位置
+		File saveDir = new File(savePath);
+		if(!saveDir.exists()){
+			saveDir.mkdir();
+		}
+		fileName = fileName+UUID.randomUUID().toString().substring(0, 8)+"."+suffix;
+		File file = new File(saveDir+File.separator+fileName);    
+		FileOutputStream fos = new FileOutputStream(file);     
+		fos.write(getData); 
+		if(fos!=null){
+			fos.close();  
+		}
+		if(inputStream!=null){
+			inputStream.close();
+		}
+		if(file!=null) {
+			return 200;
+		}
+		return 500;
+	}
+	//读取文件
+	private  byte[] readInputStream(InputStream inputStream) throws IOException {
+        byte[] buffer = new byte[1024];
+        int len = 0;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        while((len = inputStream.read(buffer)) != -1) {
+            bos.write(buffer, 0, len);
+        }
+        bos.close();
+        return bos.toByteArray();
+    }
+
+	@Override
+	public TbFile selectById(String id) {
+		return fileMapper.selectByPrimaryKey(id);
 	}
 }

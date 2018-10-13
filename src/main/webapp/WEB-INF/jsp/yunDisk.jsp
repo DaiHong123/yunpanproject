@@ -7,10 +7,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
+
 <script type="text/javascript" src="../../static/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="../../static/js/jquery.form.js"></script>
 <link rel="stylesheet" href="../../static/css/breviary.css" />
 <link  href="../../static/css/index_1.css"  rel="stylesheet" />
+
+<script src="../../static/js/jquery-1.8.3.min.js"></script>
+<style>
+	a:visited {
+		color:#424e67;
+	}
+</style>
+
 </head>
 <body>
 		<header id="header" class="clear">
@@ -111,20 +120,17 @@
 	<section id="filesList"> <header class="filesListHeader">
 	<div class="filesListHeadBtnsR left">
 		<div class="filesListHeadChangBtn" id="filesListHeadChangBtn">
-			<span id="clickUpload" class="filesUpLoad">	
-				<i class="icon icon-upload"></i>上传
-				<form id="formUpload" name="formUploadFile" method="POST" enctype="multipart/form-data">
-					<input id="fileUpload" type="file" name="uploadFile" style="display: none" />
-				</form>
-			</span> 
-			<span class="filesCreate" onclick="createFile()" ><i class="icon icon-newfolder" ></i>新建文件夹</span>
+			<span class="filesUpLoad"><i class="icon icon-upload"></i>上传</span> <span
+				class="filesCreate" onclick="createFile()" ><i class="icon icon-newfolder" ></i>新建文件夹</span>
 		</div>
 		<div class="filesListHeadChangChose" id="filesListHeadChangChose">
 			<span class="headShare"><i class="icon icon-share"></i>分享</span> <span
 				class="headDownLoad"><i class="icon icon-download"></i>下载</span> <span
 				class="headDelete" onclick="deletefile()"><i class="icon icon-delete"></i>删除</span> <span
+
 				class="headResetName" id="headResetName" onclick="check()">重命名</span> <span class="headCopy" onclick="isCopyOrMove('复制到')">复制到</span> <span
 				class="headMyDevice" onclick="isCopyOrMove('移动到')" >移动到</span>
+
 		</div>
 	</div>
 	<div class="filesListHeadBtnsL right">
@@ -166,7 +172,7 @@
 		</ul>
 		<table class="files">
 			<tbody id="filesTab">
-					
+				
 			</tbody>
 		</table>
 		<div id="moduleFlieName">
@@ -180,6 +186,7 @@
 		</div>
 	</div>
 	</section> </section>
+
 	
 	
 	
@@ -211,15 +218,18 @@
 			</div>
 		</div>
 
+
 </body>
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>
 <script src="../../static/js/search.js"></script>
 <script src="../../static/js/yunDisk.js"></script>
 <script src="../../static/js/file.js"></script>
+
 <script src="../../static/js/fileUpload.js"></script>
 <script src="../../static/js/breviary.js"></script>
 <script src="../../static/js/data.js"></script>
 <script src="../../static/js/tools.js"></script>
 <script src="../../static/js/handledata.js"></script>
 </html>
+
