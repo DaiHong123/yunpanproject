@@ -53,7 +53,7 @@
 		str+="<a onclick=\"fundFileByParentId(\'"+data.fid+"\',"+data.isdir+")\" href=\"javascript:void(0);\"><span class=\"fileTitle\">"+data.fname+"</span></a>";
 		str+="<div class=\"filesFns right\">";
 		str+="<a class=\"icon icon-share\" href=\"javascript:;\">分享</a>";
-		str+="<a class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
+		str+="<a onclick=\"downFile(\'"+data.furl+"\',\'"+data.fname+"\',\'"+data.suffix+"\')\" class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
 		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
 		str+="</div></td><td><span>"
 		if(data.fsize){
