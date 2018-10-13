@@ -1,5 +1,7 @@
 //右侧功能栏点击事件
 function asideAll(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.05)","color":"#3b8cff"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
@@ -13,6 +15,8 @@ function asideAll(){
 	fundFileByTyPe("All");
 }
 function asideImg(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.05)","color":"#3b8cff"});
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
@@ -26,6 +30,8 @@ function asideImg(){
 	fundFileByTyPe("jpg");
 }
 function asideText(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideText").css({"background":"rgba(0,0,0,.05)","color":"#3b8cff"});
@@ -39,6 +45,8 @@ function asideText(){
 	fundFileByTyPe("txt");
 }
 function asidevideo(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
@@ -52,6 +60,8 @@ function asidevideo(){
 	fundFileByTyPe("mp4");
 }
 function asideSeed(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
@@ -65,6 +75,8 @@ function asideSeed(){
 	fundFileByTyPe("bt");
 }
 function asideMusic(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
@@ -78,6 +90,8 @@ function asideMusic(){
 	fundFileByTyPe("mp3");
 }
 function asideOther(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
@@ -109,7 +123,8 @@ function fundFileByTyPe(type){
         		if(file.isdir){
         			str+="<i class=\"fileIcon\"></i>";
         		}else if(file.suffix == "jpg"){
-        			str+="<i class=\"imgIcon\"></i>";
+        			str+="<input id = \""+file.fname+"\" value = \""+file.furl+"\" style=\" display:none \">"
+        			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'"+file.fname+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
         		}else if(file.suffix == "txt"){
         			str+="<i class=\"txtIcon\"></i>";
         		}else if(file.suffix == "mp4"){
@@ -124,13 +139,13 @@ function fundFileByTyPe(type){
         		str+="<a onclick=\"fundFileByParentId(\'"+file.fid+"\',"+file.isdir+")\" href=\"javascript:void(0);\" ><span class=\"fileTitle\" title="+file.fname+">"+file.fname+"</span></a>";
         		str+="<div class=\"filesFns right\">";
         		str+="<a class=\"icon icon-share\" href=\"javascript:;\">分享</a>";
-        		str+="<a class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
+        		str+="<a onclick=\"downFile(\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\')\" class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
         		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
         		str+="</div></td><td><span>"
         		if(file.fsize){
         			str+=file.fsize+"</span></td>";
         		}else{
-        			str+="-</span></td>";
+        			str+="——</span></td>";
         		}
         		str+="<td><span class=\"fileChangeDate\">"+dateFmt("yyyy-MM-dd",new Date(file.updatetime))+"</span></td></tr>";
         		$("#filesTab").append(str);

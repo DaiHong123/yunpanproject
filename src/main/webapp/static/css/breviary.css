@@ -1,0 +1,766 @@
+/* ::::: https://pan.baidu.com/box-static/base/css/function.css?t=1537274867313 ::::: */
+
+ body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+textarea,
+select,
+optgroup,
+option,
+fieldset,
+legend,
+p,
+blockquote,
+th,
+td {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+}
+
+fieldset,
+img {
+	border: 0px none;
+}
+
+ul,
+li,
+ol {
+	list-style: outside none none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: 100%;
+}
+
+input,
+button,
+textarea,
+select,
+optgroup,
+option {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+}
+
+input,
+button,
+select {
+	margin: 0px;
+	line-height: 1.2;
+}
+
+a {
+	color: rgb(0, 102, 204);
+	text-decoration: none;
+}
+
+a img,
+img {}
+
+a:hover,
+a:active,
+a:focus {
+	color: rgb(0, 102, 204);
+	text-decoration: underline;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+	font: 12px/1.5 "Microsoft YaHei", arial, SimSun, "宋体";
+	color: rgb(102, 102, 102);
+}
+
+a {
+	color: rgb(0, 102, 204);
+	text-decoration: none;
+	outline: 0px none;
+}
+
+a:hover,
+a:active,
+a:focus {
+	color: rgb(0, 102, 204);
+	text-decoration: underline;
+}
+
+.g-disabled {
+	opacity: 0.5;
+}
+
+.g-button {
+	position: relative;
+	display: inline-block;
+	height: 30px;
+	margin: 0px 5px;
+	padding-left: 15px;
+	font-size: 12px;
+	line-height: 30px;
+	vertical-align: top;
+	white-space: nowrap;
+	text-decoration: none;
+	border: 1px solid rgb(212, 212, 212);
+	color: rgb(102, 102, 102);
+	outline: 0px none;
+	border-radius: 2px;
+}
+
+.g-button-right {
+	position: relative;
+	right: -1px;
+	display: block;
+	height: 29px;
+	padding-right: 15px;
+	line-height: 29px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.g-button-right:hover {
+	cursor: pointer;
+}
+
+.g-button .icon {
+	display: inline-block;
+	width: 20px;
+	height: 24px;
+	margin-right: 4px;
+	vertical-align: middle;
+}
+
+.g-button .text {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.g-button .button-red-light-icon {
+	display: none;
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	width: 6px;
+	height: 6px;
+	background: rgb(248, 100, 92) none repeat scroll 0% 0%;
+	border-radius: 100%;
+}
+
+.g-button-large .text {
+	height: 37px;
+	line-height: 37px;
+}
+
+.g-button:link,
+.g-button:visited {
+	color: rgb(102, 102, 102);
+}
+
+.g-button:hover {
+	text-decoration: none;
+	color: rgb(89, 150, 230);
+	border: 1px solid rgb(89, 150, 230);
+}
+
+.g-button:active {
+	color: rgb(102, 102, 102);
+}
+
+.g-disabled:link,
+.g-disabled:hover,
+.g-disabled:visited .g-disabled .g-button-right,
+.g-disabled:hover .g-button-right,
+.g-disabled:active .g-button-right,
+.g-disabled .g-button,
+.g-disabled .g-button-right {
+	text-decoration: none;
+	color: rgb(158, 189, 217);
+	cursor: default;
+	pointer-events: none;
+}
+
+.g-dropdown-button {
+	display: inline-block;
+	margin: 0px 5px;
+	vertical-align: top;
+}
+
+.g-dropdown-button .g-button,
+.g-dropdown-button .menu {
+	display: list-item;
+	margin: 0px ! important;
+	list-style: outside none none;
+	z-index: 1;
+}
+
+.g-dropdown-button .menu {
+	position: relative;
+	visibility: hidden;
+	border: 1px solid rgb(170, 170, 170);
+	font-size: 12px;
+	text-align: center;
+	background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+}
+
+.g-dropdown-button .menu .g-button-menu {
+	position: absolute;
+	top: -24px;
+	display: block;
+	height: 32px;
+	padding: 0px 12px;
+	line-height: 32px;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	color: rgb(102, 102, 102);
+}
+
+.g-dropdown-button .menu .g-button-menu a {
+	color: rgb(102, 102, 102);
+}
+
+.g-dropdown-button .menu .g-button-menu:hover {
+	text-decoration: none;
+	background: rgb(228, 238, 254) none repeat scroll 0% 0%;
+}
+
+.g-dropdown-button .menu .g-button-menu .button-red-light-icon {
+	display: none;
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	width: 6px;
+	height: 6px;
+	background: rgb(248, 100, 92) none repeat scroll 0% 0%;
+	border-radius: 100%;
+}
+
+.g-dropdown-button .menu .g-menu-hasIcon {
+	padding-left: 12px;
+	text-align: center;
+}
+
+.g-dropdown-button .menu .g-menu-hasIcon .icon {
+	display: none;
+}
+
+.g-button-blue {
+	border: 1px solid rgb(71, 141, 228);
+	background-color: rgb(71, 141, 228);
+}
+
+.g-button-blue .text,
+.g-button-blue .g-button-right .text,
+.g-button-blue:hover .g-button-right .text,
+.g-button-blue:active .g-button-right .text {
+	color: rgb(255, 255, 255);
+}
+
+.g-button-blue:hover {
+	border: 1px solid rgb(58, 129, 218);
+	background-color: rgb(58, 129, 218);
+}
+
+.g-button-large {
+	height: 37px;
+	padding-left: 50px;
+	font-size: 14px;
+	line-height: 34px;
+}
+
+.g-button-large .g-button-right {
+	height: 37px;
+	padding-right: 50px;
+	line-height: 34px;
+}
+
+.g-button-large:hover {
+	color: rgb(89, 150, 230);
+	border: 1px solid rgb(89, 150, 230);
+}
+
+.g-button-blue-large {
+	height: 37px;
+	font-size: 14px;
+	line-height: 34px;
+	background-color: rgb(71, 141, 228);
+	border: 1px solid rgb(71, 141, 228);
+}
+
+.g-button-blue-large .g-button-right .text,
+.g-button-blue-large:hover .g-button-right .text,
+.g-button-blue-large:active .g-button-right .text {
+	color: rgb(255, 255, 255);
+}
+
+.g-button-blue-large .g-button-right {
+	height: 37px;
+	line-height: 34px;
+}
+
+.g-button-blue-large:hover {
+	border: 1px solid rgb(62, 125, 203);
+	background-color: rgb(62, 125, 203);
+}
+
+.g-button-tips {
+	visibility: hidden;
+	display: inline-block;
+	position: absolute;
+	word-break: break-all;
+	white-space: normal;
+	width: 360px;
+	padding: 13px 15px;
+	border-radius: 3px;
+	color: rgb(141, 145, 153);
+	background-color: rgb(255, 255, 255);
+	border: 1px solid rgb(212, 212, 212);
+	top: 35px;
+	left: 0px;
+	line-height: 20px;
+}
+
+.dialog {
+	position: fixed;
+	border: 1px solid rgb(206, 209, 217);
+	background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+	box-shadow: 0px 0px 3px rgb(206, 209, 217);
+	border-radius: 4px;
+	display: none;
+	font-family: "Microsoft YaHei", SimSun;
+}
+
+.dialog .dialog-min-header h3,
+.dialog .dialog-header h3 {
+	position: relative;
+	display: block;
+	height: 42px;
+	line-height: 42px;
+	text-indent: 1em;
+	font-size: 14px;
+	font-weight: 700;
+	color: rgb(77, 77, 77);
+}
+
+.dialog .dialog-header-title {
+	display: block;
+	margin-right: 50px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.dialog .dialog-drag {
+	cursor: move;
+}
+
+.dialog .dialog-header-title .select-text {
+	font-style: normal;
+	cursor: text;
+}
+
+.dialog .dialog-body {
+	background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+	line-height: 24px;
+}
+
+.dialog .dialog-min-header,
+.dialog .dialog-header {
+	position: relative;
+	color: rgb(51, 51, 51);
+	border-bottom: 1px solid rgb(206, 209, 217);
+	-moz-user-select: none;
+}
+
+.dialog .dialog-min-header {
+	display: none;
+}
+
+.dialog .dialog-control {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	height: 20px;
+}
+
+.dialog .dialog-control span {
+	cursor: pointer;
+	float: right;
+}
+
+.dialog .dialog-icon {
+	height: 20px;
+	width: 20px;
+	line-height: 20px;
+	font-size: 20px;
+	color: rgb(164, 169, 179);
+}
+
+.dialog .dialog-icon:hover {
+	color: rgb(71, 141, 228);
+}
+
+.dialog .dialog-close {
+	background-position: 0px 0px;
+}
+
+.dialog .dialog-back {
+	background-position: -40px 0px;
+}
+
+.dialog .dialog-min {
+	background-position: -20px 0px;
+}
+
+.dialog-blue {
+	border-radius: 1px 1px 0px 0px;
+	border: 1px solid rgb(206, 208, 215);
+}
+
+.dialog-blue .dialog-min-header,
+.dialog-blue .dialog-header {
+	color: rgb(125, 129, 138);
+	background: rgb(231, 236, 242) none repeat scroll 0% 0%;
+	border-bottom: 0px none;
+}
+
+.dialog-blue .dialog-close {
+	background-position: -80px 0px;
+}
+
+.dialog-blue .dialog-min {
+	background-position: -60px 0px;
+}
+
+.dialog-blue .dialog-max,
+.dialog-blue .dialog-back {
+	background-position: -40px 0px;
+}
+
+.dialog .dialog-footer {
+	padding-bottom: 30px;
+	text-align: center;
+}
+
+
+/* ::::: https://pan.baidu.com/box-static/disk-system/pkg/home-all_0e4d226.css ::::: */
+
+.dialog .dialog-body {
+	background: transparent none repeat scroll 0px 0px;
+}
+
+.treeview-node,
+.treeview-node:link,
+.treeview-node:visited {
+	border-style: solid;
+	border-color: rgb(255, 255, 255);
+	-moz-border-top-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	border-image: none;
+	border-width: 1px 0px;
+	color: rgb(41, 116, 182);
+	cursor: pointer;
+}
+
+.treeview-node,
+.treeview-node:link,
+.treeview-node:visited,
+.treeview-node-handler {
+	display: block;
+	white-space: nowrap;
+	text-decoration: none;
+}
+
+.treeview-node-on,
+.treeview-node-on:link,
+.treeview-node-on:visited,
+.treeview-node-on:hover,
+.treeview-node-on:active {
+	background: rgb(229, 240, 251) none repeat scroll 0% 0%;
+	border-color: rgb(187, 212, 239) rgb(255, 255, 255);
+}
+
+.treeview-node-handler {
+	padding: 4px 0px;
+	color: rgb(51, 51, 51);
+}
+
+.treeview-ic {
+	margin-right: 5px;
+	height: 18px;
+	width: 22px;
+}
+
+._minus .treeview-ic {
+	background-position: 0px -22px;
+}
+
+.treeview-dir {
+	background: transparent url('../img/icon-tree_48f78c0.png') no-repeat scroll 0px 0px;
+}
+
+.treeview-collapse {
+	display: none;
+}
+
+.treeview .icon-operate {
+	background: transparent url('../img/icon-tree_48f78c0.png') no-repeat scroll 0px 0px;
+}
+
+.treeview .b-in-blk {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.treeview .plus {
+	margin: 0px 3px;
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+	background-position: -30px 0px;
+}
+
+.treeview-node .minus {
+	background-position: -30px -22px;
+}
+
+#fileTreeDialog .g-button {
+	margin: 5px 5px 0px;
+}
+
+#fileTreeDialog .file-tree-container {
+	height: 200px;
+	margin: 10px 11px;
+	border: 1px solid rgb(242, 242, 242);
+	overflow: auto;
+}
+
+#fileTreeDialog .dialog-body {}
+
+#fileTreeDialog .dialog-footer {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.frame-all {
+	background-color: rgb(66, 135, 237);
+	transition: background 1s ease 0s;
+}
+
+.module-header .module-header-wrapper {
+	transition: background 1s ease 0s;
+}
+
+.g-button {
+	text-decoration: none;
+	color: rgb(59, 140, 255);
+	border: 1px solid rgb(192, 217, 254);
+	border-radius: 4px;
+	height: 32px;
+	line-height: 32px;
+	padding-left: 10px;
+}
+
+.g-button .icon {
+	line-height: 28px;
+	font-size: 16px;
+	height: 31px;
+	margin-right: 0px;
+}
+
+.g-button .text {
+	font-size: 13px;
+	margin-left: 2px;
+	margin-right: 2px;
+	vertical-align: baseline;
+}
+
+.g-button.blue-upload:hover,
+.g-button.begin-btn:hover {
+	background: rgb(78, 151, 255) none repeat scroll 0% 0%;
+	border: 1px solid rgb(78, 151, 255);
+}
+
+.g-dropdown-button-second .text {
+	font-size: 12px;
+}
+
+.g-dropdown-button-second .menu {
+	width: 100%;
+}
+
+.g-button-large,
+.g-button-blue-large {
+	padding-left: 10px;
+	height: 32px;
+}
+
+.g-button-large .g-button-right,
+.g-button-blue-large .g-button-right {
+	height: 32px;
+	line-height: 32px;
+	padding-right: 10px;
+}
+
+.g-button-large .text,
+.g-button-blue-large .text {
+	height: 32px;
+	line-height: 32px;
+}
+
+.g-button-right {
+	height: 32px;
+	line-height: 32px;
+	padding-right: 10px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.g-button:hover {
+	color: rgb(119, 175, 255) ! important;
+	border: 1px solid rgb(192, 217, 254);
+}
+
+.g-button:hover .icon {
+	color: rgb(119, 175, 255);
+}
+
+.g-button.g-button-blue-large:hover {
+	border: 1px solid rgb(78, 151, 255);
+	background: rgb(78, 151, 255) none repeat scroll 0% 0%;
+}
+
+.g-button:link,
+.g-button:visited {
+	color: rgb(59, 140, 255);
+}
+
+.g-button-blue {
+	border: 1px solid rgb(59, 140, 255);
+	background-color: rgb(59, 140, 255);
+}
+
+.g-button-blue .icon {
+	color: rgb(255, 255, 255);
+}
+
+.g-button-blue:hover {
+	background: rgb(119, 175, 255) none repeat scroll 0% 0%;
+	border: 1px solid rgb(119, 175, 255);
+}
+
+.g-button-blue:hover .icon {
+	color: rgb(255, 255, 255);
+}
+
+.g-button-blue-large {
+	border: 1px solid rgb(59, 140, 255);
+	background: rgb(59, 140, 255) none repeat scroll 0% 0%;
+}
+
+
+.dialog {
+	position: absolute;
+	box-shadow: none;
+	overflow: hidden;
+	border: 0px none;
+}
+
+.dialog .dialog-min-header,
+.dialog .dialog-header {
+	background-color: rgb(247, 250, 255);
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-bottom: 1px solid rgb(196, 219, 254);
+	height: 44px;
+	line-height: 44px;
+	font-weight: 200;
+}
+
+.dialog .dialog-min-header h3,
+.dialog .dialog-header h3 {
+	color: rgb(66, 78, 103);
+}
+
+.dialog .dialog-min-header .select-text,
+.dialog .dialog-header .select-text {
+	-moz-user-select: initial;
+}
+
+.dialog .dialog-header-title em {
+	font-style: normal;
+	cursor: text;
+	font-weight: 200;
+}
+
+.dialog .dialog-footer {
+	padding-bottom: 15px;
+}
+
+.dialog .dialog-footer::after {
+	content: ".";
+	display: block;
+	visibility: hidden;
+	height: 0px;
+	line-height: 0;
+	font-size: 0px;
+	clear: both;
+}
+
+.dialog .dialog-control {
+	top: 13px;
+	right: 12px;
+}
+
+.dialog .dialog-control .icon {
+	font-size: 12px;
+	text-align: center;
+	line-height: 20px;
+	color: rgb(95, 112, 148);
+	margin: 0px 2px;
+}
+
+.dialog .dialog-control .icon .sicon {
+	display: none;
+}
+
+.dialog .dialog-control .icon span {
+	font-size: 14px;
+}
+
+.dialog .dialog-control .icon:hover {
+	color: rgb(124, 138, 168);
+}
+
+.dialog .dialog-icon {
+	font-size: 24px;
+}
+
+
+
