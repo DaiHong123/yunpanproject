@@ -67,7 +67,6 @@ function fundFileByParentId(parentId,isdir){
 //显示悬浮层
 function showInform(event) {
 	var furl = $("#furl").val();
-	alert(furl);
 	var info = document.getElementById("inform");
 	$.ajax({
 		url : "/file/thumbnail", 
@@ -76,8 +75,7 @@ function showInform(event) {
 		contentType:"application/x-www-form-urlencoded",
 		data: {"furl":furl},
         success: function(data){
-        	alert(data);
-        	$("#informImg").arrt({"src":data});
+        	 $("#informImg").attr("src", data);   
         }
 	})
 	var x = event.clientX / 10 + 12;

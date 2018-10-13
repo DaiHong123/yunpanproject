@@ -81,14 +81,14 @@ public class FileController {
 		//初始化缩略图的路径
 		String uploadPath = "/static/thum_img";
 		String realUploadPath = session.getServletContext().getRealPath(uploadPath);
-		File file = new File(furl);
+		File file = new File(furl + "");
 		String thumbImageUrl = uploadPath + "/thum_" + file.getName();
+		String des = realUploadPath + "/thum_" + file.getName();
 		// 判断缩略图是否存在
-		if (new File(thumbImageUrl).exists()) {
+		if (new File(des).exists()) {
 			return thumbImageUrl;
 		} else {
 			try {
-				String des = realUploadPath + "/thum_" + file.getName();
 				Thumbnails.of(new BufferedInputStream(new FileInputStream(file))).size(WIDTH, HEIGHT).toFile(des);
 			} catch (Exception e) {
 				e.printStackTrace();
