@@ -311,8 +311,7 @@
 																	canvas) {
 																canvas.id = "mycanvas";
 																//生成base64图片数据
-																console
-																		.log("aaaaaaaaaa");
+																console.log("aaaaaaaaaa");
 																console
 																		.log(canvas);
 																var dataUrl = canvas
@@ -381,7 +380,8 @@
 								<c:choose>
 									<c:when test="${user.vip == 0 }">
 										<!-- 充值会员 暂时不做-->
-                                  <em>非会员，</em><a style="text-decoration: none;" href="">充值&nbsp;&nbsp;</a>成为我们的会员，享受更大的空间,更快的速度
+										<em>非会员，</em>
+										<a style="text-decoration: none;" href="">充值&nbsp;&nbsp;</a>成为我们的会员，享受更大的空间,更快的速度
                                     <input type="text" name="vip"
 											value="0" style="display: none">
 									</c:when>
