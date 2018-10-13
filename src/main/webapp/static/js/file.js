@@ -100,6 +100,7 @@ function rename(names,domObj, dataObj, success, fail) {
 				getByClass('fileTitle', domObj)[0].title = newName + '(' + s
 						+ ')';
 			}
+			newName = getByClass('fileTitle', domObj)[0].innerHTML;
 		} else {
 			if (s == 0) {
 				getByClass('fileTitle', domObj)[0].innerHTML = newName;
@@ -133,7 +134,10 @@ function rename(names,domObj, dataObj, success, fail) {
 			getByClass('checkstyle', domObj)[0].value = fid;
 			$('.acreateFile').attr("onclick","fundFileByParentId(\'"+fid+"\',true)");	
 		}else if(names=="resname"){
-			fid = $('.checkstyle').val();
+			var fid ;
+			 $("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
+				 fid = $(this).val();
+		     });
 			$.ajax({
 				url : "/file/rename",
 				type : "get",
@@ -311,5 +315,21 @@ function deletefile(){
 
 //复制文件
 function copyFile(){
-	
+	document.getElementById('module-canvas').style.display='block';
+	document.getElementById('fileTreeDialog').style.display='block';
+	 $.ajax({
+			url : "/file/copyFile",
+			type : "get",
+			async : true,
+			contentType : "application/x-www-form-urlencoded",
+			success : function(data) {
+				
+			}
+		});	
+}
+
+//取消
+function cancel(){
+	document.getElementById('module-canvas').style.display='none';
+	document.getElementById('fileTreeDialog').style.display='none';
 }

@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
+<link rel="stylesheet" href="../../static/css/breviary.css" />
 <script src="../../static/js/jquery-1.8.3.min.js"></script>
 </head>
 <body>
@@ -110,7 +111,7 @@
 			<span class="headShare"><i class="icon icon-share"></i>分享</span> <span
 				class="headDownLoad"><i class="icon icon-download"></i>下载</span> <span
 				class="headDelete" onclick="deletefile()"><i class="icon icon-delete"></i>删除</span> <span
-				class="headResetName" id="headResetName" onclick="check()">重命名</span> <span class="headCopy">复制到</span> <span
+				class="headResetName" id="headResetName" onclick="check()">重命名</span> <span class="headCopy" onclick="copyFile()">复制到</span> <span
 				class="headMyDevice"><i class="icon icon-more"></i>更多</span>
 		</div>
 	</div>
@@ -167,7 +168,64 @@
 		</div>
 	</div>
 	</section> </section>
-	<div id="frameSelect"></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+			<div class="module-canvas" id="module-canvas" style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;"></div>
+	<div class="dialog dialog-fileTreeDialog   dialog-gray" id="fileTreeDialog" style="width: 520px; top: 195px; bottom: auto; left: 400px; right: auto; display: none; visibility: visible; z-index: 53;">
+			<div class="dialog-header dialog-drag">
+				<h3><span class="dialog-header-title"><em class="select-text">复制到</em></span></h3>
+				<div class="dialog-control"><span class="dialog-icon dialog-close "><span class="sicon" onclick="cancel()">x</span></span>
+				</div>
+			</div>
+			<div class="dialog-body">
+				<div class="file-tree-container">
+					<ul class="treeview treeview-content ">
+						<li>
+							<div class="treeview-node  treeview-node-on treeview-root _minus" data-padding-left="0" style="padding-left: 0px;"><span class="treeview-node-handler"><em class="b-in-blk plus icon-operate minus"></em><dfn class="b-in-blk treeview-ic treeview-dir"></dfn><span class="treeview-txt" data-file-path="/">全部文件</span></span>
+							</div>
+							<ul class="treeview treeview-root-content treeview-content " data-padding-left="15">
+								<li>
+									<div class="treeview-node" data-padding-left="15" style="padding-left: 15px;"><span class="treeview-node-handler"><em class="b-in-blk plus icon-operate "></em><dfn class="b-in-blk treeview-ic treeview-dir"></dfn><span class="treeview-txt" data-file-path="/来自：OPPO A59s">来自：OPPO A59s</span></span>
+									</div>
+									<ul class="treeview  treeview-content treeview-collapse" data-padding-left="30px"></ul>
+								</li>
+								<li>
+									<div class="treeview-node " data-padding-left="15" style="padding-left: 15px;"><span class="treeview-node-handler"><em class="b-in-blk plus  "></em><dfn class="b-in-blk treeview-ic treeview-dir"></dfn><span class="treeview-txt" data-file-path="/我的资源">我的资源</span></span>
+									</div>
+									<ul class="treeview  treeview-content treeview-collapse" data-padding-left="30px"></ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="dialog-footer g-clearfix">
+				<a class="g-button g-button-large" data-button-id="b77" data-button-index="" href="javascript:;" title="取消" style="float: right; padding-left: 50px;"><span class="g-button-right" style="padding-right: 50px;"><span class="text" style="width: auto;" onclick="cancel()">取消</span></span>
+				</a>
+				<a class="g-button g-button-blue-large" data-button-id="b81" data-button-index="" href="javascript:;" title="确定" style="float: left; padding-left: 50px;"><span class="g-button-right" style="padding-right: 50px;"><span class="text" style="width: auto;">确定</span></span>
+				</a>
+			</div>
+		</div>
+	
+	
+	
+	
+	
+	
+	
 </body>
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>

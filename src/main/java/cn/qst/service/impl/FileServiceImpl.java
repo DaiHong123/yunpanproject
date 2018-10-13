@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import cn.qst.comman.utils.TreeFile;
 import cn.qst.mapper.TbFileMapper;
 import cn.qst.pojo.TbFile;
 import cn.qst.pojo.TbFileExample;
@@ -134,4 +135,39 @@ public class FileServiceImpl implements FileService {
 				//删除改菜单
 				fileMapper.deleteByPrimaryKey(fid);		
 	}
+
+	
+	//查找文件夹
+	@Override
+	public List<TreeFile> treeFiles(String fid) {
+		// TODO Auto-generated method stub
+		List<TreeFile> treeFiles = new ArrayList<>();
+		List<TbFile> tbFiles = new ArrayList<>();
+		TbFileExample example = new TbFileExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andParentidEqualTo(fid);
+		criteria.andIsdirEqualTo(true);
+		List<TbFile> selectByExample = fileMapper.selectByExample(example );
+		for(TbFile file:selectByExample) {
+			TreeFile treeFile = new TreeFile();
+			treeFile.setFid(file.getFid());
+			treeFile.setFname(file.getFname());
+			treeFile.setChildFile(false);
+			treeFiles.add(treeFile);
+		}
+		for(int i=0;i<treeFiles.size();i++) {				
+			TbFileExample example2 = new TbFileExample();
+			Criteria criteria2 = example2.createCriteria();
+			criteria2.andParentidEqualTo(treeFiles.get(i).getFid());
+			criteria2.andIsdirEqualTo(true);
+			List<TbFile> selectByExample2 = fileMapper.selectByExample(example2);
+			System.out.println(selectByExample2.size());
+			if(selectByExample2.size()!=0&&selectByExample2!=null) {
+				treeFiles.get(i).setChildFile(true);
+			}
+		}
+		return treeFiles;
+	}
+	
+	
 }
