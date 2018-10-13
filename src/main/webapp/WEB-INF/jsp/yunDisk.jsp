@@ -77,7 +77,12 @@
 			<a onclick="asideOther()" href="javascript:void(0);">
 				<li id="asideOther" class="asideOther"><span>其他</span></li>
 			</a>
-			<li class="asideMyShare"><i class="icon icon-my-share"></i><span>我的分享</span></li>
+			<li class="asideMyShare">
+				<a href="/myshare" target="_self">
+					<i class="icon icon-my-share"></i>
+					<span>我的分享</span>
+				</a>
+			</li>
 			<li class="asideRecycle"><i class="icon icon-delete"></i><span>回收站</span></li>
 		</ul>
 		<footer class="contRightFoot">
