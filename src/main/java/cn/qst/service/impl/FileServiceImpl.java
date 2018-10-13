@@ -236,4 +236,9 @@ public class FileServiceImpl implements FileService {
         bos.close();
         return bos.toByteArray();
     }
+
+	@Override
+	public TbFile selectById(String id) {
+		return fileMapper.selectByPrimaryKey(id);
+	}
 }

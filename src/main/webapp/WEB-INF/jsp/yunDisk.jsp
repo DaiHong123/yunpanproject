@@ -163,7 +163,7 @@
 		</ul>
 		<table class="files">
 			<tbody id="filesTab">
-					
+				
 			</tbody>
 		</table>
 		<div id="moduleFlieName">

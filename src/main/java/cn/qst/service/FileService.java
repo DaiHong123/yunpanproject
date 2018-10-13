@@ -16,6 +16,8 @@ public interface FileService {
 	
 	String selectNameByFid(String fid);
 	
+	TbFile selectById(String id);
+	
 	TbFile saveFile(TbFile file);
 	
 	boolean rename(String fname,String fid,String uid);
