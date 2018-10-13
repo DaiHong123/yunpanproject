@@ -3,11 +3,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.qst.service.FileService;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -111,5 +113,27 @@ public class FileController {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	
+	//重命名文件
+	@RequestMapping("/rename")
+	@ResponseBody
+	public boolean rename(String fname,String fid,HttpSession session) throws UnsupportedEncodingException {
+		TbUser user = (TbUser)session.getAttribute("user");
+		fname = new String(fname.getBytes("iso8859-1"),"UTF-8");
+		fileService.rename(fname, fid, user.getUid());
+		return true;
+	}
+	
+	
+	//删除文件
+	@RequestMapping("/deleteFile")
+	@ResponseBody
+	public boolean deleteFile(@RequestParam(value = "fids[]") String[] fids) {
+		for(String fid:fids) {
+			fileService.deleteFile(fid);
+		}
+		return true;
 	}
 }

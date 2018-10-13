@@ -115,7 +115,7 @@
 		<div class="filesListHeadChangChose" id="filesListHeadChangChose">
 			<span class="headShare"><i class="icon icon-share"></i>分享</span> <span
 				class="headDownLoad"><i class="icon icon-download"></i>下载</span> <span
-				class="headDelete"><i class="icon icon-delete"></i>删除</span> <span
+				class="headDelete" onclick="deletefile()"><i class="icon icon-delete"></i>删除</span> <span
 				class="headResetName" id="headResetName" onclick="check()">重命名</span> <span class="headCopy">复制到</span> <span
 				class="headMyDevice"><i class="icon icon-more"></i>更多</span>
 		</div>

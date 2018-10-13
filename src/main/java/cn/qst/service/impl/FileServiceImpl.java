@@ -107,4 +107,36 @@ public class FileServiceImpl implements FileService {
 		return file;
 	}
 	
+	//文件重命名
+	@Override
+	public boolean rename(String fname,String fid,String uid) {
+		// TODO Auto-generated method stub
+		TbFile tbFile = new TbFile();
+		tbFile.setFname(fname);
+		tbFile.setFid(fid);
+		tbFile.setUid(uid);
+		tbFile.setUploadtime(new Date());
+		int primaryKeySelective = fileMapper.updateByPrimaryKeySelective(tbFile);
+		return primaryKeySelective==1?true:false;
+	}
+
+	
+	//文件删除
+	@Override
+	public void deleteFile(String fid) {
+		// TODO Auto-generated method stub		
+		TbFileExample example = new TbFileExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andParentidEqualTo(fid);
+		List<TbFile> files = fileMapper.selectByExample(example);
+		//如果存在子菜单
+				if(files!=null&&files.size()>0) {
+					//递归删除
+					for (TbFile file : files) {
+						this.deleteFile(file.getFid());
+					}
+				}
+				//删除改菜单
+				fileMapper.deleteByPrimaryKey(fid);		
+	}
 }

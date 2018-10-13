@@ -11,7 +11,10 @@ public interface FileService {
 	List<TbFile> fundFileParentsById(String parentId);
 	
 	TbFile createFile(String fname,String uid,String parentid);
-
+	
+	boolean rename(String fname,String fid,String uid);
+	
 	TbFile saveFile(TbFile file);
-
+	
+	void deleteFile(String fid);
 }
