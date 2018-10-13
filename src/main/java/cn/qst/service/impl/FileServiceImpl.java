@@ -134,4 +134,11 @@ public class FileServiceImpl implements FileService {
 				//删除改菜单
 				fileMapper.deleteByPrimaryKey(fid);		
 	}
+
+	@Override
+	public String selectNameByFid(String fid) {
+		TbFile file = fileMapper.selectByPrimaryKey(fid);
+		if( file == null ) return null;
+		else return file.getFname();
+	}
 }

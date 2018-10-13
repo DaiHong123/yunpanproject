@@ -12,6 +12,8 @@ public interface FileService {
 	
 	TbFile createFile(String fname,String uid,String parentid);
 	
+	String selectNameByFid(String fid);
+	
 	boolean rename(String fname,String fid,String uid);
 
 	void deleteFile(String fid);

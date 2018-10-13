@@ -8,6 +8,11 @@
 <title></title>
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
 <script src="../../static/js/jquery-1.8.3.min.js"></script>
+<style>
+	a:visited {
+		color:#424e67;
+	}
+</style>
 </head>
 <body>
 		<header id="header" class="clear">

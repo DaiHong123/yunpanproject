@@ -1,13 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title>我的分享</title>
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
 <script src="../../static/js/jquery-1.8.3.min.js"></script>
+<style>
+	a:visited {
+		color:#424e67;
+	}
+</style>
 </head>
 <body>
 		<header id="header" class="clear">
@@ -105,39 +111,11 @@
 		</div>
 		</footer>
 	</div>
-	<section id="filesList"> <header class="filesListHeader">
-	<div class="filesListHeadBtnsR left">
-		<div class="filesListHeadChangChose" id="filesListHeadChangChose">
-			 <span class="headDownLoad"><i class="icon icon-download"></i>下载</span>
-			 <span class="headDelete"><i class="icon icon-delete"></i>删除</span>
-			 <span class="headResetName" id="headResetName" onclick="check()">重命名</span>
-			 <span class="headCopy">复制到</span>
-			 <span class="headMyDevice"><i class="icon icon-more"></i>更多</span>
-		</div>
-	</div>
-	<div class="filesListHeadBtnsL right">
-		<form id="fileSearch">
-			<input class="txt" type="text" /> <a class="submit icon icon-search"
-				href="javascript:;"></a>
-		</form>
-		<span class="filesSort icon icon-order" id="filesSortId"> <span
-			class="filesSortList"> <span> <i
-					class="show icon icon-sort-select"></i> 文件名
-			</span> <span> <i class="icon icon-sort-select"></i> 大小
-			</span> <span> <i class="icon icon-sort-select"></i> 修改日期
-			</span>
-		</span>
-		</span>
-		<!--<span class="filesShowStyle icon icon-grid"></span>-->
-		<span id="showList" class="filesShowStyle icon icon-grid"></span>
-	</div>
-	</header>
+	<section id="filesList">
+		<div style="padding-top: 15px;"></div>
 		<div class="filesPath" id="filesHead">
 			<div class="filesListRoute left">
-				<span>全部文件</span>
-			</div>
-			<div class="filesListCount right">
-				
+				<span>链接分享</span>
 			</div>
 		</div>
 	<div class="filesBody">
@@ -146,29 +124,30 @@
 			<span></span>
 		</div>
 		<ul id="tHead">
-			<li><input type="checkbox" id="allChecks" onclick="ckAll(),display()" /> 全选/全不选</span> <i
-				class="icon downtitle-icon icon-downtitle"></i></li>
-			<li><span>大小</span></li>
-			<li><span>修改日期</span></li>
-			<li id="checkAll"></li>
+			<li style="width: 50%;margin-left: 17px;"><span>分享文件</span></li>
+			<li><span>分享日期</span></li>
+			<li><span>链接地址</span></li>
+			<li><span>操作</span></li>
 		</ul>
 		<table class="files">
 			<tbody id="filesTab">
-					
+				<c:if test="${shares==null}">
+					暂无分享内容
+				</c:if>
+				<c:if test="${shares!=null}">
+					<c:forEach items="shares" var="share" varStatus="ind">
+						<tr>
+							<td>${share.sname}</td>
+							<td><f:formatDate value="${share.sharetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+							<td>地址</td>
+							<td>操作</td>
+						</tr>
+					</c:forEach>
+				</c:if>
 			</tbody>
 		</table>
-		<div id="moduleFlieName">
-			<div>
-				<input type="text" /> <span> <i class="icon icon-border"></i>
-					<i class="icon icon-checksmall"></i>
-				</span> <span> <i class="icon icon-border"></i> <i
-					class="icon icon-cancel"></i>
-				</span>
-			</div>
-		</div>
 	</div>
 	</section> </section>
-	<div id="frameSelect"></div>
 </body>
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>
