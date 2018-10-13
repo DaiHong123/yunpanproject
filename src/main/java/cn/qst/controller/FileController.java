@@ -1,21 +1,28 @@
 package cn.qst.controller;
 
+import org.apache.log4j.varia.StringMatchFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import cn.qst.service.FileService;
 import net.coobird.thumbnailator.Thumbnails;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import cn.qst.comman.utils.Base64;
 import cn.qst.pojo.FileResult;
 import cn.qst.pojo.TbFile;
 import cn.qst.pojo.TbUser;
@@ -64,27 +71,30 @@ public class FileController {
 	 * @param request
 	 * @param url
 	 * @return
+	 * @throws IOException 
 	 */
+	@ResponseBody
 	@RequestMapping("/thumbnail")
-	public String thumbnail(HttpSession session, HttpServletRequest request,
-			@RequestParam(defaultValue = "../static/img/blankBg.png") String url) {
+	public String thumbnail(HttpSession session, HttpServletRequest request, String furl) throws IOException {
 		final Integer WIDTH = 100;
 		final Integer HEIGHT = 100;
-
-		String uploadPath = "/static/img";
+		//初始化缩略图的路径
+		String uploadPath = "/static/thum_img";
 		String realUploadPath = session.getServletContext().getRealPath(uploadPath);
-
-		File file = new File(url);
-
-		try {
-			String des = realUploadPath + "/thum_" + file.getName();
-			Thumbnails.of(new BufferedInputStream(new FileInputStream(file))).size(WIDTH, HEIGHT).toFile(des);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		File file = new File(furl);
 		String thumbImageUrl = uploadPath + "/thum_" + file.getName();
-		request.setAttribute("thumbUrl", thumbImageUrl);
-		return "register";
+		// 判断缩略图是否存在
+		if (new File(thumbImageUrl).exists()) {
+			return thumbImageUrl;
+		} else {
+			try {
+				String des = realUploadPath + "/thum_" + file.getName();
+				Thumbnails.of(new BufferedInputStream(new FileInputStream(file))).size(WIDTH, HEIGHT).toFile(des);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return thumbImageUrl;
 	}
 
 	// 添加文件夹
