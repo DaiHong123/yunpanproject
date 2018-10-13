@@ -8,6 +8,8 @@ function fundFileByParentId(parentId,isdir){
 			data: {"parentId":parentId},
 	        success: function(data){//如果调用servlet成功，响应200。请求成功后回调函数。这个方法有两个参数：服务器返回数据，返回状态(可以缺省)。
 	        	document.getElementById('allChecks').checked = false;
+	        	document.getElementById('filesListHeadChangChose').style.display='none';
+				document.getElementById('filesListHeadChangBtn').style.display='block';
 	        	$(".filesListRoute").find("a").remove();
 	        	$(".filesListRoute").find("span").remove();
 	        	//路径链

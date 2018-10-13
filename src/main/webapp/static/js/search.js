@@ -1,5 +1,7 @@
 //右侧功能栏点击事件
 function asideAll(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.05)","color":"#3b8cff"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
@@ -13,6 +15,8 @@ function asideAll(){
 	fundFileByTyPe("All");
 }
 function asideImg(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.05)","color":"#3b8cff"});
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
@@ -26,6 +30,8 @@ function asideImg(){
 	fundFileByTyPe("jpg");
 }
 function asideText(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideText").css({"background":"rgba(0,0,0,.05)","color":"#3b8cff"});
@@ -39,6 +45,8 @@ function asideText(){
 	fundFileByTyPe("txt");
 }
 function asidevideo(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
@@ -52,6 +60,8 @@ function asidevideo(){
 	fundFileByTyPe("mp4");
 }
 function asideSeed(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
@@ -65,6 +75,8 @@ function asideSeed(){
 	fundFileByTyPe("bt");
 }
 function asideMusic(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
@@ -78,6 +90,8 @@ function asideMusic(){
 	fundFileByTyPe("mp3");
 }
 function asideOther(){
+	document.getElementById('filesListHeadChangChose').style.display='none';
+	document.getElementById('filesListHeadChangBtn').style.display='block';
 	$(".asideAll").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideImg").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});
 	$(".asideText").css({"background":"rgba(0,0,0,.01)","color":"#424e67"});

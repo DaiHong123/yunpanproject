@@ -24,6 +24,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import cn.qst.comman.fastdfs.FileUploadUtils;
+import cn.qst.comman.utils.TreeFile;
 import cn.qst.pojo.FileResult;
 import cn.qst.pojo.TbFile;
 import cn.qst.pojo.TbUser;
@@ -189,5 +190,13 @@ public class FileController {
 			fileService.deleteFile(fid);
 		}
 		return true;
+	}
+	
+	//复制文件夹
+	@RequestMapping("/copyFile")
+	@ResponseBody
+	public void copyFile() {
+		List<TreeFile> treeFiles = fileService.treeFiles("-1");
+		treeFiles.forEach(name->System.out.println(name));
 	}
 }
