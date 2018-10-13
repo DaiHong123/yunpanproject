@@ -2,7 +2,9 @@ package cn.qst.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -77,5 +79,59 @@ public class FileServiceImpl implements FileService {
 		//反转
 		Collections.reverse(parents);
 		return parents;
+	}
+
+	
+	//添加文件夹
+	@Override
+	public TbFile createFile(String fname, String uid, String parentid) {
+		// TODO Auto-generated method stub
+		TbFile tbFile = new TbFile();
+		tbFile.setFid(String.valueOf(UUID.randomUUID()).replace("-", ""));
+		tbFile.setFname(fname);
+		tbFile.setFsize(null);
+		tbFile.setFurl("-");
+		tbFile.setSuffix(null);
+		tbFile.setIsdir(true);
+		tbFile.setUploadtime(new Date());
+		tbFile.setUpdatetime(new Date());
+		tbFile.setParentid(parentid);
+		tbFile.setUid(uid);
+		int insert = fileMapper.insert(tbFile);
+		return insert==1?tbFile:null;
+	}
+
+	
+	//文件重命名
+	@Override
+	public boolean rename(String fname,String fid,String uid) {
+		// TODO Auto-generated method stub
+		TbFile tbFile = new TbFile();
+		tbFile.setFname(fname);
+		tbFile.setFid(fid);
+		tbFile.setUid(uid);
+		tbFile.setUploadtime(new Date());
+		int primaryKeySelective = fileMapper.updateByPrimaryKeySelective(tbFile);
+		return primaryKeySelective==1?true:false;
+	}
+
+	
+	//文件删除
+	@Override
+	public void deleteFile(String fid) {
+		// TODO Auto-generated method stub		
+		TbFileExample example = new TbFileExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andParentidEqualTo(fid);
+		List<TbFile> files = fileMapper.selectByExample(example);
+		//如果存在子菜单
+				if(files!=null&&files.size()>0) {
+					//递归删除
+					for (TbFile file : files) {
+						this.deleteFile(file.getFid());
+					}
+				}
+				//删除改菜单
+				fileMapper.deleteByPrimaryKey(fid);		
 	}
 }

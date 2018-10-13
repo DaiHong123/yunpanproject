@@ -67,7 +67,7 @@ public class FileController {
 	 */
 	@RequestMapping("/thumbnail")
 	public String thumbnail(HttpSession session, HttpServletRequest request,
-			@RequestParam(defaultValue="../static/img/blankBg.png") String url) {
+			@RequestParam(defaultValue = "../static/img/blankBg.png") String url) {
 		final Integer WIDTH = 100;
 		final Integer HEIGHT = 100;
 
@@ -85,5 +85,35 @@ public class FileController {
 		String thumbImageUrl = uploadPath + "/thum_" + file.getName();
 		request.setAttribute("thumbUrl", thumbImageUrl);
 		return "register";
+	}
+
+	// 添加文件夹
+	@RequestMapping("/createFile")
+	@ResponseBody
+	public TbFile createFile(String fname, HttpSession session) {
+		TbUser user = (TbUser) session.getAttribute("user");
+		String parentid = (String) session.getAttribute("fparentId");
+		TbFile createFile = fileService.createFile(fname, user.getUid(), parentid);
+		return createFile;
+		// return null;
+	}
+
+	// 重命名文件
+	@RequestMapping("/rename")
+	@ResponseBody
+	public boolean rename(String fname, String fid, HttpSession session) {
+		TbUser user = (TbUser) session.getAttribute("user");
+		fileService.rename(fname, fid, user.getUid());
+		return true;
+	}
+
+	// 删除文件
+	@RequestMapping("/deleteFile")
+	@ResponseBody
+	public boolean deleteFile(@RequestParam(value = "fids[]") String[] fids) {
+		for (String fid : fids) {
+			fileService.deleteFile(fid);
+		}
+		return true;
 	}
 }
