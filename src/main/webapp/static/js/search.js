@@ -105,7 +105,7 @@ function fundFileByTyPe(type){
         	$(".filesListCount").append("<span>已加载"+data.length+"个</span>");
         	$.each(data,function(i,file){
         		var str="<tr data-file-id=\"1\" class=\"active\">";
-        		str+="<td><input type=\"checkbox\" class=\"checkstyle\"  onclick=\"allcheck(),display()\"/>";
+        		str+="<td><input type=\"checkbox\" class=\"checkstyle\"  onclick=\"allcheck(),display()\"  value="+file.fid+" />";
         		if(file.isdir){
         			str+="<i class=\"fileIcon\"></i>";
         		}else if(file.suffix == "jpg"){
@@ -121,7 +121,7 @@ function fundFileByTyPe(type){
         		}else{
         			str+="<i class=\"otherIcon\"></i>";
         		}
-        		str+="<a onclick=\"fundFileByParentId(\'"+file.fid+"\',"+file.isdir+")\" href=\"javascript:void(0);\"><span class=\"fileTitle\">"+file.fname+"</span></a>";
+        		str+="<a onclick=\"fundFileByParentId(\'"+file.fid+"\',"+file.isdir+")\" href=\"javascript:void(0);\" ><span class=\"fileTitle\" title="+file.fname+">"+file.fname+"</span></a>";
         		str+="<div class=\"filesFns right\">";
         		str+="<a class=\"icon icon-share\" href=\"javascript:;\">分享</a>";
         		str+="<a class=\"icon icon-download\" href=\"javascript:;\">下载</a>";

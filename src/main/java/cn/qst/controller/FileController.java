@@ -2,6 +2,7 @@ package cn.qst.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import cn.qst.service.FileService;
 import java.util.List;
@@ -59,5 +60,26 @@ public class FileController {
 		TbFile createFile = fileService.createFile(fname, user.getUid(), parentid);
 		return createFile;
 		//return null;
+	}
+	
+	
+	//重命名文件
+	@RequestMapping("/rename")
+	@ResponseBody
+	public boolean rename(String fname,String fid,HttpSession session) {
+		TbUser user = (TbUser)session.getAttribute("user");
+		fileService.rename(fname, fid, user.getUid());
+		return true;
+	}
+	
+	
+	//删除文件
+	@RequestMapping("/deleteFile")
+	@ResponseBody
+	public boolean deleteFile(@RequestParam(value = "fids[]") String[] fids) {
+		for(String fid:fids) {
+			fileService.deleteFile(fid);
+		}
+		return true;
 	}
 }

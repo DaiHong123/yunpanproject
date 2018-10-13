@@ -6,7 +6,7 @@ function createFile() {
 	str += "<td>";
 	str += "<input type='checkbox' class='checkstyle' value='2' onclick='allcheck(),display()' />";
 	str += "<i class='fileIcon'></i>";
-	str += "<a onclick=\"\" href=\"javascript:void(0);\" class='sss'><span class='fileTitle' title='新建文件夹' >新建文件夹</span></a>";
+	str += "<a onclick=\"\" href=\"javascript:void(0);\" class='acreateFile'><span class='fileTitle' title='新建文件夹' >新建文件夹</span></a>";
 	str += "</td>";
 	str += "<td>";
 	str += "<span></span>";
@@ -18,7 +18,8 @@ function createFile() {
 	var obj = {
 		title : "新建文件夹"
 	};
-	rename(this.child[0], obj, function() {
+	var name = "create";
+	rename(name,this.child[0], obj, function() {
 		/* 传入后台数据 */
 		/*var fname = obj.title;
 		$.ajax({
@@ -44,7 +45,7 @@ function createFile() {
 }
 
 // 重命名
-function rename(domObj, dataObj, success, fail) {
+function rename(names,domObj, dataObj, success, fail) {
 	var fid = "";
 	var _this = this;
 	var moduleName = document.getElementById('moduleFlieName');
@@ -108,28 +109,53 @@ function rename(domObj, dataObj, success, fail) {
 						+ s + ')';
 				getByClass('fileTitle', domObj)[0].title = newName + '(' + s
 						+ ')';
+				newName = getByClass('fileTitle', domObj)[0].innerHTML;
 			}
 		}
-		$.ajax({
-			url : "/file/createFile",
-			type : "post",
-			async : false,
-			contentType : "application/x-www-form-urlencoded",
-			data : {
-				"fname" : newName
-			}, 
-			success : function(data) {
-				if (data != null) {
-					fid = data.fid;
-					alert("创建成功");
-				} else {
-					alert("网络异常创建失败");
+		if(names=="create"){
+			$.ajax({
+				url : "/file/createFile",
+				type : "post",
+				async : false,
+				contentType : "application/x-www-form-urlencoded",
+				data : {
+					"fname" : newName
+				}, 
+				success : function(data) {
+					if (data != null) {
+						fid = data.fid;
+						alert("创建成功");
+					} else {
+						alert("网络异常创建失败");
+					}
 				}
-			}
-		});
+			});	
+			getByClass('checkstyle', domObj)[0].value = fid;
+			$('.acreateFile').attr("onclick","fundFileByParentId(\'"+fid+"\',true)");	
+		}else if(names=="resname"){
+			fid = $('.checkstyle').val();
+			$.ajax({
+				url : "/file/rename",
+				type : "get",
+				async : false,
+				contentType : "application/x-www-form-urlencoded",
+				data : {
+					"fname" : newName,
+					"fid":fid
+				}, 
+				success : function(data) {
+					if(data){
+						alert("重命名成功")
+					}else{
+						alert("网络异常失败");
+					}
+				}
+			});
+		}
+			
 		
-		getByClass('checkstyle', domObj)[0].value = fid;
-		$('.sss').attr("onclick","fundFileByParentId(\'"+fid+"\',true)");
+		
+		
 		success && success();
 		moduleName.style.display = 'none';
 	}
@@ -178,15 +204,12 @@ function check() {
 	}
 	if (count == 1) {
 		obj.title = document.getElementsByClassName('fileTitle')[flag].title;
-		rename(this.child[flag], obj);
+		var name = "resname";
+		rename(name,this.child[flag], obj);
+		
 	}
 
 }
-
-function deletefile() {
-
-}
-
 // 全选和全不选
 function ckAll() {
 	var flag = document.getElementById("allChecks").checked;
@@ -256,4 +279,37 @@ function getNowFormatDate() {
 	var currentdate = date.getFullYear() + seperator1 + month + seperator1
 			+ strDate;
 	return currentdate;
+}
+
+
+//删除文件
+function deletefile(){
+	var fids = [];
+	var i = 0;
+	 $("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
+		 fids[i] = $(this).val();
+		 i++;
+         n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
+         $("table.files").find("tr:eq("+n+")").remove();
+     });
+	 $.ajax({
+			url : "/file/deleteFile",
+			type : "get",
+			async : true,
+			contentType : "application/x-www-form-urlencoded",
+			data : {
+				 fids
+			}, 
+			success : function(data) {
+				document.getElementById('allChecks').checked = false;
+				document.getElementById('filesListHeadChangChose').style.display='none';
+				document.getElementById('filesListHeadChangBtn').style.display='block';
+				alert("删除成功");
+			}
+		});	
+}
+
+//复制文件
+function copyFile(){
+	
 }
