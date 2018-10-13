@@ -30,7 +30,8 @@ function fundFileByParentId(parentId,isdir){
 	        		if(file.isdir){
 	        			str+="<i class=\"fileIcon\"></i>";
 	        		}else if(file.suffix == "jpg"){
-	        			str+="<i class=\"imgIcon\"></i>";
+	        			str+="<input id = \""+file.fname+"\" value = \""+file.furl+"\" style=\" display:none \">"
+	        			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'"+file.fname+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
 	        		}else if(file.suffix == "txt"){
 	        			str+="<i class=\"txtIcon\"></i>";
 	        		}else if(file.suffix == "mp4"){
@@ -62,3 +63,50 @@ function fundFileByParentId(parentId,isdir){
 		
 	}
 }
+
+//显示悬浮层
+function showInform(event, fname) {
+	var fnames = "#" + fname;
+	var furl = $(fnames).val();
+	var info = document.getElementById("inform");
+	$.ajax({
+		url : "/file/thumbnail", 
+		type: "post", 
+		async:true,
+		contentType:"application/x-www-form-urlencoded",
+		data: {"furl":furl},
+        success: function(data){
+        	 $("#informImg").attr("src", data);   
+        }
+	})
+	var x = event.clientX / 10 + 15;
+	var y = event.clientY / 10 - 4;
+	var top = parseInt(info.offsetTop); 
+	var left = parseInt(info.offsetLeft); 
+	top = (y + top) * 10;
+	left = (x + left) * 10;
+	top = top + "px";
+	left = left + "px";
+	$("#inform").css({"top":top,"left":left});
+	info.style.display = 'block';
+}
+//隐藏悬浮层
+function hiddenInform(event) {
+	$("#inform").css({"top":"10px","left":"10px"});
+	var informDiv = document.getElementById('btn');
+	var x = event.clientX;
+	var y = event.clientY;
+	var divx1 = informDiv.offsetLeft;
+	var divy1 = informDiv.offsetTop;
+	var divx2 = informDiv.offsetLeft + informDiv.offsetWidth;
+	var divy2 = informDiv.offsetTop + informDiv.offsetHeight;
+	if(x < divx1 || x > divx2 || y < divy1 || y > divy2) {
+		document.getElementById('inform').style.display = 'none';
+		$("#informImg").attr("src", "../../static/thum_img/blankBg.png"); 
+	}
+}
+
+
+
+
+

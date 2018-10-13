@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -163,6 +164,21 @@ public class UserController {
 		session.removeAttribute("username");
 		session.removeAttribute("imgstr");
 		session.removeAttribute("user");
+		String uploadPath = "/static/thum_img";
+		String imgFile = session.getServletContext().getRealPath(uploadPath);
+		File file = new File(imgFile);
+		File[] files = file.listFiles();
+		for (File file2 : files) {
+			if ((file2.getName()).contains("thum_")) {
+				System.out.println(file2.getName());
+				StringBuffer imgUrl = new StringBuffer(imgFile);
+				imgUrl.append("\\");
+				imgUrl.append(file2.getName());
+				System.out.println(imgUrl);
+				File img = new File(imgUrl.toString());
+				img.delete();
+			} 
+		}
 		return "login";
 	}
 
@@ -327,7 +343,7 @@ public class UserController {
 
 	/**
 	 * 从sessino中获取验证码，效验邮件验证码是否正确, 同时取得验证码超时的时间 判断验证码是否超时 每次效验成功即销毁验证码对象
-	 *
+	 * 有一个bug 解决不了     效验验证码会效验两次，所以清楚session中的信息会出现验证失败的问题
 	 * @param verifyNo
 	 *            用户输入验证码
 	 * @return 确认是否正确

@@ -168,6 +168,9 @@
 	</div>
 	</section> </section>
 	<div id="frameSelect"></div>
+	<div id="inform">
+		<img id="informImg" src="../../static/thum_img/blankBg.png"/>
+	</div>
 </body>
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>
