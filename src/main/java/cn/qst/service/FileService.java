@@ -1,7 +1,7 @@
 package cn.qst.service;
 import java.util.List;
 
-import cn.qst.comman.utils.TreeFile;
+
 import cn.qst.pojo.TbFile;
 
 public interface FileService {
@@ -20,5 +20,9 @@ public interface FileService {
 
 	void deleteFile(String fid);
 	
-	List<TreeFile> treeFiles(String fid);
+	List<TbFile> treeFiles(String uid);
+	
+	boolean copyFile(String fid,String pid);
+	
+	boolean moveFile(String fid,String pid);
 }

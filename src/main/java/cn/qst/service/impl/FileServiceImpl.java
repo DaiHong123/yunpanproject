@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import cn.qst.comman.utils.TreeFile;
+
 import cn.qst.mapper.TbFileMapper;
 import cn.qst.pojo.TbFile;
 import cn.qst.pojo.TbFileExample;
@@ -143,33 +143,40 @@ public class FileServiceImpl implements FileService {
 
 	//查找文件夹
 	@Override
-	public List<TreeFile> treeFiles(String fid) {
+	public List<TbFile> treeFiles(String uid) {
 		// TODO Auto-generated method stub
-		List<TreeFile> treeFiles = new ArrayList<>();
-		List<TbFile> tbFiles = new ArrayList<>();
 		TbFileExample example = new TbFileExample();
 		Criteria criteria = example.createCriteria();
-		criteria.andParentidEqualTo(fid);
+		criteria.andUidEqualTo(uid);
 		criteria.andIsdirEqualTo(true);
-		List<TbFile> selectByExample = fileMapper.selectByExample(example );
-		for(TbFile file:selectByExample) {
-			TreeFile treeFile = new TreeFile();
-			treeFile.setFid(file.getFid());
-			treeFile.setFname(file.getFname());
-			treeFile.setChildFile(false);
-			treeFiles.add(treeFile);
-		}
-		for(int i=0;i<treeFiles.size();i++) {				
-			TbFileExample example2 = new TbFileExample();
-			Criteria criteria2 = example2.createCriteria();
-			criteria2.andParentidEqualTo(treeFiles.get(i).getFid());
-			criteria2.andIsdirEqualTo(true);
-			List<TbFile> selectByExample2 = fileMapper.selectByExample(example2);
-			System.out.println(selectByExample2.size());
-			if(selectByExample2.size()!=0&&selectByExample2!=null) {
-				treeFiles.get(i).setChildFile(true);
-			}
-		}
-		return treeFiles;
+		List<TbFile> files = fileMapper.selectByExample(example );
+		return files;
+		
+	}
+
+	@Override
+	public boolean copyFile(String fid, String pid) {
+		// TODO Auto-generated method stub		
+		TbFileExample example = new TbFileExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andFidEqualTo(fid);
+		List<TbFile> example2 = fileMapper.selectByExample(example );
+		TbFile tbFile = example2.get(0);
+		tbFile.setFid(UUID.randomUUID().toString().replaceAll("-", ""));
+		tbFile.setParentid(pid);
+		tbFile.setUploadtime(new Date());
+		tbFile.setUpdatetime(new Date());
+		int selective = fileMapper.insertSelective(tbFile);
+		return selective==1?true:false;
+	}
+
+	@Override
+	public boolean moveFile(String fid, String pid) {
+		// TODO Auto-generated method stub
+		TbFile tbFile = new TbFile();
+		tbFile.setFid(fid);
+		tbFile.setParentid(pid);
+		int selective = fileMapper.updateByPrimaryKeySelective(tbFile);
+		return selective==1?true:false;
 	}
 }
