@@ -1,3 +1,6 @@
+
+var sures;
+var namecm;
 function createFile() {
 	this.obj = document.getElementById('filesTab');
 	this.child = this.obj.children;
@@ -20,24 +23,8 @@ function createFile() {
 	};
 	var name = "create";
 	rename(name,this.child[0], obj, function() {
-		/* 传入后台数据 */
-		/*var fname = obj.title;
-		$.ajax({
-			url : "/file/createFile",
-			type : "post",
-			async : false,
-			contentType : "application/x-www-form-urlencoded",
-			data : {
-				"fname" : fname
-			}, 
-			success : function(data) {
-				if (data != null) {
-					alert("创建成功");
-				} else {
-					alert("网络异常创建失败");
-				}
-			}
-		});*/
+
+		
 	}, function() {
 		this.obj.removeChild(this.child[0]);
 	});
@@ -133,6 +120,11 @@ function rename(names,domObj, dataObj, success, fail) {
 			});	
 			getByClass('checkstyle', domObj)[0].value = fid;
 			$('.acreateFile').attr("onclick","fundFileByParentId(\'"+fid+"\',true)");	
+			
+			
+
+			
+			
 		}else if(names=="resname"){
 			var fid ;
 			 $("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
@@ -311,23 +303,85 @@ function deletefile(){
 		});	
 }
 
-//复制文件
-function copyFile(){
+
+
+//选择复制还是移动
+function isCopyOrMove(names){
+	var str ="";
+	str+="<span class='dialog-header-title'><em class='select-text' >"+names+"</em></span>";
+	document.getElementById('aa').innerHTML = str;
 	document.getElementById('module-canvas').style.display='block';
 	document.getElementById('fileTreeDialog').style.display='block';
-	 $.ajax({
-			url : "/file/copyFile",
-			type : "get",
-			async : true,
-			contentType : "application/x-www-form-urlencoded",
-			success : function(data) {
-				
-			}
-		});	
+	namecm = names;
+	
+}
+
+
+
+
+
+function get(obj){
+	sures = obj.attributes['data-file-id'].nodeValue;
 }
 
 //取消
 function cancel(){
 	document.getElementById('module-canvas').style.display='none';
 	document.getElementById('fileTreeDialog').style.display='none';
+}
+function sure(){
+	if(namecm=='复制到'){
+		var fids = [];
+		var i = 0;
+		 $("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
+			 fids[i] = $(this).val();
+			 i++;
+	         n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
+	     });
+		 $.ajax({
+				url : "/file/copyFiles",
+				type : "get",
+				async : false,
+				contentType : "application/x-www-form-urlencoded",
+				data : {
+					pid:sures,
+					 fids
+				}, 
+				success : function(data) {
+					if(data){
+						alert("复制成功")
+					}else{
+						alert("复制失败")
+					}
+				}
+			});		 
+	}else{
+		var fids = [];
+		var i = 0;
+		 $("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
+			 fids[i] = $(this).val();
+			 i++;
+	         n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
+	         $("table.files").find("tr:eq("+n+")").remove();
+	     });
+		 $.ajax({
+				url : "/file/moveFiles",
+				type : "get",
+				async : false,
+				contentType : "application/x-www-form-urlencoded",
+				data : {
+					pid:sures,
+					 fids
+				}, 
+				success : function(data) {
+					if(data){
+						alert("移动成功")
+					}else{
+						alert("移动失败")
+					}
+				}
+			});	
+	}
+	   
+
 }

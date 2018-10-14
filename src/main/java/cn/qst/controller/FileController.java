@@ -19,6 +19,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.io.UnsupportedEncodingException;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
 import java.util.Date;
 
 import java.util.List;
@@ -30,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cn.qst.comman.fastdfs.FileUploadUtils;
+import cn.qst.comman.utils.Tree;
 import cn.qst.comman.utils.TreeFile;
 import cn.qst.pojo.FileResult;
 import cn.qst.pojo.TbFile;
@@ -210,11 +216,56 @@ public class FileController {
 		return true;
 	}
 	
-	//复制文件夹
+	//查询文件夹树
 	@RequestMapping("/copyFile")
 	@ResponseBody
-	public void copyFile() {
-		List<TreeFile> treeFiles = fileService.treeFiles("-1");
-		treeFiles.forEach(name->System.out.println(name));
+	public Tree copyFile(HttpSession session) {
+		Tree tree = new Tree();
+		List<TreeFile> files = new ArrayList<>();
+		TbUser user = (TbUser)session.getAttribute("user");
+		List<TbFile> TbFiles = fileService.treeFiles(user.getUid());
+		TreeFile treeFile1 = new TreeFile();
+		treeFile1.setId("-1");
+		treeFile1.setPid("-2");
+		treeFile1.setTitle("全部文件");
+		files.add(treeFile1);
+		for(TbFile file:TbFiles) {
+			TreeFile treeFile = new TreeFile();
+			treeFile.setId(file.getFid());
+			treeFile.setPid(file.getParentid());
+			treeFile.setTitle(file.getFname());
+			files.add(treeFile);
+		}
+		tree.setFiles(files);
+		return tree;
+	}
+	
+	
+	//复制文件
+	@RequestMapping("/copyFiles")
+	@ResponseBody
+	public boolean copyFiles(@RequestParam(value = "fids[]") String[] fids,String pid ) {
+		boolean b = true;
+		for(String fid:fids) {
+			b = fileService.copyFile(fid, pid);
+			if(b==false) {
+				return b;
+			}
+		}
+		return b;
+	}
+	
+	//移动文件
+		@RequestMapping("/moveFiles")
+		@ResponseBody
+	public boolean moveFiles(@RequestParam(value = "fids[]") String[] fids,String pid) {
+			boolean b = true;
+			for(String fid:fids) {
+				b = fileService.moveFile(fid, pid);
+				if(b==false) {
+					return b;
+				}
+			}
+			return b;
 	}
 }
