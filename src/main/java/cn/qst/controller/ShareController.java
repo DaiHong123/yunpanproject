@@ -50,10 +50,13 @@ public class ShareController {
 	public String viewShare(Model map, String code) {
 		if( code == null ) return "500";
 		TbShare share = shareService.selectBySid(code);
-		String[] ids = share.getFids().split(",");
-		List<TbFile> list = new ArrayList<>();
-		for(String id: ids) list.add(fileService.selectById(id));
-		map.addAttribute("files", list);
+		map.addAttribute("shareInfo", share);
+		if( share != null ) {
+			String[] ids = share.getFids().split(",");
+			List<TbFile> list = new ArrayList<>();
+			for(String id: ids) list.add(fileService.selectById(id));
+			map.addAttribute("files", list);
+		}
 		return "sharefile";
 	}
 	

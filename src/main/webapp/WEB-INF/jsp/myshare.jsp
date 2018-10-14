@@ -8,12 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>我的分享</title>
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
+<link rel="stylesheet" href="../../static/css/share.css"/>
 <script src="../../static/js/jquery-1.8.3.min.js"></script>
-<style>
-	a:visited {
-		color:#424e67;
-	}
-</style>
+<!-- 点击复制直接复制到粘贴板 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.js"></script>
 </head>
 <body>
 		<header id="header" class="clear">
@@ -120,27 +118,32 @@
 		</div>
 	<div class="filesBody">
 		<div class="blankBg"></div>
-		<div id="fileScrollBar">
-			<span></span>
-		</div>
 		<ul id="tHead">
-			<li style="width: 50%;margin-left: 17px;"><span>分享文件</span></li>
-			<li><span>分享日期</span></li>
-			<li><span>链接地址</span></li>
-			<li><span>操作</span></li>
+			<li style="width: 40%;margin-left: 17px;"><span>分享文件</span></li>
+			<li style="width: 20%;"><span>分享日期</span></li>
+			<li style="width: 20%;"><span>链接地址</span></li>
+			<li style="width: 18%;"><span>操作</span></li>
 		</ul>
-		<table class="files">
+		<table class="files" style="margin-left: 17px;">
 			<tbody id="filesTab">
 				<c:if test="${shares==null}">
-					暂无分享内容
+					<div>
+						
+					</div>
+					<div class="empty_center">
+						<p>您还没有分享文件，赶快去分享吧！</p>
+					</div>
 				</c:if>
 				<c:if test="${shares!=null}">
-					<c:forEach items="shares" var="share" varStatus="ind">
+					<c:forEach items="${shares}" var="share" varStatus="ind">
 						<tr>
-							<td>${share.sname}</td>
-							<td><f:formatDate value="${share.sharetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-							<td>地址</td>
-							<td>操作</td>
+							<td style="width: 40%;">${share.sname}</td>
+							<td style="width: 20%;"><f:formatDate value="${share.sharetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+							<td style="max-width:233px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="/openfile?code=${share.sid}" target="_blank">http://localhost:8080/openfile?code=${share.sid}</a></td>
+							<td style="width: 20%;">
+								<button class="btn btn-primary" data="${share.sid}" onclick="copy(this)">复制链接</button>
+								<button class="btn btn-delete" onclick="cancel('${share.sid}')">取消分享</button>
+							</td>
 						</tr>
 					</c:forEach>
 				</c:if>
