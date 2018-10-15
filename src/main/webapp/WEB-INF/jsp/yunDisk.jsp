@@ -13,8 +13,7 @@
 <link rel="stylesheet" href="../../static/css/breviary.css" />
 <link href="../../static/css/index_1.css" rel="stylesheet" />
 <!-- 点击复制直接复制到粘贴板 -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.js"></script>
 
 <style>
 a:visited {
