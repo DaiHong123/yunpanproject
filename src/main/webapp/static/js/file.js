@@ -239,7 +239,6 @@ function allcheck() {
 		}
 	}
 	if (s == cks.length) {
-
 		document.getElementById('allChecks').checked = true;
 	} else {
 		document.getElementById('allChecks').checked = false;
@@ -400,6 +399,9 @@ function sure(){
 						alert("移动成功");
 						document.getElementById('module-canvas').style.display='none';
 						document.getElementById('fileTreeDialog').style.display='none';
+						document.getElementById('allChecks').checked = false;
+						document.getElementById('filesListHeadChangChose').style.display='none';
+						document.getElementById('filesListHeadChangBtn').style.display='block';
 						 $("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
 					         n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
 					         $("table.files").find("tr:eq("+n+")").remove();
