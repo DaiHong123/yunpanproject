@@ -90,7 +90,6 @@ body::-webkit-scrollbar-track-piece {
 			//添加cookie    
 			setCookie();
 		}
-		//var md5 = new MD5();
 		$.ajax({
 			url : "/User/login", //(默认: 当前页地址) 发送请求的地址
 			type : "post", //(默认: "get") 请求方式 ("post" 或 "get")， 默认为 "get"。注意：其它 http请求方法，如 put和 delete也可以使用，但仅部分浏览器支持。

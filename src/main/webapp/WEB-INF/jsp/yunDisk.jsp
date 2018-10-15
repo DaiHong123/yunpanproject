@@ -19,6 +19,39 @@ a:visited {
 }
 </style>
 
+<style>
+/*滚动条*/
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+::-webkit-scrollbar-track-piece {
+	background-color:;
+}
+
+body::-webkit-scrollbar-track-piece {
+	background-color: #ccc;
+}
+
+::-webkit-scrollbar-track-piece:no-button {
+	
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #F5B5B6;
+	border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: #F5B5B6;
+}
+
+::-webkit-scrollbar-thumb:active {
+	background-color: #F5B5B6;
+}
+/*/滚动条*/
+</style>
 </head>
 <body>
 	<header id="header" class="clear">
@@ -152,9 +185,9 @@ a:visited {
 	</div>
 	<div class="filesBody">
 		<div class="blankBg"></div>
-		<div id="fileScrollBar">
+		<!-- <div id="fileScrollBar">
 			<span></span>
-		</div>
+		</div> -->
 		<ul id="tHead">
 			<li><input type="checkbox" id="allChecks"
 				onclick="ckAll(),display()" /> 全选/全不选</span> <i
@@ -187,10 +220,10 @@ a:visited {
 	<div class="module-canvas" id="big_thum" align="center" onclick="noShowImg()"
 		style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;">
 	</div>
-	<div id = "div_img" onclick="noShowImg()"
+	<div id = "div_img" onmousedown="moveLocation(this)"
 	 style="display: none;position:absolute; width: 520px; top: 150px; bottom: auto; left: 350px; right: auto; visibility: visible; z-index: 53;">
 		<img class="big_img" alt="点击返回"
-			id="big_thum_img" src="../../static/img/blankBg.png"/>
+			id="big_thum_img" src="../../static/img/blankBg.png" />
 	</div>
 	
 	<div class="module-canvas" id="module-canvas"
