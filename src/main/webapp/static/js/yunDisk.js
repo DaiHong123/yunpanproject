@@ -111,9 +111,23 @@ function downFile(fileurl , fileName , suffix){
 }
 
 function showImg(furl) {
-	var info = document.getElementById("inform");
-	$("#thum_Img").attr("src", furl);  
-	info.style.display = 'block';
+	$.ajax({
+		url : "/file/thumbnail", 
+		type: "post", 
+		async:true,
+		contentType:"application/x-www-form-urlencoded",
+		data: {"furl":furl, "type":""},
+        success: function(data){
+        	 $("#big_thum_img").attr("src", data);   
+        }
+	}) 
+	document.getElementById("big_thum").style.display = 'block';
+	document.getElementById("div_img").style.display = 'block';
+}
+
+function noShowImg() {
+	document.getElementById("big_thum").style.display = 'none';
+	document.getElementById("div_img").style.display = 'none';
 }
 
 //显示悬浮层
@@ -126,7 +140,7 @@ function showInform(event, fname) {
 		type: "post", 
 		async:true,
 		contentType:"application/x-www-form-urlencoded",
-		data: {"furl":furl},
+		data: {"furl":furl, "type":"thum"},
         success: function(data){
         	 $("#thum_Img").attr("src", data);   
         }
