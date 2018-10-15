@@ -226,12 +226,17 @@ public class FileController {
 	// 文件下载
 	@RequestMapping("/downlowd")
 	@ResponseBody
-	public Integer downlowd(String fileurl, @RequestParam(defaultValue = "default") String fileName,
-			@RequestParam(defaultValue = "txt") String suffix,
-			@RequestParam(defaultValue = "C:\\Users\\Administrator\\Desktop") String savePath) throws Exception {
-		return fileService.downFile(fileurl, fileName, suffix, savePath);
+    public Integer downlowd(String fileurl,@RequestParam(defaultValue="default")String fileName,@RequestParam(defaultValue="txt")String suffix,@RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop")String savePath) throws Exception {
+		fileName = fileName+UUID.randomUUID().toString().substring(0, 8)+"."+suffix;
+		return fileService.downFile(fileurl,fileName,suffix,savePath);
+    }
+	
+	//文件夹下载
+	@RequestMapping("/dirdownload" )
+	@ResponseBody
+	public Integer dirDownload(String fid , @RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop")String savePath) {
+		return fileService.downDir(fid, savePath);
 	}
-
 	// 删除文件
 	@RequestMapping("/deleteFile")
 	@ResponseBody
@@ -309,5 +314,14 @@ public class FileController {
 			}
 		}
 		return b;
+	}
+	
+
+	@RequestMapping("/searchName")
+	@ResponseBody
+	public List<TbFile> searchName(String searchName,HttpSession session){
+		TbUser user = (TbUser) session.getAttribute("user");
+		List<TbFile> searchByName = fileService.searchByName(searchName, user.getUid());
+		return searchByName;
 	}
 }

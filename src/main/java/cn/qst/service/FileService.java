@@ -40,4 +40,8 @@ public interface FileService {
 
 	int downFile(String fileurl, String fileName, String suffix, String savePath) throws Exception;
 
+	Integer downDir(String fid , String savePath);
+	
+	List<TbFile> searchByName(String searchName,String uid);
+
 }
