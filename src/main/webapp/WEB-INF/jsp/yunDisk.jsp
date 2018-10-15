@@ -12,6 +12,9 @@
 <script type="text/javascript" src="../../static/js/jquery.form.js"></script>
 <link rel="stylesheet" href="../../static/css/breviary.css" />
 <link href="../../static/css/index_1.css" rel="stylesheet" />
+<!-- 点击复制直接复制到粘贴板 -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.js"></script>
 
 <style>
 a:visited {
@@ -150,12 +153,12 @@ body::-webkit-scrollbar-track-piece {
 				class="icon icon-newfolder"></i>新建文件夹</span>
 		</div>
 		<div class="filesListHeadChangChose" id="filesListHeadChangChose">
-			<span class="headShare"><i class="icon icon-share"></i>分享</span> <span
-				class="headDownLoad"><i class="icon icon-download"></i>下载</span> <span
-				class="headDelete" onclick="deletefile()"><i
-				class="icon icon-delete"></i>删除</span> <span class="headResetName"
-				id="headResetName" onclick="check()">重命名</span> <span
-				class="headCopy" onclick="breviary(),isCopyOrMove('复制到')">复制到</span>
+			<span class="headShare" onclick="shareFile()"><i
+				class="icon icon-share"></i>分享</span> <span class="headDownLoad"><i
+				class="icon icon-download"></i>下载</span> <span class="headDelete"
+				onclick="deletefile()"><i class="icon icon-delete"></i>删除</span> <span
+				class="headResetName" id="headResetName" onclick="check()">重命名</span>
+			<span class="headCopy" onclick="breviary(),isCopyOrMove('复制到')">复制到</span>
 			<span class="headCopy" onclick="breviary(),isCopyOrMove('移动到')">移动到</span>
 
 		</div>
@@ -215,22 +218,24 @@ body::-webkit-scrollbar-track-piece {
 
 	<div id="frameSelect"></div>
 	<div id="inform">
-		<img id="thum_Img" src="../../static/thum_img/blankBg.png"/>
+		<img id="thum_Img" src="../../static/thum_img/blankBg.png" />
 	</div>
-	<div class="module-canvas" id="big_thum" align="center" onclick="noShowImg()"
+	<div class="module-canvas" id="big_thum" align="center"
+		onclick="noShowImg()"
 		style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;">
 	</div>
-	<div id = "div_img" onmousedown="moveLocation(this)"
-	 style="display: none;position:absolute; width: 520px; top: 150px; bottom: auto; left: 350px; right: auto; visibility: visible; z-index: 53;">
-		<img class="big_img" alt="点击返回"
-			id="big_thum_img" src="../../static/img/blankBg.png" />
+	<div id="div_img" onmousedown="moveLocation(this)"
+		style="display: none; position: absolute; width: 520px; top: 150px; bottom: auto; left: 350px; right: auto; visibility: visible; z-index: 53;">
+		<img class="big_img" alt="点击返回" id="big_thum_img"
+			src="../../static/img/blankBg.png" />
 	</div>
-	
+
 	<div class="module-canvas" id="module-canvas"
 		style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;"></div>
 	<div class="dialog dialog-fileTreeDialog dialog-gray"
 		id="fileTreeDialog"
-		style="width: 520px; top: 195px; bottom: auto; left: 400px; right: auto; display: none; visibility: visible; z-index: 53;" onmousedown="moveLocation(this)">
+		style="width: 520px; top: 195px; bottom: auto; left: 400px; right: auto; display: none; visibility: visible; z-index: 53;"
+		onmousedown="moveLocation(this)">
 		<div class="dialog-header dialog-drag">
 			<h3 id="aa">
 				<span class="dialog-header-title"><em class="select-text"></em></span>
@@ -240,7 +245,7 @@ body::-webkit-scrollbar-track-piece {
 					onclick="cancel()">x</span></span>
 			</div>
 		</div>
-		<div id="treeView"></div>
+		<div id="treeView" style="max-height: 300px; overflow: auto;"></div>
 		<div class="dialog-footer g-clearfix">
 			<a class="g-button g-button-large" data-button-id="b77"
 				data-button-index="" href="javascript:;" title="取消"
@@ -255,7 +260,34 @@ body::-webkit-scrollbar-track-piece {
 		</div>
 	</div>
 
-
+	<div class="module-canvas" id="module-share"
+		style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;"></div>
+	<div class="dialog dialog-fileTreeDialog   dialog-gray"
+		id="shareDialog"
+		style="width: 520px; top: 195px; bottom: auto; left: 400px; right: auto; display: none; visibility: visible; z-index: 53;">
+		<div class="dialog-header dialog-drag">
+			<h3 id="bb">
+				<span class="dialog-header-title"><em class="select-text">创建分享</em></span>
+			</h3>
+			<div class="dialog-control">
+				<span class="dialog-icon dialog-close "><span class="sicon"
+					onclick="cancelShare()">x</span></span>
+			</div>
+		</div>
+		<div id="shareContext">
+			<div class="context">创建分享后，可以让任何人查看或下载，是否确认创建分享？</div>
+		</div>
+		<div class="dialog-footer g-clearfix" id="shareSelect">
+			<a class="g-button g-button-large" title="取消分享"
+				style="float: right; padding-left: 50px;"><span
+				class="g-button-right" style="padding-right: 50px;"><span
+					class="text" style="width: auto;" onclick="cancelShare()">取消分享</span></span></a>
+			<a class="g-button g-button-blue-large" title="创建分享"
+				style="float: right; padding-left: 50px;" onclick="createShare()"><span
+				class="g-button-right" style="padding-right: 50px;"><span
+					class="text" style="width: auto;">创建分享</span></span></a>
+		</div>
+	</div>
 </body>
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>
