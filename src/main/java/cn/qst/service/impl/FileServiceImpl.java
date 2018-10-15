@@ -216,7 +216,8 @@ public class FileServiceImpl implements FileService {
 		int selective = fileMapper.updateByPrimaryKeySelective(tbFile);
 		return selective==1?true:false;
 	}
-
+	
+	//文件下载
 	@Override
 	public int downFile(String fileurl, String fileName,String suffix, String savePath) throws Exception {
 		URL httpUrl = new URL(IMAGE_SERVER_URL+fileurl);  
@@ -236,7 +237,6 @@ public class FileServiceImpl implements FileService {
 		if(!saveDir.exists()){
 			saveDir.mkdir();
 		}
-		fileName = fileName+UUID.randomUUID().toString().substring(0, 8)+"."+suffix;
 		File file = new File(saveDir+File.separator+fileName);    
 		FileOutputStream fos = new FileOutputStream(file);     
 		fos.write(getData); 
@@ -251,6 +251,39 @@ public class FileServiceImpl implements FileService {
 		}
 		return 500;
 	}
+	
+	//文件夹下载
+	@Override
+	public Integer downDir(String fid , String savePath) {
+		//获取文件信息
+		TbFile file = fileMapper.selectByPrimaryKey(fid);
+		//文件保存位置
+		File saveDir = new File(savePath);
+		if(!saveDir.exists()){
+			saveDir.mkdir();
+		}
+		//查询所有的子类
+		TbFileExample example = new TbFileExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andParentidEqualTo(fid);
+		List<TbFile> list = fileMapper.selectByExample(example);
+		//遍历集合
+		for (TbFile tbFile : list) {
+			if(tbFile.getIsdir()) {
+				downDir(tbFile.getFid(), savePath+file.getFname());
+			}else {
+				try {
+					downFile(tbFile.getFurl(),tbFile.getFname(), tbFile.getSuffix(), savePath);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return 500;
+				}
+			}
+		}
+		return 200;
+	}
+	
 	//读取文件
 	private  byte[] readInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[1024];
@@ -282,4 +315,7 @@ public class FileServiceImpl implements FileService {
 		}
 		return strings;
 	}
+	
+	
+	
 }

@@ -176,6 +176,7 @@ public class FileController {
 	@RequestMapping("/uploadFile")
 	@ResponseBody
 	public TbFile picUpload(MultipartFile uploadFile , HttpSession session) {
+		System.err.println(uploadFile);
 		TbUser user = (TbUser)session.getAttribute("user");
 		try {
 			//上传文件获取服务器相对路径
@@ -211,9 +212,16 @@ public class FileController {
 	@RequestMapping("/downlowd")
 	@ResponseBody
     public Integer downlowd(String fileurl,@RequestParam(defaultValue="default")String fileName,@RequestParam(defaultValue="txt")String suffix,@RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop")String savePath) throws Exception {
+		fileName = fileName+UUID.randomUUID().toString().substring(0, 8)+"."+suffix;
 		return fileService.downFile(fileurl,fileName,suffix,savePath);
     }
 	
+	//文件夹下载
+	@RequestMapping("/dirdownload" )
+	@ResponseBody
+	public Integer dirDownload(String fid , @RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop")String savePath) {
+		return fileService.downDir(fid, savePath);
+	}
 	
 	// 删除文件
 	@RequestMapping("/deleteFile")

@@ -7,13 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
-
-<script type="text/javascript" src="../../static/js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="../../static/js/jquery.form.js"></script>
 <link rel="stylesheet" href="../../static/css/breviary.css" />
 <link href="../../static/css/index_1.css" rel="stylesheet" />
-
-<script src="../../static/js/jquery-1.8.3.min.js"></script>
+<script src="../../static/js/jquery-1.8.3.min.js"></script>	
+<script type="text/javascript" src="../../static/js/jquery.form.js"></script>
 <style>
 a:visited {
 	color: #424e67;
@@ -113,9 +110,15 @@ a:visited {
 	<section id="filesList"> <header class="filesListHeader">
 	<div class="filesListHeadBtnsR left">
 		<div class="filesListHeadChangBtn" id="filesListHeadChangBtn">
-			<span class="filesUpLoad"><i class="icon icon-upload"></i>上传</span> <span
-				class="filesCreate" onclick="createFile()"><i
-				class="icon icon-newfolder"></i>新建文件夹</span>
+			<span id="clickUpload" class="filesUpLoad">
+				<i class="icon icon-upload"></i>上传
+				<form id="formUpload" method="post" enctype="multipart/form-data">
+					<input id="fileUpload" type="file" name="uploadFile" style="display: none">
+				</form>
+			</span> 
+			<span class="filesCreate" onclick="createFile()">
+			 	<i class="icon icon-newfolder"></i>新建文件夹
+			</span>
 		</div>
 		<div class="filesListHeadChangChose" id="filesListHeadChangChose">
 			<span class="headShare"><i class="icon icon-share"></i>分享</span> <span
