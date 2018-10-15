@@ -128,8 +128,8 @@
 				class="headDownLoad"><i class="icon icon-download"></i>下载</span> <span
 				class="headDelete" onclick="deletefile()"><i class="icon icon-delete"></i>删除</span> <span
 
-				class="headResetName" id="headResetName" onclick="check()">重命名</span> <span class="headCopy" onclick="isCopyOrMove('复制到')">复制到</span> <span
-				class="headMyDevice" onclick="isCopyOrMove('移动到')" >移动到</span>
+				class="headResetName" id="headResetName" onclick="check()">重命名</span> <span class="headCopy" onclick="breviary(),isCopyOrMove('复制到')">复制到</span> <span
+				class="headCopy" onclick="breviary(),isCopyOrMove('移动到')" >移动到</span>
 
 		</div>
 	</div>
@@ -205,7 +205,7 @@
 			<div class="module-canvas" id="module-canvas" style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;"></div>
 	<div class="dialog dialog-fileTreeDialog   dialog-gray" id="fileTreeDialog" style="width: 520px; top: 195px; bottom: auto; left: 400px; right: auto; display: none; visibility: visible; z-index: 53;">
 			<div class="dialog-header dialog-drag">
-				<h3 id="aa"><span class="dialog-header-title"><em class="select-text" >复制到</em></span></h3>
+				<h3 id="aa"><span class="dialog-header-title"><em class="select-text" ></em></span></h3>
 				<div class="dialog-control"><span class="dialog-icon dialog-close "><span class="sicon" onclick="cancel()">x</span></span>
 				</div>
 			</div>	

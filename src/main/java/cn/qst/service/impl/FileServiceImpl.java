@@ -176,8 +176,8 @@ public class FileServiceImpl implements FileService {
 	
 	//复制文件
 	@Override
-	public boolean copyFile(String fid, String pid) {
-		// TODO Auto-generated method stub		
+	public void copyFile(String fid, String pid) {
+		// TODO Auto-generated method stub	
 		TbFileExample example = new TbFileExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andFidEqualTo(fid);
@@ -187,8 +187,14 @@ public class FileServiceImpl implements FileService {
 		tbFile.setParentid(pid);
 		tbFile.setUploadtime(new Date());
 		tbFile.setUpdatetime(new Date());
-		int selective = fileMapper.insertSelective(tbFile);
-		return selective==1?true:false;
+		 fileMapper.insertSelective(tbFile);
+		TbFileExample example3 = new TbFileExample();
+		Criteria criteria3 = example3.createCriteria();
+		criteria3.andParentidEqualTo(fid);
+		List<TbFile> selectByExample = fileMapper.selectByExample(example3);
+		for(TbFile file:selectByExample) {
+			copyFile(file.getFid(), tbFile.getFid());
+		}		
 	}
 
 	
@@ -252,5 +258,20 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public TbFile selectById(String id) {
 		return fileMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<String> fundChildren(String pid) {
+		// TODO Auto-generated method stub
+		List<String> strings = new ArrayList<>();
+		TbFileExample example = new TbFileExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andParentidEqualTo(pid);
+		List<TbFile> selectByExample = fileMapper.selectByExample(example);
+		
+		for(TbFile file:selectByExample) {
+			strings.add(file.getFname());
+		}
+		return strings;
 	}
 }

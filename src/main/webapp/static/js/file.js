@@ -10,9 +10,16 @@ function createFile() {
 	str += "<input type='checkbox' class='checkstyle' value='2' onclick='allcheck(),display()' />";
 	str += "<i class='fileIcon'></i>";
 	str += "<a onclick=\"\" href=\"javascript:void(0);\" class='acreateFile'><span class='fileTitle' title='新建文件夹' >新建文件夹</span></a>";
+	str+="<div class=\"filesFns right\">";
+	str+="<a class=\"icon icon-share\" href=\"javascript:;\">分享</a>";
+	str+="<a onclick=\"\" class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
+	str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
+	str+="</div>";
 	str += "</td>";
+	
 	str += "<td>";
-	str += "<span></span>";
+	
+	str += "<span>——</span>";
 	str += "</td>";
 	str += "<td>";
 	str += "<span class='fileChangeDate'>" + getNowFormatDate() + "	</span>";
@@ -33,7 +40,7 @@ function createFile() {
 
 // 重命名
 function rename(names,domObj, dataObj, success, fail) {
-	var fid = "";
+	var file = "";
 	var _this = this;
 	var moduleName = document.getElementById('moduleFlieName');
 	var topNum = domObj.offsetTop, leftNum = domObj.offsetLeft;
@@ -111,20 +118,23 @@ function rename(names,domObj, dataObj, success, fail) {
 				}, 
 				success : function(data) {
 					if (data != null) {
-						fid = data.fid;
+						file = data;
 						alert("创建成功");
 					} else {
 						alert("网络异常创建失败");
 					}
 				}
 			});	
-			getByClass('checkstyle', domObj)[0].value = fid;
-			$('.acreateFile').attr("onclick","fundFileByParentId(\'"+fid+"\',true)");	
+			getByClass('checkstyle', domObj)[0].value = file.fid;
+			$('.acreateFile').attr("onclick","fundFileByParentId(\'"+file.fid+"\',true)");	
+			$('.icon-download').attr("onclick","downFile(\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\')");
 			
 			
-
 			
-			
+			var sum = $('.filesCount').text();
+		 sum++;
+		 $(".filesListCount").find("span").remove();
+     	$(".filesListCount").append("<span>已加载</span><span class='filesCount'>"+sum+"</span><span>个</span>");
 		}else if(names=="resname"){
 			var fid ;
 			 $("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
@@ -295,6 +305,10 @@ function deletefile(){
 				 fids
 			}, 
 			success : function(data) {
+				var sum = $('.filesCount').text();
+				 sum=sum-i;
+				 $(".filesListCount").find("span").remove();
+		     	$(".filesListCount").append("<span>已加载</span><span class='filesCount'>"+sum+"</span><span>个</span>");
 				document.getElementById('allChecks').checked = false;
 				document.getElementById('filesListHeadChangChose').style.display='none';
 				document.getElementById('filesListHeadChangBtn').style.display='block';
@@ -348,13 +362,16 @@ function sure(){
 					 fids
 				}, 
 				success : function(data) {
-					if(data){
-						alert("复制成功")
+					if(data==true){
+						alert("复制成功");
+						document.getElementById('module-canvas').style.display='none';
+						document.getElementById('fileTreeDialog').style.display='none';
 					}else{
-						alert("复制失败")
+						alert("该目录下存在同名文件了");
 					}
+					
 				}
-			});		 
+			});
 	}else{
 		var fids = [];
 		var i = 0;
@@ -362,7 +379,6 @@ function sure(){
 			 fids[i] = $(this).val();
 			 i++;
 	         n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
-	         $("table.files").find("tr:eq("+n+")").remove();
 	     });
 		 $.ajax({
 				url : "/file/moveFiles",
@@ -375,13 +391,26 @@ function sure(){
 				}, 
 				success : function(data) {
 					if(data){
-						alert("移动成功")
+						alert("移动成功");
+						document.getElementById('module-canvas').style.display='none';
+						document.getElementById('fileTreeDialog').style.display='none';
+						 $("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
+					         n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
+					         $("table.files").find("tr:eq("+n+")").remove();
+					     });
+						 
+						 
+						 var sum = $('.filesCount').text();
+						 sum=sum-i;
+						 $(".filesListCount").find("span").remove();
+				     	$(".filesListCount").append("<span>已加载</span><span class='filesCount'>"+sum+"</span><span>个</span>");	 
+						 
+						 
 					}else{
-						alert("移动失败")
+						alert("该目录下存在同名文件了");
 					}
 				}
-			});	
+			});
+		
 	}
-	   
-
 }

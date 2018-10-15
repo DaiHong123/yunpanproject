@@ -245,10 +245,17 @@ public class FileController {
 	public boolean copyFiles(@RequestParam(value = "fids[]") String[] fids,String pid ) {
 		boolean b = true;
 		for(String fid:fids) {
-			b = fileService.copyFile(fid, pid);
-			if(b==false) {
-				return b;
+			String fname = fileService.selectNameByFid(fid);
+			System.out.println(fname);
+			List<String> fundChildren = fileService.fundChildren(pid);
+			for(String name:fundChildren) {
+				if(fname.equals(name)) {
+					return false;
+				}
 			}
+		}
+		for(String fid:fids) {
+			 fileService.copyFile(fid, pid);	
 		}
 		return b;
 	}
@@ -258,6 +265,16 @@ public class FileController {
 		@ResponseBody
 	public boolean moveFiles(@RequestParam(value = "fids[]") String[] fids,String pid) {
 			boolean b = true;
+			for(String fid:fids) {
+				String fname = fileService.selectNameByFid(fid);
+				System.out.println(fname);
+				List<String> fundChildren = fileService.fundChildren(pid);
+				for(String name:fundChildren) {
+					if(fname.equals(name)) {
+						return false;
+					}
+				}
+			}
 			for(String fid:fids) {
 				b = fileService.moveFile(fid, pid);
 				if(b==false) {

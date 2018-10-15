@@ -27,7 +27,10 @@ public interface FileService {
 
 	List<TbFile> treeFiles(String uid);
 	
-	boolean copyFile(String fid,String pid);
+	List<String> fundChildren(String pid);
+	
+	
+	void copyFile(String fid,String pid);
 	
 	boolean moveFile(String fid,String pid);
 
