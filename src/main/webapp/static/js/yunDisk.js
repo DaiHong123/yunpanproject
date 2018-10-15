@@ -66,9 +66,11 @@ function fundFileByParentId(parentId,isdir){
 	}
 }
 
-function downFile(fileurl , fileName , suffix){
+
+//文件下载
+function downFile(fileurl , fileName , suffix , isdir){
 	$.ajax({
-	    url : "/file/downlowd", 
+	    url : "/file/downlowd",
 		type: "post",
 		async:true,
 		contentType:"application/x-www-form-urlencoded",
@@ -83,7 +85,7 @@ function downFile(fileurl , fileName , suffix){
 		error: function(){
 			alert('下载失败');
 		}
-	});
+   });
 }
 
 
@@ -128,11 +130,3 @@ function hiddenInform(event) {
 		$("#informImg").attr("src", "../../static/thum_img/blankBg.png"); 
 	}
 }
-
-
-
-
-
-
-
-
