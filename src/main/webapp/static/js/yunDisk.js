@@ -80,8 +80,8 @@ function fundFileByParentId(parentId,isdir){
         			
         		}else if(file.suffix == "mp3"){
         			
-        		}else{
-        			
+        		}else if(file.suffix == "pdf"){
+        			window.open("../static/pdfjs/web/viewer.html?file="+file.furl);
         		}
 			}
 		})

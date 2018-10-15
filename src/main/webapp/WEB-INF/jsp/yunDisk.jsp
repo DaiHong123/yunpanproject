@@ -294,7 +294,6 @@ body::-webkit-scrollbar-track-piece {
 <script src="../../static/js/search.js"></script>
 <script src="../../static/js/yunDisk.js"></script>
 <script src="../../static/js/file.js"></script>
-
 <script src="../../static/js/fileUpload.js"></script>
 <script src="../../static/js/breviary.js"></script>
 <script src="../../static/js/data.js"></script>
