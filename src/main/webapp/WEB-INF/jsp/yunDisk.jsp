@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="../../static/css/breviary.css" />
 <link href="../../static/css/index_1.css" rel="stylesheet" />
 
-<script src="../../static/js/jquery-1.8.3.min.js"></script>
 <style>
 a:visited {
 	color: #424e67;
@@ -131,7 +130,7 @@ a:visited {
 	<div class="filesListHeadBtnsL right">
 		<form id="fileSearch">
 			<input class="txt" type="text" /> <a class="submit icon icon-search"
-				href="javascript:;"></a>
+				href="javascript:;" onclick="search()"></a>
 		</form>
 		<span class="filesSort icon icon-order" id="filesSortId"> <span
 			class="filesSortList"> <span> <i
@@ -180,6 +179,7 @@ a:visited {
 		</div>
 	</div>
 	</section> </section>
+
 	<div id="frameSelect"></div>
 	<div id="inform">
 		<img id="thum_Img" src="../../static/thum_img/blankBg.png"/>
@@ -197,7 +197,7 @@ a:visited {
 		style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;"></div>
 	<div class="dialog dialog-fileTreeDialog dialog-gray"
 		id="fileTreeDialog"
-		style="width: 520px; top: 195px; bottom: auto; left: 400px; right: auto; display: none; visibility: visible; z-index: 53;">
+		style="width: 520px; top: 195px; bottom: auto; left: 400px; right: auto; display: none; visibility: visible; z-index: 53;" onmousedown="moveLocation(this)">
 		<div class="dialog-header dialog-drag">
 			<h3 id="aa">
 				<span class="dialog-header-title"><em class="select-text"></em></span>

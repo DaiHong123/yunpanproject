@@ -1,8 +1,11 @@
 
 var sures;
 var namecm;
+
+//创建文件夹
 function createFile() {
 	this.obj = document.getElementById('filesTab');
+	//获取obj下的子内容
 	this.child = this.obj.children;
 	var fid = "";
 	var str = "<tr data-file-id='2' class='active' >";
@@ -24,11 +27,13 @@ function createFile() {
 	str += "<td>";
 	str += "<span class='fileChangeDate'>" + getNowFormatDate() + "	</span>";
 	str += "</tr>";
+	//拼接内容
 	this.obj.innerHTML = str + this.obj.innerHTML;
 	var obj = {
 		title : "新建文件夹"
 	};
 	var name = "create";
+	//创建文件夹时重命名
 	rename(name,this.child[0], obj, function() {
 
 		
@@ -125,9 +130,10 @@ function rename(names,domObj, dataObj, success, fail) {
 					}
 				}
 			});	
+			//给多选框进行赋值
 			getByClass('checkstyle', domObj)[0].value = file.fid;
 			$('.acreateFile').attr("onclick","fundFileByParentId(\'"+file.fid+"\',true)");	
-			$('.icon-download').attr("onclick","downFile(\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\')");
+			$('.icon-download').attr("onclick","downFile(\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\',\'"+file.isdir+"\',\'"+file.fid+"\')");
 			
 			
 			
@@ -414,3 +420,40 @@ function sure(){
 		
 	}
 }
+
+
+//移动位置
+function moveLocation(obj){
+	
+	$(obj).mousedown(function(e){
+	    //设置移动后的默认位置
+	    var endx=0;
+	    var endy=0;
+	    //获取div的初始位置，要注意的是需要转整型，因为获取到值带px
+	    var left= parseInt($(obj).css("left"));
+	    var top = parseInt($(obj).css("top"));
+
+	    //获取鼠标按下时的坐标，区别于下面的es.pageX,es.pageY
+	    var downx=e.pageX;
+	    var downy=e.pageY;     //pageY的y要大写，必须大写！！
+
+	 //    鼠标按下时给div挂事件
+	$(obj).bind("mousemove",function(es){
+
+	    //es.pageX,es.pageY:获取鼠标移动后的坐标
+	    var endx= es.pageX-downx+left;     //计算div的最终位置
+	    var endy=es.pageY-downy+top;
+
+	    //带上单位
+	    $(obj).css("left",endx+"px").css("top",endy+"px")    
+	});    
+	})
+
+
+	$(obj).mouseup(function(){
+	    //鼠标弹起时给div取消事件
+	    $(obj).unbind("mousemove")
+	})
+
+}
+
