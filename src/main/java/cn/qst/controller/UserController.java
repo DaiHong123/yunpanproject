@@ -5,6 +5,7 @@ import cn.qst.comman.utils.Base64;
 import cn.qst.comman.utils.MD5Utils;
 import cn.qst.comman.utils.SendEmail;
 import cn.qst.comman.utils.TimeUtils;
+import cn.qst.intercept.UserOnlineBindingListener;
 import cn.qst.pojo.TbCity;
 
 import cn.qst.pojo.TbProvince;
@@ -164,20 +165,7 @@ public class UserController {
 		session.removeAttribute("username");
 		session.removeAttribute("imgstr");
 		session.removeAttribute("user");
-		//缩略图删除，再用户注销登陆之后
-		String uploadPath = "/static/thum_img";
-		String imgFile = session.getServletContext().getRealPath(uploadPath);
-		File file = new File(imgFile);
-		File[] files = file.listFiles();
-		for (File file2 : files) {
-			if ((file2.getName()).contains("thum_")) {
-				StringBuffer imgUrl = new StringBuffer(imgFile);
-				imgUrl.append("\\");
-				imgUrl.append(file2.getName());
-				File img = new File(imgUrl.toString());
-				img.delete();
-			} 
-		}
+		session.removeAttribute("UserOnlineBindingListener");
 		return "login";
 	}
 
@@ -212,6 +200,7 @@ public class UserController {
 				session.setAttribute("imgstr", user.getImage());
 				session.setAttribute("user", user);
 				session.setAttribute("fparentId", "-1");
+				session.setAttribute("UserOnlineBindingListener", new UserOnlineBindingListener());
 				return true;
 			} else {
 				return null;

@@ -69,7 +69,7 @@ public class FileServiceImpl implements FileService {
 		criteria.andUidEqualTo(uid);
 		return fileMapper.selectByExample(example);
 	}
-
+	
 	@Override
 	public List<TbFile> fundFileParentsById(String parentId) {
 		// TODO Auto-generated method stub
@@ -93,6 +93,14 @@ public class FileServiceImpl implements FileService {
 		return parents;
 	}
 
+	/**
+	 * 查询文件具体信息
+	 * @param fid
+	 * @return
+	 */
+	public TbFile findFileByFid(String fid) {
+		return fileMapper.selectByPrimaryKey(fid);
+	}
 	
 	//添加文件夹
 	@Override
