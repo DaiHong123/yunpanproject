@@ -48,7 +48,7 @@ function fundFileByParentId(parentId,isdir){
 	        		str+="<a onclick=\"fundFileByParentId(\'"+file.fid+"\',"+file.isdir+")\" href=\"javascript:void(0);\" ><span class=\"fileTitle\" title="+file.fname+">"+file.fname+"</span></a>";
 	        		str+="<div class=\"filesFns right\">";
 	        		str+="<a class=\"icon icon-share\" href=\"javascript:;\">分享</a>";
-	        		str+="<a onclick=\"downFile(\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\')\" class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
+	        		str+="<a onclick=\"downFile(\'"+file.fid+"\',\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\',"+file.isdir+")\" class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
 	        		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
 	        		str+="</div></td><td><span>"
 	        		if(file.fsize){
@@ -88,24 +88,46 @@ function fundFileByParentId(parentId,isdir){
 	}
 }
 
-function downFile(fileurl , fileName , suffix){
-	$.ajax({
-	    url : "/file/downlowd", 
-		type: "post",
-		async:true,
-		contentType:"application/x-www-form-urlencoded",
-		data: {"fileurl":fileurl,'fileName':fileName,'suffix':suffix},
-		success: function(data){
-			if(data=='200')
-				alert('下载成功,请在桌面查看');
-			else{
+
+//文件下载
+function downFile(fid,fileurl , fileName , suffix , isdir){
+	if(isdir){
+		$.ajax({
+			url:"/file/dirdownload",
+			type: "post",
+			async:true,
+			contentType:"application/x-www-form-urlencoded",
+			data: {"fid":fid},
+			success: function(data){
+				if(data=='200')
+					alert('下载成功,请在桌面查看');
+				else{
+					alert('下载失败!!!');
+				}
+			},
+			error: function(){
 				alert('下载失败!!!');
 			}
-		},
-		error: function(){
-			alert('下载失败');
-		}
-	});
+		})
+	}else{
+		$.ajax({
+		    url : "/file/downlowd",
+			type: "post",
+			async:true,
+			contentType:"application/x-www-form-urlencoded",
+			data: {"fileurl":fileurl,'fileName':fileName,'suffix':suffix},
+			success: function(data){
+				if(data=='200')
+					alert('下载成功,请在桌面查看');
+				else{
+					alert('下载失败!!!');
+				}
+			},
+			error: function(){
+				alert('下载失败!!!');
+			}
+	   });
+	}
 }
 
 function showImg(furl) {
@@ -169,11 +191,3 @@ function hiddenInform(event) {
 		$("#thum_Img").attr("src", "../../static/thum_img/blankBg.png"); 
 	}
 }
-
-
-
-
-
-
-
-

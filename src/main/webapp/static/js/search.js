@@ -139,7 +139,7 @@ function fundFileByTyPe(type){
         		str+="<a onclick=\"fundFileByParentId(\'"+file.fid+"\',"+file.isdir+")\" href=\"javascript:void(0);\" ><span class=\"fileTitle\" title="+file.fname+">"+file.fname+"</span></a>";
         		str+="<div class=\"filesFns right\">";
         		str+="<a class=\"icon icon-share\" href=\"javascript:;\">分享</a>";
-        		str+="<a onclick=\"downFile(\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\')\" class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
+        		str+="<a onclick=\"downFile(\'"+file.fid+"\',\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\',"+file.isdir+")\" class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
         		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
         		str+="</div></td><td><span>"
         		if(file.fsize){

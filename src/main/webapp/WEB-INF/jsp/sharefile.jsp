@@ -13,9 +13,9 @@
 </head>
 <body>
 	<header id="header" class="clear">
-		<h1 class="headerLogo left"><a href="javascript:;">百度网盘</a></h1>
+		<h1 class="headerLogo left"><a href="/yunDisk">百度网盘</a></h1>
 		<nav class="headNav left">
-			<a href="javascript:;" class="active">网盘<i></i></a>
+			<a href="/yunDisk" class="active">网盘<i></i></a>
 			<a href="#">分享<i></i></a>
 			<a href="#">更多<i></i></a>
 		</nav>

@@ -1,8 +1,11 @@
 
 var sures;
 var namecm;
+
+//创建文件夹
 function createFile() {
 	this.obj = document.getElementById('filesTab');
+	//获取obj下的子内容
 	this.child = this.obj.children;
 	var fid = "";
 	var str = "<tr data-file-id='2' class='active' >";
@@ -24,11 +27,13 @@ function createFile() {
 	str += "<td>";
 	str += "<span class='fileChangeDate'>" + getNowFormatDate() + "	</span>";
 	str += "</tr>";
+	//拼接内容
 	this.obj.innerHTML = str + this.obj.innerHTML;
 	var obj = {
 		title : "新建文件夹"
 	};
 	var name = "create";
+	//创建文件夹时重命名
 	rename(name,this.child[0], obj, function() {
 
 		
@@ -125,9 +130,10 @@ function rename(names,domObj, dataObj, success, fail) {
 					}
 				}
 			});	
+			//给多选框进行赋值
 			getByClass('checkstyle', domObj)[0].value = file.fid;
 			$('.acreateFile').attr("onclick","fundFileByParentId(\'"+file.fid+"\',true)");	
-			$('.icon-download').attr("onclick","downFile(\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\')");
+			$('.icon-download').attr("onclick","downFile(\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\',\'"+file.isdir+"\',\'"+file.fid+"\')");
 			
 			
 			
@@ -413,4 +419,126 @@ function sure(){
 			});
 		
 	}
+}
+
+
+//移动位置
+function moveLocation(obj){
+	
+	$(obj).mousedown(function(e){
+	    //设置移动后的默认位置
+	    var endx=0;
+	    var endy=0;
+	    //获取div的初始位置，要注意的是需要转整型，因为获取到值带px
+	    var left= parseInt($(obj).css("left"));
+	    var top = parseInt($(obj).css("top"));
+
+	    //获取鼠标按下时的坐标，区别于下面的es.pageX,es.pageY
+	    var downx=e.pageX;
+	    var downy=e.pageY;     //pageY的y要大写，必须大写！！
+
+	 //    鼠标按下时给div挂事件
+	$(obj).bind("mousemove",function(es){
+
+	    //es.pageX,es.pageY:获取鼠标移动后的坐标
+	    var endx= es.pageX-downx+left;     //计算div的最终位置
+	    var endy=es.pageY-downy+top;
+
+	    //带上单位
+	    $(obj).css("left",endx+"px").css("top",endy+"px")    
+	});    
+	})
+
+
+	$(obj).mouseup(function(){
+	    //鼠标弹起时给div取消事件
+	    $(obj).unbind("mousemove")
+	})
+
+}
+
+//分享
+function shareFile() {
+	var str ="";
+	str+="<span class='dialog-header-title'><em class='select-text' >创建分享</em></span>";
+	$('#bb').html(str);
+	var str1 = '';
+	str1 += '<a class="g-button g-button-large" title="取消分享" style="float: right; padding-left: 50px;"><span class="g-button-right" style="padding-right: 50px;"><span class="text" style="width: auto;" onclick="cancelShare()">取消分享</span></span></a><a class="g-button g-button-blue-large" title="创建分享" style="float: right; padding-left: 50px;" onclick="createShare()"><span class="g-button-right" style="padding-right: 50px;"><span class="text" style="width: auto;">创建分享</span></span></a>';
+	$("#shareSelect").html(str1);
+	var str2 = '';
+	str2 += '<div class="context">创建分享后，可以让任何人查看或下载，是否确认创建分享？</div>';
+	$("#shareContext").html(str2);
+	$("#module-share").css("display", "block");
+	$("#shareDialog").css("display", "block");
+}
+
+// 取消分享
+function cancelShare() {
+	$("#module-share").css("display", "none");
+	$("#shareDialog").css("display", "none");
+}
+
+// 创建分享
+function createShare() {
+	// 获取到选中文件的id，然后使用AJAX异步创建分享，显示文件访问链接
+	var fids = '';
+	var i = 0;
+	$("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
+		if( i != 0 ) fids += ',';
+		fids += $(this).val();
+		i++;
+        n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
+    });
+	$.ajax({
+		url:'/share',
+		type:'POST',
+		async : false,
+		contentType : "application/x-www-form-urlencoded",
+		data: {'fids': fids},
+		success: function(data) {
+			data = JSON.parse(data);
+			if( data.code == 1 ) {// 分享成功
+				var url = data.url;
+				var str = '';
+				str += '<div class="success-context"><div class="url-info">';
+				str += '<span class="share-success"><em class="icon"></em>成功创建分享链接 </span>';
+				str += '<div class="url-context"><div class="copy-button-section" onclick="copyurl()">';
+				str += '<a class="g-button g-button-blue copy-button" id="copyShare">';
+				str += '<span class="g-button-right"><span class="text public" id="cc">复制链接</span>';
+				str += '</span></a><div class="copy-tips" id="copy-tips" style="display: none;">复制链接成功</div>';
+				str += '</div><div class="url"><div class="share-url-border">';
+				str += '<input type="text" spellingcheck="false" readonly="readonly" id="surl" class="share-url" value="'+url+'"/>';
+				str += '</div></div></div></div></div>';
+				$("#shareContext").html(str);
+				var str1 = '';
+				str1 += '<a class="g-button g-button-large" title="关闭" style="float: right; padding-left: 50px;"><span class="g-button-right" style="padding-right: 50px;"><span class="text" style="width: auto;" onclick="cancelShare()">关闭</span></span></a>'
+				$("#shareSelect").html(str1);
+			} else { // 分享失败
+				console.log("分享出错");
+			}
+		},
+		error: function() {
+			alert("分享失败");
+		}
+	});
+}
+
+function copyurl() {
+	var obj = document.getElementById('cc');
+	var url = $("#surl").val();
+	var clipboard = new ClipboardJS(obj, {
+        text: function() {
+            return url;
+        }
+    });
+    clipboard.on('success', function(e) {//复制成功执行的回调，可选
+        $("#copy-tips").css("display", "block");
+        clipboard.destroy();
+    });
+    clipboard.on('error', function(e) {//复制失败执行的回调，可选
+    	alert("复制失败了T_T");
+    	if(clipboard) {
+            clipboard.destroy();
+        }
+    });
 }
