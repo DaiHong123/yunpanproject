@@ -64,7 +64,6 @@ public class ShareController {
 	@RequestMapping("/share")
 	@ResponseBody
 	public String save(HttpSession session, String fids) {
-		System.err.println(fids);
 		TbUser user = (TbUser) session.getAttribute("user");
 		String firstId = fids.split(",")[0];
 		String sname = "新建分享";
