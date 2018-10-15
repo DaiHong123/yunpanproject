@@ -184,9 +184,17 @@ a:visited {
 	<div id="inform">
 		<img id="thum_Img" src="../../static/thum_img/blankBg.png" />
 	</div>
+	<div class="module-canvas" id="big_thum" align="center" onclick="noShowImg()"
+		style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;">
+	</div>
+	<div id = "div_img" onclick="noShowImg()"
+	 style="display: none;position:absolute; width: 520px; top: 150px; bottom: auto; left: 350px; right: auto; visibility: visible; z-index: 53;">
+		<img class="big_img" alt="点击返回"
+			id="big_thum_img" src="../../static/img/blankBg.png">
+	</div>
 	<div class="module-canvas" id="module-canvas"
 		style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;"></div>
-	<div class="dialog dialog-fileTreeDialog   dialog-gray"
+	<div class="dialog dialog-fileTreeDialog dialog-gray"
 		id="fileTreeDialog"
 		style="width: 520px; top: 195px; bottom: auto; left: 400px; right: auto; display: none; visibility: visible; z-index: 53;">
 		<div class="dialog-header dialog-drag">
