@@ -11,6 +11,8 @@ public class TbShare {
 
     private String uid;
 
+    private String sname;
+
     public String getSid() {
         return sid;
     }
@@ -41,5 +43,13 @@ public class TbShare {
 
     public void setUid(String uid) {
         this.uid = uid == null ? null : uid.trim();
+    }
+
+    public String getSname() {
+        return sname;
+    }
+
+    public void setSname(String sname) {
+        this.sname = sname == null ? null : sname.trim();
     }
 }

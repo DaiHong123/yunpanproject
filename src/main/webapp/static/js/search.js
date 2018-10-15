@@ -116,7 +116,7 @@ function fundFileByTyPe(type){
         	document.getElementById('allChecks').checked = false;
         	$("#filesTab").find("tr").remove();
         	$(".filesListCount").find("span").remove();
-        	$(".filesListCount").append("<span>已加载"+data.length+"个</span>");
+        	$(".filesListCount").append("<span>已加载</span><span class='filesCount'>"+data.length+"</span><span>个</span>");
         	$.each(data,function(i,file){
         		var str="<tr data-file-id=\"1\" class=\"active\">";
         		str+="<td><input type=\"checkbox\" class=\"checkstyle\"  onclick=\"allcheck(),display()\"  value="+file.fid+" />";

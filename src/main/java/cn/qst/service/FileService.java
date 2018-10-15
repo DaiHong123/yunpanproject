@@ -1,7 +1,7 @@
 package cn.qst.service;
 import java.util.List;
 
-import cn.qst.comman.utils.TreeFile;
+
 import cn.qst.pojo.TbFile;
 
 public interface FileService {
@@ -13,8 +13,12 @@ public interface FileService {
 	List<TbFile> fundFileParentsById(String parentId);
 	
     TbFile findFileByFid(String fid);
-	
+
 	TbFile createFile(String fname,String uid,String parentid);
+	
+	String selectNameByFid(String fid);
+	
+	TbFile selectById(String id);
 	
 	TbFile saveFile(TbFile file);
 	
@@ -22,7 +26,18 @@ public interface FileService {
 
 	void deleteFile(String fid);
 	
-	List<TreeFile> treeFiles(String fid);
+
+	List<TbFile> treeFiles(String uid);
+	
+	List<String> fundChildren(String pid);
+	
+	
+	void copyFile(String fid,String pid);
+	
+	boolean moveFile(String fid,String pid);
+
+
 
 	int downFile(String fileurl, String fileName, String suffix, String savePath) throws Exception;
+
 }
