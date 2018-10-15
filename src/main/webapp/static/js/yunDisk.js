@@ -25,7 +25,7 @@ function fundFileByParentId(parentId,isdir){
 	        	$(".filesListRoute").append(link);
 	        	$("#filesTab").find("tr").remove();
 	        	$(".filesListCount").find("span").remove();
-	        	$(".filesListCount").append("<span>已加载"+data.files.length+"个</span>");
+	        	$(".filesListCount").append("<span>已加载</span><span class='filesCount'>"+data.files.length+"</span><span>个</span>");
 	        	$.each(data.files,function(i,file){
 	        		var str="<tr data-file-id=\"1\" class=\"active\">";
 	        		str+="<td><input type=\"checkbox\" class=\"checkstyle\" value="+file.fid+" onclick=\"allcheck(),display()\"/>";
@@ -62,7 +62,31 @@ function fundFileByParentId(parentId,isdir){
 	        }
 		});
 	}else{
-		
+		$.ajax({
+			url:"/file/findFileByFid",
+			type:"post",
+			async:false,
+			contentType:"application/x-www-form-urlencoded",
+			data:{"fid":parentId},
+			success:function(data) {
+				var file = data;
+				if(file.isdir){
+        			
+        		}else if(file.suffix == "jpg"){
+        			showImg(file.furl);
+        		}else if(file.suffix == "txt"){
+        			
+        		}else if(file.suffix == "mp4"){
+        			
+        		}else if(file.suffix == "seed"){
+        			
+        		}else if(file.suffix == "mp3"){
+        			
+        		}else{
+        			
+        		}
+			}
+		})
 	}
 }
 
@@ -88,6 +112,11 @@ function downFile(fileurl , fileName , suffix , isdir){
    });
 }
 
+function showImg(furl) {
+	var info = document.getElementById("inform");
+	$("#thum_Img").attr("src", furl);  
+	info.style.display = 'block';
+}
 
 //显示悬浮层
 function showInform(event, fname) {
@@ -101,7 +130,7 @@ function showInform(event, fname) {
 		contentType:"application/x-www-form-urlencoded",
 		data: {"furl":furl},
         success: function(data){
-        	 $("#informImg").attr("src", data);   
+        	 $("#thum_Img").attr("src", data);   
         }
 	})
 	var x = event.clientX / 10 + 15;
@@ -127,6 +156,6 @@ function hiddenInform(event) {
 	var divy2 = informDiv.offsetTop + informDiv.offsetHeight;
 	if(x < divx1 || x > divx2 || y < divy1 || y > divy2) {
 		document.getElementById('inform').style.display = 'none';
-		$("#informImg").attr("src", "../../static/thum_img/blankBg.png"); 
+		$("#thum_Img").attr("src", "../../static/thum_img/blankBg.png"); 
 	}
 }

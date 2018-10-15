@@ -2,7 +2,7 @@
 var dataFile;
 
 
-$(function(window, undefined) {
+function breviary() {
 	
 	
 	
@@ -16,16 +16,7 @@ $(function(window, undefined) {
 				
 			}
 		});	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	var treeView = tools1.$('#treeView');
@@ -33,7 +24,7 @@ $(function(window, undefined) {
 	treeView.innerHTML = treeHtml(fileData, -2);
 	var fileItem = tools1.$('.treeNode');
 	var root_icon = tools1.$('.icon-control', fileItem[0])[0];
-	root_icon.className = 'icon1 icon-control icon-minus';
+	root_icon.className = 'icon1 icon-control icon-add';
 	tools1.each(fileItem, function(item) {
 		filesHandle(item);
 	});
@@ -83,4 +74,4 @@ $(function(window, undefined) {
 			}
 		});
 	};
-})(window);
+}

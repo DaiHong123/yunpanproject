@@ -78,6 +78,17 @@ public class FileController {
 	}
 
 	/**
+	 * 根据文件id查询文件信息
+	 * @param fid
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("findFileByFid")
+	public TbFile findFileByFid(String fid) {
+		return fileService.findFileByFid(fid);
+	}
+	
+	/**
 	 * 接受图片url地址，生成图片缩略图，并返回缩略图url
 	 * 
 	 * @param session
@@ -245,10 +256,17 @@ public class FileController {
 	public boolean copyFiles(@RequestParam(value = "fids[]") String[] fids,String pid ) {
 		boolean b = true;
 		for(String fid:fids) {
-			b = fileService.copyFile(fid, pid);
-			if(b==false) {
-				return b;
+			String fname = fileService.selectNameByFid(fid);
+			System.out.println(fname);
+			List<String> fundChildren = fileService.fundChildren(pid);
+			for(String name:fundChildren) {
+				if(fname.equals(name)) {
+					return false;
+				}
 			}
+		}
+		for(String fid:fids) {
+			 fileService.copyFile(fid, pid);	
 		}
 		return b;
 	}
@@ -258,6 +276,16 @@ public class FileController {
 		@ResponseBody
 	public boolean moveFiles(@RequestParam(value = "fids[]") String[] fids,String pid) {
 			boolean b = true;
+			for(String fid:fids) {
+				String fname = fileService.selectNameByFid(fid);
+				System.out.println(fname);
+				List<String> fundChildren = fileService.fundChildren(pid);
+				for(String name:fundChildren) {
+					if(fname.equals(name)) {
+						return false;
+					}
+				}
+			}
 			for(String fid:fids) {
 				b = fileService.moveFile(fid, pid);
 				if(b==false) {
