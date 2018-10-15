@@ -43,7 +43,6 @@ import cn.qst.pojo.TbUser;
 @RequestMapping("/file")
 public class FileController {
 
-	
 	@Autowired
 	private FileService fileService;
 
@@ -78,6 +77,18 @@ public class FileController {
 	}
 
 	/**
+	 * 根据文件id查询文件信息
+	 * 
+	 * @param fid
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("findFileByFid")
+	public TbFile findFileByFid(String fid) {
+		return fileService.findFileByFid(fid);
+	}
+
+	/**
 	 * 接受图片url地址，生成图片缩略图，并返回缩略图url
 	 * 
 	 * @param session
@@ -88,13 +99,21 @@ public class FileController {
 	 */
 	@ResponseBody
 	@RequestMapping("/thumbnail")
-	public String thumbnail(HttpSession session, HttpServletRequest request, String furl) throws IOException {
+	public String thumbnail(HttpSession session, HttpServletRequest request, String furl, String type)
+			throws IOException {
 		// 初始化缩略图的路径
 		String uploadPath = "/static/thum_img";
 		String realUploadPath = session.getServletContext().getRealPath(uploadPath);
 		File file = new File(furl);
-		String des = realUploadPath + "/thum_" + file.getName();
-		String thumbImageUrl = uploadPath + "/thum_" + file.getName();
+		String des = null;
+		String thumbImageUrl = null;
+		if ("thum".equals(type)) {
+			des = realUploadPath + "/thum_" + file.getName();
+			thumbImageUrl = uploadPath + "/thum_" + file.getName();
+		} else {
+			des = realUploadPath + "/big_thum_" + file.getName();
+			thumbImageUrl = uploadPath + "/big_thum_" + file.getName();
+		}
 		if (new File(des).exists()) {
 			return thumbImageUrl;
 		} else {
@@ -105,15 +124,25 @@ public class FileController {
 				sourceImg = ImageIO.read(fileInputStream);
 				Integer width = sourceImg.getWidth();
 				Integer height = sourceImg.getHeight();
-				if (width > 100 || height > 100) {
-					width = width / 2;
-					height = height / 2;
-				} else if (width > 450 || height > 450) {
-					width = width / 3;
-					height = height / 3;
-				} else if (width > 800 || height > 800) {
-					width = width / 4;
-					height = height / 4;
+				if ("thum".equals(type)) {
+					if (width > 100 || height > 100) {
+						width = width / 2;
+						height = height / 2;
+					} else if (width > 450 || height > 450) {
+						width = width / 3;
+						height = height / 3;
+					} else if (width > 800 || height > 800) {
+						width = width / 4;
+						height = height / 4;
+					}
+				} else {
+					if (width < 100 || height < 100) {
+						width = width * 4;
+						height = height * 4;
+					} else if (width < 350 || height < 350) {
+						width = width * 2;
+						height = height * 2;
+					}
 				}
 				Thumbnails.of(furl).size(width, height).toFile(des);
 			} catch (FileNotFoundException e1) {
@@ -134,7 +163,7 @@ public class FileController {
 		return thumbImageUrl;
 	}
 
-	//添加文件夹
+	// 添加文件夹
 	@RequestMapping("/createFile")
 	@ResponseBody
 	public TbFile createFile(String fname, HttpSession session) {
@@ -150,7 +179,7 @@ public class FileController {
 	public boolean rename(String fname, String fid, HttpSession session) {
 		TbUser user = (TbUser) session.getAttribute("user");
 		try {
-			fname = new String(fname.getBytes("iso8859-1"),"UTF-8");
+			fname = new String(fname.getBytes("iso8859-1"), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -159,51 +188,50 @@ public class FileController {
 		return true;
 	}
 
-	
-		
-	//文件上传
+	// 文件上传
 	@RequestMapping("/uploadFile")
 	@ResponseBody
-	public TbFile picUpload(MultipartFile uploadFile , HttpSession session) {
-		TbUser user = (TbUser)session.getAttribute("user");
+	public TbFile picUpload(MultipartFile uploadFile, HttpSession session) {
+		TbUser user = (TbUser) session.getAttribute("user");
 		try {
-			//上传文件获取服务器相对路径
+			// 上传文件获取服务器相对路径
 			String path = FileUploadUtils.fileUpload(uploadFile);
-			//截取文件名
+			// 截取文件名
 			String originalFilename = uploadFile.getOriginalFilename();
-			String fileName = originalFilename.substring(0,originalFilename.lastIndexOf('.'));
-			//获取文件大小
-			Double size = uploadFile.getSize()*1.0;
-			//新建文件对象
+			String fileName = originalFilename.substring(0, originalFilename.lastIndexOf('.'));
+			// 获取文件大小
+			Double size = uploadFile.getSize() * 1.0;
+			// 新建文件对象
 			TbFile file = new TbFile();
 			file.setFid(UUID.randomUUID().toString().replace("-", ""));
 			file.setFname(fileName);
 			file.setFsize(size);
-			file.setSuffix(originalFilename.substring(originalFilename.lastIndexOf(".")+1));
-			file.setParentid((String)session.getAttribute("fparentId"));
+			file.setSuffix(originalFilename.substring(originalFilename.lastIndexOf(".") + 1));
+			file.setParentid((String) session.getAttribute("fparentId"));
 			file.setIsdir(false);
 			file.setUid(user.getUid());
 			file.setFurl(path);
 			Date date = new Date();
 			file.setUpdatetime(date);
 			file.setUploadtime(date);
-			//保存到数据库中
+			// 保存到数据库中
 			return fileService.saveFile(file);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	//文件下载
+
+	// 文件下载
 	@RequestMapping("/downlowd")
 	@ResponseBody
-    public Integer downlowd(String fileurl,@RequestParam(defaultValue="default")String fileName,@RequestParam(defaultValue="txt")String suffix,@RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop")String savePath) throws Exception {
-		return fileService.downFile(fileurl,fileName,suffix,savePath);
-    }
-	
-	
+	public Integer downlowd(String fileurl, @RequestParam(defaultValue = "default") String fileName,
+			@RequestParam(defaultValue = "txt") String suffix,
+			@RequestParam(defaultValue = "C:\\Users\\Administrator\\Desktop") String savePath) throws Exception {
+		return fileService.downFile(fileurl, fileName, suffix, savePath);
+	}
+
 	// 删除文件
 	@RequestMapping("/deleteFile")
 	@ResponseBody
@@ -213,21 +241,21 @@ public class FileController {
 		}
 		return true;
 	}
-	
-	//查询文件夹树
+
+	// 查询文件夹树
 	@RequestMapping("/copyFile")
 	@ResponseBody
 	public Tree copyFile(HttpSession session) {
 		Tree tree = new Tree();
 		List<TreeFile> files = new ArrayList<>();
-		TbUser user = (TbUser)session.getAttribute("user");
+		TbUser user = (TbUser) session.getAttribute("user");
 		List<TbFile> TbFiles = fileService.treeFiles(user.getUid());
 		TreeFile treeFile1 = new TreeFile();
 		treeFile1.setId("-1");
 		treeFile1.setPid("-2");
 		treeFile1.setTitle("全部文件");
 		files.add(treeFile1);
-		for(TbFile file:TbFiles) {
+		for (TbFile file : TbFiles) {
 			TreeFile treeFile = new TreeFile();
 			treeFile.setId(file.getFid());
 			treeFile.setPid(file.getParentid());
@@ -237,50 +265,49 @@ public class FileController {
 		tree.setFiles(files);
 		return tree;
 	}
-	
-	
-	//复制文件
+
+	// 复制文件
 	@RequestMapping("/copyFiles")
 	@ResponseBody
-	public boolean copyFiles(@RequestParam(value = "fids[]") String[] fids,String pid ) {
+	public boolean copyFiles(@RequestParam(value = "fids[]") String[] fids, String pid) {
 		boolean b = true;
-		for(String fid:fids) {
+		for (String fid : fids) {
 			String fname = fileService.selectNameByFid(fid);
 			System.out.println(fname);
 			List<String> fundChildren = fileService.fundChildren(pid);
-			for(String name:fundChildren) {
-				if(fname.equals(name)) {
+			for (String name : fundChildren) {
+				if (fname.equals(name)) {
 					return false;
 				}
 			}
 		}
-		for(String fid:fids) {
-			 fileService.copyFile(fid, pid);	
+		for (String fid : fids) {
+			fileService.copyFile(fid, pid);
 		}
 		return b;
 	}
-	
-	//移动文件
-		@RequestMapping("/moveFiles")
-		@ResponseBody
-	public boolean moveFiles(@RequestParam(value = "fids[]") String[] fids,String pid) {
-			boolean b = true;
-			for(String fid:fids) {
-				String fname = fileService.selectNameByFid(fid);
-				System.out.println(fname);
-				List<String> fundChildren = fileService.fundChildren(pid);
-				for(String name:fundChildren) {
-					if(fname.equals(name)) {
-						return false;
-					}
+
+	// 移动文件
+	@RequestMapping("/moveFiles")
+	@ResponseBody
+	public boolean moveFiles(@RequestParam(value = "fids[]") String[] fids, String pid) {
+		boolean b = true;
+		for (String fid : fids) {
+			String fname = fileService.selectNameByFid(fid);
+			System.out.println(fname);
+			List<String> fundChildren = fileService.fundChildren(pid);
+			for (String name : fundChildren) {
+				if (fname.equals(name)) {
+					return false;
 				}
 			}
-			for(String fid:fids) {
-				b = fileService.moveFile(fid, pid);
-				if(b==false) {
-					return b;
-				}
+		}
+		for (String fid : fids) {
+			b = fileService.moveFile(fid, pid);
+			if (b == false) {
+				return b;
 			}
-			return b;
+		}
+		return b;
 	}
 }

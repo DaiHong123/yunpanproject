@@ -62,7 +62,31 @@ function fundFileByParentId(parentId,isdir){
 	        }
 		});
 	}else{
-		
+		$.ajax({
+			url:"/file/findFileByFid",
+			type:"post",
+			async:false,
+			contentType:"application/x-www-form-urlencoded",
+			data:{"fid":parentId},
+			success:function(data) {
+				var file = data;
+				if(file.isdir){
+        			
+        		}else if(file.suffix == "jpg"){
+        			showImg(file.furl);
+        		}else if(file.suffix == "txt"){
+        			
+        		}else if(file.suffix == "mp4"){
+        			
+        		}else if(file.suffix == "seed"){
+        			
+        		}else if(file.suffix == "mp3"){
+        			
+        		}else{
+        			
+        		}
+			}
+		})
 	}
 }
 
@@ -86,6 +110,25 @@ function downFile(fileurl , fileName , suffix){
 	});
 }
 
+function showImg(furl) {
+	$.ajax({
+		url : "/file/thumbnail", 
+		type: "post", 
+		async:true,
+		contentType:"application/x-www-form-urlencoded",
+		data: {"furl":furl, "type":""},
+        success: function(data){
+        	 $("#big_thum_img").attr("src", data);   
+        }
+	}) 
+	document.getElementById("big_thum").style.display = 'block';
+	document.getElementById("div_img").style.display = 'block';
+}
+
+function noShowImg() {
+	document.getElementById("big_thum").style.display = 'none';
+	document.getElementById("div_img").style.display = 'none';
+}
 
 //显示悬浮层
 function showInform(event, fname) {
@@ -97,9 +140,9 @@ function showInform(event, fname) {
 		type: "post", 
 		async:true,
 		contentType:"application/x-www-form-urlencoded",
-		data: {"furl":furl},
+		data: {"furl":furl, "type":"thum"},
         success: function(data){
-        	 $("#informImg").attr("src", data);   
+        	 $("#thum_Img").attr("src", data);   
         }
 	})
 	var x = event.clientX / 10 + 15;
@@ -125,7 +168,7 @@ function hiddenInform(event) {
 	var divy2 = informDiv.offsetTop + informDiv.offsetHeight;
 	if(x < divx1 || x > divx2 || y < divy1 || y > divy2) {
 		document.getElementById('inform').style.display = 'none';
-		$("#informImg").attr("src", "../../static/thum_img/blankBg.png"); 
+		$("#thum_Img").attr("src", "../../static/thum_img/blankBg.png"); 
 	}
 }
 
