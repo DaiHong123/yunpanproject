@@ -69,7 +69,7 @@ public class FileServiceImpl implements FileService {
 		criteria.andUidEqualTo(uid);
 		return fileMapper.selectByExample(example);
 	}
-
+	
 	@Override
 	public List<TbFile> fundFileParentsById(String parentId) {
 		// TODO Auto-generated method stub
@@ -93,6 +93,14 @@ public class FileServiceImpl implements FileService {
 		return parents;
 	}
 
+	/**
+	 * 查询文件具体信息
+	 * @param fid
+	 * @return
+	 */
+	public TbFile findFileByFid(String fid) {
+		return fileMapper.selectByPrimaryKey(fid);
+	}
 	
 	//添加文件夹
 	@Override
@@ -176,8 +184,9 @@ public class FileServiceImpl implements FileService {
 	
 	//复制文件
 	@Override
-	public boolean copyFile(String fid, String pid) {
-		// TODO Auto-generated method stub		
+	public void copyFile(String fid, String pid) {
+		// TODO Auto-generated method stub	
+		//首先将查找到的fid的文件复制一份到数据库中指向pid
 		TbFileExample example = new TbFileExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andFidEqualTo(fid);
@@ -187,8 +196,17 @@ public class FileServiceImpl implements FileService {
 		tbFile.setParentid(pid);
 		tbFile.setUploadtime(new Date());
 		tbFile.setUpdatetime(new Date());
-		int selective = fileMapper.insertSelective(tbFile);
-		return selective==1?true:false;
+		 fileMapper.insertSelective(tbFile);
+		 
+		 //查找其fid下的所有子文件
+		TbFileExample example3 = new TbFileExample();
+		Criteria criteria3 = example3.createCriteria();
+		criteria3.andParentidEqualTo(fid);
+		List<TbFile> selectByExample = fileMapper.selectByExample(example3);
+		//递归查找其子文件再复制
+		for(TbFile file:selectByExample) {
+			copyFile(file.getFid(), tbFile.getFid());
+		}		
 	}
 
 	
@@ -202,7 +220,8 @@ public class FileServiceImpl implements FileService {
 		int selective = fileMapper.updateByPrimaryKeySelective(tbFile);
 		return selective==1?true:false;
 	}
-
+	
+	//文件下载
 	@Override
 	public int downFile(String fileurl, String fileName,String suffix, String savePath) throws Exception {
 		URL httpUrl = new URL(IMAGE_SERVER_URL+fileurl);  
@@ -222,7 +241,6 @@ public class FileServiceImpl implements FileService {
 		if(!saveDir.exists()){
 			saveDir.mkdir();
 		}
-		fileName = fileName+UUID.randomUUID().toString().substring(0, 8)+"."+suffix;
 		File file = new File(saveDir+File.separator+fileName);    
 		FileOutputStream fos = new FileOutputStream(file);     
 		fos.write(getData); 
@@ -237,6 +255,39 @@ public class FileServiceImpl implements FileService {
 		}
 		return 500;
 	}
+	
+	//文件夹下载
+	@Override
+	public Integer downDir(String fid , String savePath) {
+		//获取文件信息
+		TbFile file = fileMapper.selectByPrimaryKey(fid);
+		//文件保存位置
+		File saveDir = new File(savePath);
+		if(!saveDir.exists()){
+			saveDir.mkdir();
+		}
+		//查询所有的子类
+		TbFileExample example = new TbFileExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andParentidEqualTo(fid);
+		List<TbFile> list = fileMapper.selectByExample(example);
+		//遍历集合
+		for (TbFile tbFile : list) {
+			if(tbFile.getIsdir()) {
+				downDir(tbFile.getFid(), savePath+file.getFname());
+			}else {
+				try {
+					downFile(tbFile.getFurl(),tbFile.getFname(), tbFile.getSuffix(), savePath);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return 500;
+				}
+			}
+		}
+		return 200;
+	}
+	
 	//读取文件
 	private  byte[] readInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[1024];
@@ -253,4 +304,24 @@ public class FileServiceImpl implements FileService {
 	public TbFile selectById(String id) {
 		return fileMapper.selectByPrimaryKey(id);
 	}
+
+	
+	//通过父id查找其子类名字
+	@Override
+	public List<String> fundChildren(String pid) {
+		// TODO Auto-generated method stub
+		List<String> strings = new ArrayList<>();
+		TbFileExample example = new TbFileExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andParentidEqualTo(pid);
+		List<TbFile> selectByExample = fileMapper.selectByExample(example);
+		
+		for(TbFile file:selectByExample) {
+			strings.add(file.getFname());
+		}
+		return strings;
+	}
+	
+	
+	
 }

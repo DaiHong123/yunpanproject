@@ -25,7 +25,7 @@ function fundFileByParentId(parentId,isdir){
 	        	$(".filesListRoute").append(link);
 	        	$("#filesTab").find("tr").remove();
 	        	$(".filesListCount").find("span").remove();
-	        	$(".filesListCount").append("<span>已加载"+data.files.length+"个</span>");
+	        	$(".filesListCount").append("<span>已加载</span><span class='filesCount'>"+data.files.length+"</span><span>个</span>");
 	        	$.each(data.files,function(i,file){
 	        		var str="<tr data-file-id=\"1\" class=\"active\">";
 	        		str+="<td><input type=\"checkbox\" class=\"checkstyle\" value="+file.fid+" onclick=\"allcheck(),display()\"/>";
@@ -48,7 +48,7 @@ function fundFileByParentId(parentId,isdir){
 	        		str+="<a onclick=\"fundFileByParentId(\'"+file.fid+"\',"+file.isdir+")\" href=\"javascript:void(0);\" ><span class=\"fileTitle\" title="+file.fname+">"+file.fname+"</span></a>";
 	        		str+="<div class=\"filesFns right\">";
 	        		str+="<a class=\"icon icon-share\" href=\"javascript:;\">分享</a>";
-	        		str+="<a onclick=\"downFile(\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\')\" class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
+	        		str+="<a onclick=\"downFile(\'"+file.fid+"\',\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\',"+file.isdir+")\" class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
 	        		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
 	        		str+="</div></td><td><span>"
 	        		if(file.fsize){
@@ -62,30 +62,95 @@ function fundFileByParentId(parentId,isdir){
 	        }
 		});
 	}else{
-		
+		$.ajax({
+			url:"/file/findFileByFid",
+			type:"post",
+			async:false,
+			contentType:"application/x-www-form-urlencoded",
+			data:{"fid":parentId},
+			success:function(data) {
+				var file = data;
+				if(file.isdir){
+        			
+        		}else if(file.suffix == "jpg"){
+        			showImg(file.furl);
+        		}else if(file.suffix == "txt"){
+        			
+        		}else if(file.suffix == "mp4"){
+        			
+        		}else if(file.suffix == "seed"){
+        			
+        		}else if(file.suffix == "mp3"){
+        			
+        		}else{
+        			
+        		}
+			}
+		})
 	}
 }
 
-function downFile(fileurl , fileName , suffix){
-	$.ajax({
-	    url : "/file/downlowd", 
-		type: "post",
-		async:true,
-		contentType:"application/x-www-form-urlencoded",
-		data: {"fileurl":fileurl,'fileName':fileName,'suffix':suffix},
-		success: function(data){
-			if(data=='200')
-				alert('下载成功,请在桌面查看');
-			else{
+
+//文件下载
+function downFile(fid,fileurl , fileName , suffix , isdir){
+	if(isdir){
+		$.ajax({
+			url:"/file/dirdownload",
+			type: "post",
+			async:true,
+			contentType:"application/x-www-form-urlencoded",
+			data: {"fid":fid},
+			success: function(data){
+				if(data=='200')
+					alert('下载成功,请在桌面查看');
+				else{
+					alert('下载失败!!!');
+				}
+			},
+			error: function(){
 				alert('下载失败!!!');
 			}
-		},
-		error: function(){
-			alert('下载失败');
-		}
-	});
+		})
+	}else{
+		$.ajax({
+		    url : "/file/downlowd",
+			type: "post",
+			async:true,
+			contentType:"application/x-www-form-urlencoded",
+			data: {"fileurl":fileurl,'fileName':fileName,'suffix':suffix},
+			success: function(data){
+				if(data=='200')
+					alert('下载成功,请在桌面查看');
+				else{
+					alert('下载失败!!!');
+				}
+			},
+			error: function(){
+				alert('下载失败!!!');
+			}
+	   });
+	}
 }
 
+function showImg(furl) {
+	$.ajax({
+		url : "/file/thumbnail", 
+		type: "post", 
+		async:true,
+		contentType:"application/x-www-form-urlencoded",
+		data: {"furl":furl, "type":""},
+        success: function(data){
+        	 $("#big_thum_img").attr("src", data);   
+        }
+	}) 
+	document.getElementById("big_thum").style.display = 'block';
+	document.getElementById("div_img").style.display = 'block';
+}
+
+function noShowImg() {
+	document.getElementById("big_thum").style.display = 'none';
+	document.getElementById("div_img").style.display = 'none';
+}
 
 //显示悬浮层
 function showInform(event, fname) {
@@ -97,9 +162,9 @@ function showInform(event, fname) {
 		type: "post", 
 		async:true,
 		contentType:"application/x-www-form-urlencoded",
-		data: {"furl":furl},
+		data: {"furl":furl, "type":"thum"},
         success: function(data){
-        	 $("#informImg").attr("src", data);   
+        	 $("#thum_Img").attr("src", data);   
         }
 	})
 	var x = event.clientX / 10 + 15;
@@ -125,14 +190,6 @@ function hiddenInform(event) {
 	var divy2 = informDiv.offsetTop + informDiv.offsetHeight;
 	if(x < divx1 || x > divx2 || y < divy1 || y > divy2) {
 		document.getElementById('inform').style.display = 'none';
-		$("#informImg").attr("src", "../../static/thum_img/blankBg.png"); 
+		$("#thum_Img").attr("src", "../../static/thum_img/blankBg.png"); 
 	}
 }
-
-
-
-
-
-
-
-

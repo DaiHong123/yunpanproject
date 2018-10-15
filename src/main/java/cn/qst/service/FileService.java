@@ -12,6 +12,8 @@ public interface FileService {
 
 	List<TbFile> fundFileParentsById(String parentId);
 	
+    TbFile findFileByFid(String fid);
+
 	TbFile createFile(String fname,String uid,String parentid);
 	
 	String selectNameByFid(String fid);
@@ -27,12 +29,17 @@ public interface FileService {
 
 	List<TbFile> treeFiles(String uid);
 	
-	boolean copyFile(String fid,String pid);
+	List<String> fundChildren(String pid);
+	
+	
+	void copyFile(String fid,String pid);
 	
 	boolean moveFile(String fid,String pid);
 
 
 
 	int downFile(String fileurl, String fileName, String suffix, String savePath) throws Exception;
+
+	Integer downDir(String fid , String savePath);
 
 }
