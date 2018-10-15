@@ -1,30 +1,26 @@
 package cn.qst.comman.utils;
 
 public class TreeFile {
-	private String fid;
-	private String fname;
-	private boolean isChildFile;
-	public String getFid() {
-		return fid;
+	private String id;
+	private String pid;
+	private String title;
+	public String getId() {
+		return id;
 	}
-	public void setFid(String fid) {
-		this.fid = fid;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getFname() {
-		return fname;
+	public String getPid() {
+		return pid;
 	}
-	public void setFname(String fname) {
-		this.fname = fname;
+	public void setPid(String pid) {
+		this.pid = pid;
 	}
-	public boolean isChildFile() {
-		return isChildFile;
+	public String getTitle() {
+		return title;
 	}
-	public void setChildFile(boolean isChildFile) {
-		this.isChildFile = isChildFile;
-	}
-	@Override
-	public String toString() {
-		return "TreeFile [fid=" + fid + ", fname=" + fname + ", isChildFile=" + isChildFile + "]";
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 }

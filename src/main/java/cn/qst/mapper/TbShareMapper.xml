@@ -6,6 +6,7 @@
     <result column="fids" property="fids" jdbcType="VARCHAR" />
     <result column="sharetime" property="sharetime" jdbcType="TIMESTAMP" />
     <result column="uid" property="uid" jdbcType="CHAR" />
+    <result column="sname" property="sname" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    sid, fids, sharetime, uid
+    sid, fids, sharetime, uid, sname
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.qst.pojo.TbShareExample" >
     select
@@ -100,9 +101,9 @@
   </delete>
   <insert id="insert" parameterType="cn.qst.pojo.TbShare" >
     insert into tb_share (sid, fids, sharetime, 
-      uid)
+      uid, sname)
     values (#{sid,jdbcType=CHAR}, #{fids,jdbcType=VARCHAR}, #{sharetime,jdbcType=TIMESTAMP}, 
-      #{uid,jdbcType=CHAR})
+      #{uid,jdbcType=CHAR}, #{sname,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.qst.pojo.TbShare" >
     insert into tb_share
@@ -119,6 +120,9 @@
       <if test="uid != null" >
         uid,
       </if>
+      <if test="sname != null" >
+        sname,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="sid != null" >
@@ -132,6 +136,9 @@
       </if>
       <if test="uid != null" >
         #{uid,jdbcType=CHAR},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -156,6 +163,9 @@
       <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=CHAR},
       </if>
+      <if test="record.sname != null" >
+        sname = #{record.sname,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +176,8 @@
     set sid = #{record.sid,jdbcType=CHAR},
       fids = #{record.fids,jdbcType=VARCHAR},
       sharetime = #{record.sharetime,jdbcType=TIMESTAMP},
-      uid = #{record.uid,jdbcType=CHAR}
+      uid = #{record.uid,jdbcType=CHAR},
+      sname = #{record.sname,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +194,9 @@
       <if test="uid != null" >
         uid = #{uid,jdbcType=CHAR},
       </if>
+      <if test="sname != null" >
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
     </set>
     where sid = #{sid,jdbcType=CHAR}
   </update>
@@ -190,7 +204,8 @@
     update tb_share
     set fids = #{fids,jdbcType=VARCHAR},
       sharetime = #{sharetime,jdbcType=TIMESTAMP},
-      uid = #{uid,jdbcType=CHAR}
+      uid = #{uid,jdbcType=CHAR},
+      sname = #{sname,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=CHAR}
   </update>
 </mapper>
