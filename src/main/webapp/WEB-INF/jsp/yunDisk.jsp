@@ -178,7 +178,7 @@
 
 	<div id="frameSelect"></div>
 	<div id="inform">
-		<img id="informImg" src="../../static/thum_img/blankBg.png" />
+		<img id="thum_Img" src="../../static/thum_img/blankBg.png" />
 	</div>
 	<div class="module-canvas" id="module-canvas"
 		style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;"></div>

@@ -5,9 +5,9 @@ body, h1, p, form {
 
 #inform {
 	position: absolute;
-	top: 10px;
-	left: 10px;
-	max-height: 250px;
+	top: 100px;
+	left: 100px;
+	max-height: 10000px;
 	/* 设置最大高度，当高度达到此值时出现滚动条 */
 	z-index: 100;
 	background-color: #E0E5E5;

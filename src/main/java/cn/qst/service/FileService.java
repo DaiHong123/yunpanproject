@@ -12,6 +12,8 @@ public interface FileService {
 
 	List<TbFile> fundFileParentsById(String parentId);
 	
+    TbFile findFileByFid(String fid);
+	
 	TbFile createFile(String fname,String uid,String parentid);
 	
 	TbFile saveFile(TbFile file);

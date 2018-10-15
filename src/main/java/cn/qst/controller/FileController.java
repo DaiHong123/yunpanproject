@@ -74,6 +74,17 @@ public class FileController {
 	}
 
 	/**
+	 * 根据文件id查询文件信息
+	 * @param fid
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("findFileByFid")
+	public TbFile findFileByFid(String fid) {
+		return fileService.findFileByFid(fid);
+	}
+	
+	/**
 	 * 接受图片url地址，生成图片缩略图，并返回缩略图url
 	 * 
 	 * @param session
