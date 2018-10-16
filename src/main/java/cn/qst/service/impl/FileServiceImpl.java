@@ -408,6 +408,9 @@ public class FileServiceImpl implements FileService {
 					file.setFurl(furl);
 					file.setSuffix(suffix);
 					file.setIsdir(false);
+					// 获取文件大小
+					Double size = f.getSize() * 1.0;
+					file.setFsize(size);
 					file.setParentid(pid);
 					Date date = new Date();
 					file.setUpdatetime(date);

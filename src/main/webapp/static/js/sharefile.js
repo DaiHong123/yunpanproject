@@ -17,7 +17,10 @@ function fundFileByParentId(parentId,isdir){
 	        	$.each(data.parent,function(i,file){
 	        		if(i==(data.parent.length-1)){
 	        			link+="<span>"+file.fname+"</span>";
-	        		}else{
+	        		} else if(i == 0) {
+	        			link+="<a href=\"/openfile?code="+urlcode+"\"><span>"+file.fname+"</span></a>"
+	        			link+="<span>></span>";
+	        		} else {
 	        			link+="<a onclick=\"fundFileByParentId(\'"+file.fid+"\',"+file.isdir+")\" href=\"javascript:void(0);\"><span>"+file.fname+"</span></a>"
 	        			link+="<span>></span>";
 	        		}
