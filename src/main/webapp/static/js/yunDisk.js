@@ -75,7 +75,7 @@ function fundFileByParentId(parentId,isdir){
         		}else if(file.suffix == "txt"){
         			window.open(file.furl);
         		}else if(file.suffix == "mp4"){
-        			
+        			playVideo(file.furl, file.fname);
         		}else if(file.suffix == "seed"){
         			
         		}else if(file.suffix == "mp3"){
@@ -230,8 +230,10 @@ function jplayMusic(furl, fname) {
 		});
 	});
 }
-
-
+//视频控件
+function playVideo(furl, fname) {
+	window.open("/file/videoPlay?furl="+furl+"&fname="+fname);
+}
 
 
 

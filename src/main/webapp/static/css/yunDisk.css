@@ -3,6 +3,14 @@ body, h1, p, form {
 	margin: 0;
 }
 
+.videoPlay {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
 #musicPlay{
 	position: absolute;
 	top: 520px;
