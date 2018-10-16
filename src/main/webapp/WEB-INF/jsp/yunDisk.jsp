@@ -215,8 +215,9 @@ body::-webkit-scrollbar-track-piece {
 		</div>
 	</div>
 	</section> </section>
-
+	<!-- 在线浏览开始 -->
 	<div id="frameSelect"></div>
+	<!-- 缩略图显示 -->
 	<div id="inform">
 		<img id="thum_Img" src="../../static/thum_img/blankBg.png" />
 	</div>
@@ -229,6 +230,51 @@ body::-webkit-scrollbar-track-piece {
 		<img class="big_img" alt="点击返回" id="big_thum_img"
 			src="../../static/img/blankBg.png" />
 	</div>
+	<!-- 音乐播放 -->
+	<div id="musicPlqy">
+		<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+		<div id="jp_container_1" class="jp-audio" role="application"
+			aria-label="media player">
+			<div class="jp-type-single">
+				<div class="jp-gui jp-interface">
+					<div class="jp-controls">
+						<button class="jp-play" role="button" tabindex="0">play</button>
+						<button class="jp-stop" role="button" tabindex="0">stop</button>
+					</div>
+					<div class="jp-progress">
+						<div class="jp-seek-bar">
+							<div class="jp-play-bar"></div>
+						</div>
+					</div>
+					<div class="jp-volume-controls">
+						<button class="jp-mute" role="button" tabindex="0">mute</button>
+						<button class="jp-volume-max" role="button" tabindex="0">max
+							volume</button>
+						<div class="jp-volume-bar">
+							<div class="jp-volume-bar-value"></div>
+						</div>
+					</div>
+					<div class="jp-time-holder">
+						<div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+						<div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+						<div class="jp-toggles">
+							<button class="jp-repeat" role="button" tabindex="0">repeat</button>
+						</div>
+					</div>
+				</div>
+				<div class="jp-details">
+					<div class="jp-title" aria-label="title">&nbsp;</div>
+				</div>
+				<div class="jp-no-solution">
+					<span>Update Required</span> To play the media you will need to
+					either update your browser to a recent version or update your <a
+						href="http://get.adobe.com/flashplayer/" target="_blank">Flash
+						plugin</a>.
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 在线浏览结束 -->
 
 	<div class="module-canvas" id="module-canvas"
 		style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;"></div>
@@ -294,10 +340,12 @@ body::-webkit-scrollbar-track-piece {
 <script src="../../static/js/search.js"></script>
 <script src="../../static/js/yunDisk.js"></script>
 <script src="../../static/js/file.js"></script>
-
 <script src="../../static/js/fileUpload.js"></script>
 <script src="../../static/js/breviary.js"></script>
 <script src="../../static/js/data.js"></script>
 <script src="../../static/js/tools.js"></script>
 <script src="../../static/js/handledata.js"></script>
+<link href="../../static/jplyer/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../static/jplyer/jquery.min.js"></script>
+<script type="text/javascript" src="../../static/jplyer/jquery.jplayer.min.js"></script>
 </html>
