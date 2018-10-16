@@ -10,6 +10,10 @@
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
 <link rel="stylesheet" href="../../static/css/openfile.css" />
 <script src="../../static/js/jquery-1.8.3.min.js"></script>
+<script>
+	var urlcode= '${shareInfo.sid}';
+	console.log(urlcode);
+</script>
 </head>
 <body>
 	<header id="header" class="clear">
@@ -165,7 +169,7 @@
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>
 <script src="../../static/js/search.js"></script>
-<script src="../../static/js/yunDisk.js"></script>
+<script src="../../static/js/sharefile.js"></script>
 <script src="../../static/js/file.js"></script>
 <script src="../../static/js/openfile.js"></script>
 </html>
