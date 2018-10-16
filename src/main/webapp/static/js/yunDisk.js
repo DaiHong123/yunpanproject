@@ -73,7 +73,7 @@ function fundFileByParentId(parentId,isdir){
 				if(file.suffix == "jpg"){
         			showImg(file.furl);
         		}else if(file.suffix == "txt"){
-        			
+        			window.open(file.furl);
         		}else if(file.suffix == "mp4"){
         			
         		}else if(file.suffix == "seed"){
@@ -81,7 +81,7 @@ function fundFileByParentId(parentId,isdir){
         		}else if(file.suffix == "mp3"){
         			
         		}else if(file.suffix == "pdf"){
-        			window.open("../static/pdfjs/web/viewer.html?file="+file.furl);
+        			window.open("../../static/pdfjs/web/viewer.html?file="+file.furl);
         		}
 			}
 		})
@@ -129,7 +129,7 @@ function downFile(fid,fileurl , fileName , suffix , isdir){
 	   });
 	}
 }
-
+//图片在线预览--
 function showImg(furl) {
 	$.ajax({
 		url : "/file/thumbnail", 
@@ -191,3 +191,36 @@ function hiddenInform(event) {
 		$("#thum_Img").attr("src", "../../static/thum_img/blankBg.png"); 
 	}
 }
+//图片在线预览--
+
+//音乐播放=====
+$(document).ready(function(){
+	$("#jquery_jplayer_1").jPlayer({
+		ready: function (event) {
+			$(this).jPlayer("setMedia", {
+				title: "刘若英-你有没有深爱过",
+				mp3:"D:\music.mp3",
+				oga:"D:\music.mp3"
+			});
+		},
+		swfPath: "../../dist/jplayer",
+		supplied: "m4a, oga",
+		wmode: "window",
+		useStateClassSkin: true,
+		autoBlur: false,
+		smoothPlayBar: true,
+		keyEnabled: true,
+		remainingDuration: true,
+		toggleDuration: true
+	});
+});
+
+
+
+
+
+
+
+
+
+
