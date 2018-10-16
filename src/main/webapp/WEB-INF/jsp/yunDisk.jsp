@@ -130,7 +130,7 @@ body::-webkit-scrollbar-track-piece {
 			</div>
 			<div class="contRightCapacityInfo">
 				<p class="left">
-					<span class="UsedAmount">75.78</span>G/<span class="allAmount">2055</span>G
+					<span class="UsedAmount">2055</span>G/<span class="allAmount">2055</span>G
 				</p>
 				<a class="right" href="javascript:;">扩容</a>
 			</div>
@@ -147,33 +147,45 @@ body::-webkit-scrollbar-track-piece {
 	<section id="filesList"> <header class="filesListHeader">
 	<div class="filesListHeadBtnsR left">
 		<div class="filesListHeadChangBtn" id="filesListHeadChangBtn">
-			<span class="filesUpLoad"><i class="icon icon-upload"></i>上传</span> <span
-				class="filesCreate" onclick="createFile()"><i
-				class="icon icon-newfolder"></i>新建文件夹</span>
+
+			<span id="clickUpload" class="filesUpLoad">
+				<i class="icon icon-upload"></i>上传
+				<form id="formUpload" method="post" enctype="multipart/form-data">
+					<input id="fileUpload" type="file" name="uploadFile" style="display: none">
+				</form>
+			</span>
+			<span id="clickUploadDir" class="filesUpLoad"  >
+					<i class="icon icon-upload"></i>上传文件夹
+					<form id="formUploadDir" method="post" enctype="multipart/form-data">
+						<input id="fileUploadDir" type="file" name="uploadFileDir" style="display: none" webkitdirectory>
+					</form>
+			</span>
+			<span class="filesCreate" onclick="createFile()">
+			 	<i class="icon icon-newfolder"></i>新建文件夹
+			</span>
 		</div>
 		<div class="filesListHeadChangChose" id="filesListHeadChangChose">
-			<span class="headShare" onclick="shareFile()"><i
-				class="icon icon-share"></i>分享</span> <span class="headDownLoad"><i
-				class="icon icon-download"></i>下载</span> <span class="headDelete"
-				onclick="deletefile()"><i class="icon icon-delete"></i>删除</span> <span
-				class="headResetName" id="headResetName" onclick="check()">重命名</span>
+			<span class="headShare" onclick="shareFile()"><i class="icon icon-share"></i>分享</span> 
+			<span class="headDownLoad" onclick="downFiles()"><i class="icon icon-download"></i>下载</span> 
+			<span class="headDelete" onclick="deletefile()"> <i class="icon icon-delete"></i>删除</span> 
+			<span class="headResetName" id="headResetName" onclick="check()">重命名</span> 
 			<span class="headCopy" onclick="breviary(),isCopyOrMove('复制到')">复制到</span>
 			<span class="headCopy" onclick="breviary(),isCopyOrMove('移动到')">移动到</span>
-
 		</div>
 	</div>
 	<div class="filesListHeadBtnsL right">
 		<form id="fileSearch">
-			<input class="txt" type="text" /> <a class="submit icon icon-search"
-				href="javascript:;" onclick="search()"></a>
+			<input class="txt" type="text" name="searchName"/> <a class="submit icon icon-search" id="searcher"
+				href="javascript:;" ></a>
 		</form>
+
 		<span class="filesSort icon icon-order" id="filesSortId"> <span
-			class="filesSortList"> <span> <i
-					class="show icon icon-sort-select"></i> 文件名
-			</span> <span> <i class="icon icon-sort-select"></i> 大小
-			</span> <span> <i class="icon icon-sort-select"></i> 修改日期
-			</span>
+			class="filesSortList"> 
+			<span > <i class="show icon icon-sort-select"  title="fileName"></i> 文件名</span> 
+					<span > <i class="icon icon-sort-select" title="fileSize"></i> 大小</span> 
+					<span > <i class="icon icon-sort-select" title="fileDate"></i> 修改日期</span>
 		</span>
+
 		</span>
 		<!--<span class="filesShowStyle icon icon-grid"></span>-->
 		<span id="showList" class="filesShowStyle icon icon-grid"></span>
@@ -214,8 +226,9 @@ body::-webkit-scrollbar-track-piece {
 		</div>
 	</div>
 	</section> </section>
-
+	<!-- 在线浏览开始 -->
 	<div id="frameSelect"></div>
+	<!-- 缩略图显示 -->
 	<div id="inform">
 		<img id="thum_Img" src="../../static/thum_img/blankBg.png" />
 	</div>
@@ -228,6 +241,51 @@ body::-webkit-scrollbar-track-piece {
 		<img class="big_img" alt="点击返回" id="big_thum_img"
 			src="../../static/img/blankBg.png" />
 	</div>
+	<!-- 音乐播放 -->
+	<div id="musicPlqy">
+		<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+		<div id="jp_container_1" class="jp-audio" role="application"
+			aria-label="media player">
+			<div class="jp-type-single">
+				<div class="jp-gui jp-interface">
+					<div class="jp-controls">
+						<button class="jp-play" role="button" tabindex="0">play</button>
+						<button class="jp-stop" role="button" tabindex="0">stop</button>
+					</div>
+					<div class="jp-progress">
+						<div class="jp-seek-bar">
+							<div class="jp-play-bar"></div>
+						</div>
+					</div>
+					<div class="jp-volume-controls">
+						<button class="jp-mute" role="button" tabindex="0">mute</button>
+						<button class="jp-volume-max" role="button" tabindex="0">max
+							volume</button>
+						<div class="jp-volume-bar">
+							<div class="jp-volume-bar-value"></div>
+						</div>
+					</div>
+					<div class="jp-time-holder">
+						<div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+						<div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+						<div class="jp-toggles">
+							<button class="jp-repeat" role="button" tabindex="0">repeat</button>
+						</div>
+					</div>
+				</div>
+				<div class="jp-details">
+					<div class="jp-title" aria-label="title">&nbsp;</div>
+				</div>
+				<div class="jp-no-solution">
+					<span>Update Required</span> To play the media you will need to
+					either update your browser to a recent version or update your <a
+						href="http://get.adobe.com/flashplayer/" target="_blank">Flash
+						plugin</a>.
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 在线浏览结束 -->
 
 	<div class="module-canvas" id="module-canvas"
 		style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;"></div>
@@ -293,10 +351,12 @@ body::-webkit-scrollbar-track-piece {
 <script src="../../static/js/search.js"></script>
 <script src="../../static/js/yunDisk.js"></script>
 <script src="../../static/js/file.js"></script>
-
 <script src="../../static/js/fileUpload.js"></script>
 <script src="../../static/js/breviary.js"></script>
 <script src="../../static/js/data.js"></script>
 <script src="../../static/js/tools.js"></script>
 <script src="../../static/js/handledata.js"></script>
+<link href="../../static/jplyer/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../static/jplyer/jquery.min.js"></script>
+<script type="text/javascript" src="../../static/jplyer/jquery.jplayer.min.js"></script>
 </html>

@@ -25,7 +25,10 @@
 	headPic('headIn','headInfoCaption','headInShow');
 	//排序按钮 加鼠标移入移出
 	headPic('filesSortId','filesSortList','filesSortListShow',true);
+	//文件上传移入移出
+	headPic('filesUpLoad','filesSortList','filesSortListShow',true);
 	//循环  排列顺序的span列表,给span加鼠标移入移出事件
+	
 	circuleEv('filesSortId','#filesList .filesSortList span','active');
 	
 	
