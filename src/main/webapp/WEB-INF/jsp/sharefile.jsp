@@ -75,12 +75,24 @@
 							<h2 class="file-name" title="${shareInfo.sname}">${shareInfo.sname}</h2>
 						</div>
 						<div class="slide-show-right">
-							<c:if test="${shareInfo.uid==user.uid}">
-								<a class="btn g-button">
-									<span class="text" onclick="cancel('${shareInfo.sid}')">取消分享</span>
-								</a>
-							</c:if>
-							<a class="btn g-button">下载</a>
+							<c:choose>
+								<c:when test="${shareInfo.uid==user.uid}">
+									<a class="btn g-button">
+										<span class="ico icon icon-share-cancel"></span>
+										<span class="text" onclick="cancel('${shareInfo.sid}')">取消分享</span>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a class="btn g-button g-button-blue">
+										<em class="icon icon-save-disk" title="保存到网盘"></em>
+										<span class="text" onclick="javascript:;">保存到网盘</span>
+									</a>
+								</c:otherwise>
+							</c:choose>
+							<a class="btn g-button">
+								<em class="icon icon-download" title="下载"></em>
+								下载
+							</a>
 						</div>
 						<div class="cb"></div>
 						<div class="slide-show-other-infos">
@@ -98,6 +110,11 @@
 							<div id="filesListHeadChangBtn" style="display:none;"></div>
 							<div class="filesListHeadBtnsR left">
 								<div class="filesListHeadChangChose" id="filesListHeadChangChose">
+									<c:if test="${shareInfo.uid!=user.uid}">
+										<span class="headDownLoad">
+											<i class="icon icon-save-disk"></i>保存到网盘
+										</span>
+									</c:if>
 									<span class="headDownLoad">
 										<i class="icon icon-download"></i>下载
 									</span>
