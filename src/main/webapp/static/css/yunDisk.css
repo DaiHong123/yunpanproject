@@ -8,24 +8,24 @@ body, h1, p, form {
 	top: 100px;
 	left: 100px;
 	/*max-height: 10000px;
-	 设置最大高度，当高度达到此值时出现滚动条 */
+	 璁剧疆鏈�澶ч珮搴︼紝褰撻珮搴﹁揪鍒版鍊兼椂鍑虹幇婊氬姩鏉� */
 	z-index: 100;
 	background-color: #E0E5E5;
 	overflow: auto;
-	/* 外阴影 */
+	/* 澶栭槾褰� */
 	box-shadow: 0px 0px 10px #000;
 	display: none;
-	/* 默认隐藏 */
+	/* 榛樿闅愯棌 */
 }
 
 
 #big_thum {
 	position: absolute;
 	/*max-height: 10000px;
-	 设置最大高度，当高度达到此值时出现滚动条 */
+	 璁剧疆鏈�澶ч珮搴︼紝褰撻珮搴﹁揪鍒版鍊兼椂鍑虹幇婊氬姩鏉� */
 	background-color: #000000;
 	overflow: auto;
-	/* 外阴影 */
+	/* 澶栭槾褰� */
 	box-shadow: 0px 0px 10px #000;
 	display: none;
 }
@@ -684,7 +684,7 @@ html, body {
 .wrap {
 	position: relative;
 	width: 100%;
-	/*妤傛ê瀹抽棁锟界憰涔痵鐠佸墽鐤�*/
+	/*濡ゅ倹锚鐎规娊妫侀敓鐣屾啺娑旂椀閻犱礁澧介悿锟�*/
 	overflow: hidden;
 	z-index: 1;
 }
@@ -742,15 +742,18 @@ html, body {
 }
 
 .CapacityBar {
-	height: 8px;
+	
+	height: 15px;
 	background: rgba(0, 0, 0, .1);
 	border-radius: 10px;
 }
 
 .CapacityBar span {
+	font-size:10px;
+	text-align:center;
 	display: block;
-	height: 8px;
-	width: 8px;
+	height: 15px;
+	width: 100px;
 	border-radius: 10px;
 	background: rgb(146, 239, 85);
 }
@@ -1167,7 +1170,7 @@ html, body {
 }
 
 .files span {
-	font-family: arial, '鐎瑰缍�';
+	font-family: arial, '閻庣懓顑勭紞锟�';
 	color: #424e67;
 }
 

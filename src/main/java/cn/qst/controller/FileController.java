@@ -364,4 +364,17 @@ public class FileController {
 			return searchByName;
 		}
 	}
+	
+	//容量计算
+	@RequestMapping("/capacity")
+	@ResponseBody
+	public double capacity(HttpSession session) {
+		TbUser user = (TbUser) session.getAttribute("user");
+		String capacity = fileService.capacity(user.getUid());
+		if(capacity==null) {
+			return 0;
+		}else {
+			return Double.parseDouble(capacity);
+		}
+	}
 }

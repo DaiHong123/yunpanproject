@@ -191,3 +191,4 @@ function hiddenInform(event) {
 		$("#thum_Img").attr("src", "../../static/thum_img/blankBg.png"); 
 	}
 }
+

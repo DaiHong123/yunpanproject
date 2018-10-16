@@ -43,5 +43,7 @@ public interface FileService {
 	Integer downDir(String fid , String savePath);
 	
 	List<TbFile> searchByName(String searchName,String uid,String groupBy);
+	
+	String capacity(String uid);
 
 }

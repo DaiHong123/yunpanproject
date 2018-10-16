@@ -339,6 +339,16 @@ public class FileServiceImpl implements FileService {
 		List<TbFile> selectByExample = fileMapper.selectByExample(example );
 		return selectByExample;
 	}
+
+	
+	//计算容量
+	@Override
+	public String capacity(String uid) {
+		// TODO Auto-generated method stub
+		
+		String capacity = fileMapper.capacity(uid);
+		return capacity;
+	}
 	
 	
 	

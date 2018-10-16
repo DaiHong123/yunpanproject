@@ -130,7 +130,7 @@ body::-webkit-scrollbar-track-piece {
 			</div>
 			<div class="contRightCapacityInfo">
 				<p class="left">
-					<span class="UsedAmount">75.78</span>G/<span class="allAmount">2055</span>G
+					<span class="UsedAmount">2055</span>G/<span class="allAmount">2055</span>G
 				</p>
 				<a class="right" href="javascript:;">扩容</a>
 			</div>
