@@ -242,7 +242,7 @@ body::-webkit-scrollbar-track-piece {
 			src="../../static/img/blankBg.png" />
 	</div>
 	<!-- 音乐播放 -->
-	<div id="musicPlqy">
+	<div id="musicPlay" onmousedown="moveLocation(this)">
 		<div id="jquery_jplayer_1" class="jp-jplayer"></div>
 		<div id="jp_container_1" class="jp-audio" role="application"
 			aria-label="media player">
@@ -274,7 +274,7 @@ body::-webkit-scrollbar-track-piece {
 					</div>
 				</div>
 				<div class="jp-details">
-					<div class="jp-title" aria-label="title">&nbsp;</div>
+					<div class="jp-title" aria-label="title" onclick="noShowJplayMusic()">&nbsp;</div>
 				</div>
 				<div class="jp-no-solution">
 					<span>Update Required</span> To play the media you will need to

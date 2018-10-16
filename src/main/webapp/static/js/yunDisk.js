@@ -79,7 +79,7 @@ function fundFileByParentId(parentId,isdir){
         		}else if(file.suffix == "seed"){
         			
         		}else if(file.suffix == "mp3"){
-        			
+        			showJplayMusic(file.furl, file.fname);
         		}else if(file.suffix == "pdf"){
         			window.open("../../static/pdfjs/web/viewer.html?file="+file.furl);
         		}
@@ -193,27 +193,43 @@ function hiddenInform(event) {
 }
 //图片在线预览--
 
+
 //音乐播放=====
-$(document).ready(function(){
-	$("#jquery_jplayer_1").jPlayer({
-		ready: function (event) {
-			$(this).jPlayer("setMedia", {
-				title: "刘若英-你有没有深爱过",
-				mp3:"D:\music.mp3",
-				oga:"D:\music.mp3"
-			});
-		},
-		swfPath: "../../dist/jplayer",
-		supplied: "m4a, oga",
-		wmode: "window",
-		useStateClassSkin: true,
-		autoBlur: false,
-		smoothPlayBar: true,
-		keyEnabled: true,
-		remainingDuration: true,
-		toggleDuration: true
+
+//显示播放控件
+function showJplayMusic(furl, fname) {
+	document.getElementById("musicPlay").style.display = 'block';
+	jplayMusic(furl, fname);
+}
+//隐藏播放控件，并停止播放
+function noShowJplayMusic() {
+	document.getElementById("musicPlay").style.display = 'none';
+}
+
+//播放控件
+function jplayMusic(furl, fname) {
+	fname = fname + "(点击这里隐藏)";
+	$(document).ready(function(){
+		$("#jquery_jplayer_1").jPlayer({
+			ready: function (event) {
+				$(this).jPlayer("setMedia", {
+					title: fname,
+					mp3:furl,
+					oga:furl
+				});
+			},
+			swfPath: "../../jplayer",
+			supplied: "m4a, oga",
+			wmode: "window",
+			useStateClassSkin: true,
+			autoBlur: false,
+			smoothPlayBar: true,
+			keyEnabled: true,
+			remainingDuration: true,
+			toggleDuration: true
+		});
 	});
-});
+}
 
 
 
