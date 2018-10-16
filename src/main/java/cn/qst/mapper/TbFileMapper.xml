@@ -287,4 +287,12 @@
       uid = #{uid,jdbcType=CHAR}
     where fid = #{fid,jdbcType=CHAR}
   </update>
+  
+  
+  <select id="capacity" resultType="java.lang.String">
+  select SUM(fsize)
+FROM tb_file
+where  uid = #{uid} 
+  </select>
+  
 </mapper>
