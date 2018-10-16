@@ -6,10 +6,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title>查看分享文件</title>
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
 <link rel="stylesheet" href="../../static/css/openfile.css" />
 <script src="../../static/js/jquery-1.8.3.min.js"></script>
+<script>
+	var urlcode= '${shareInfo.sid}';
+	console.log(urlcode);
+</script>
 </head>
 <body>
 	<header id="header" class="clear">
@@ -89,7 +93,73 @@
 				</div>
 				
 				<div class="share-list" id="shareqr">
-					
+					<section>
+						<header class="filesListHeader">
+							<div id="filesListHeadChangBtn" style="display:none;"></div>
+							<div class="filesListHeadBtnsR left">
+								<div class="filesListHeadChangChose" id="filesListHeadChangChose">
+									<span class="headDownLoad">
+										<i class="icon icon-download"></i>下载
+									</span>
+								</div>
+							</div>
+						</header>
+						<div class="filesPath" id="filesHead">
+							<div class="filesListRoute left">
+								<span>全部文件</span>
+							</div>
+							<div class="filesListCount right">
+								<c:choose>
+									<c:when test="${files==null}">
+										<span>已加载0个</span>
+									</c:when>
+									<c:otherwise>
+										<span>已加载${files.size()}个</span>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+						<div class="filesBody">
+							<div class="blankBg"></div>
+							<ul id="tHead">
+								<li><input type="checkbox" id="allChecks"
+									onclick="ckAll(),display()" /> 全选/全不选</span> <i
+									class="icon downtitle-icon icon-downtitle"></i></li>
+								<li><span>大小</span></li>
+								<li><span>修改日期</span></li>
+								<li id="checkAll"></li>
+							</ul>
+							<table class="files">
+								<tbody id="filesTab">
+									<c:forEach var="file" items="${files}" varStatus="ind">
+										<tr data-file-id="1" class="active">
+											<td>
+												<input type="checkbox" class="checkstyle" value="1cd1c192acd74b53862759e03fb9cccd" onclick="allcheck(),display()">
+												<i class="fileIcon"></i>
+												<a onclick="fundFileByParentId('1cd1c192acd74b53862759e03fb9cccd',true)" href="javascript:void(0);">
+													<span class="fileTitle" title="${file.fname}">${file.fname}</span>
+												</a>
+												<div class="filesFns right">
+													<a onclick="downFile('${file.parentid}','${file.fname}','null')" class="icon icon-download" href="javascript:;">下载</a>
+												</div>
+											</td>
+											<td>
+												<c:choose>
+													<c:when test="${file.fsize==null}">
+														<span>——</span>
+													</c:when>
+													<c:otherwise>
+														<span>${file.fsize}</span>
+													</c:otherwise>
+												</c:choose>
+											</td>
+											<td><span class="fileChangeDate"><f:formatDate value="${file.updatetime}" pattern="yyyy-MM-dd"/></span></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</section>
 				</div>
 			</c:if>
 		</section>
@@ -99,7 +169,7 @@
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>
 <script src="../../static/js/search.js"></script>
-<script src="../../static/js/yunDisk.js"></script>
+<script src="../../static/js/sharefile.js"></script>
 <script src="../../static/js/file.js"></script>
 <script src="../../static/js/openfile.js"></script>
 </html>

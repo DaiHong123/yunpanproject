@@ -1,11 +1,13 @@
 package cn.qst.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.qst.service.FileService;
 
@@ -53,7 +55,11 @@ public class FileController {
 		// 获取用户id
 		session.setAttribute("fparentId", "-1");
 		TbUser user = (TbUser) session.getAttribute("user");
-		List<TbFile> fileList = fileService.fundFileByType(type, user.getUid());
+		String groupBy = (String)session.getAttribute("groupBy");
+		if(groupBy==null) {
+			groupBy = "fname";
+		}
+		List<TbFile> fileList = fileService.fundFileByType(type, user.getUid(),groupBy);
 		return fileList;
 	}
 
@@ -63,8 +69,15 @@ public class FileController {
 	public FileResult fundFileByParentId(String parentId, HttpSession session) {
 		session.setAttribute("fparentId", parentId);
 		TbUser user = (TbUser) session.getAttribute("user");
+		
+		
+		String groupBy = (String)session.getAttribute("groupBy");
+		if(groupBy==null) {
+			groupBy = "fname";
+		}
+		
 		// 获取该文件夹的子文件
-		List<TbFile> fileList = fileService.funFileByParentId(parentId, user.getUid());
+		List<TbFile> fileList = fileService.funFileByParentId(parentId, user.getUid(),groupBy);
 		// 获取该文件的父文件
 		List<TbFile> parent = fileService.fundFileParentsById(parentId);
 		// 创建返回结果集
@@ -223,12 +236,26 @@ public class FileController {
 		}
 	}
 
+	// 文件夹上传
+	@RequestMapping("/uploadFileDir")
+	@ResponseBody
+	public TbFile picUploadDir(HttpServletRequest request , HttpSession session) throws Exception {
+		//获取上传用户
+		TbUser user = (TbUser) session.getAttribute("user");
+		//获取文件父ID
+		String parentId = (String) session.getAttribute("fparentId");
+		//获取文件列表
+		MultipartHttpServletRequest params = (MultipartHttpServletRequest) request;
+		List<MultipartFile> files = params.getFiles("uploadFileDir");
+		return fileService.saveDir(files,user,parentId);
+	}
+	
 	// 文件下载
 	@RequestMapping("/downlowd")
 	@ResponseBody
     public Integer downlowd(String fileurl,@RequestParam(defaultValue="default")String fileName,@RequestParam(defaultValue="txt")String suffix,@RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop")String savePath) throws Exception {
 		fileName = fileName+UUID.randomUUID().toString().substring(0, 8)+"."+suffix;
-		return fileService.downFile(fileurl,fileName,suffix,savePath);
+		return fileService.downFile(fileurl,fileName,savePath);
     }
 	
 	//文件夹下载
@@ -237,6 +264,14 @@ public class FileController {
 	public Integer dirDownload(String fid , @RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop")String savePath) {
 		return fileService.downDir(fid, savePath);
 	}
+	//多文件下载
+	@RequestMapping("/downFiles" )
+	@ResponseBody
+	public Integer downFiles(@RequestParam(value = "fids[]") String[] fids , @RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop\\云下载")String savePath) {
+		savePath = savePath+UUID.randomUUID().toString().substring(0, 8);
+		return fileService.downFiles(fids, savePath);
+	}
+	
 	// 删除文件
 	@RequestMapping("/deleteFile")
 	@ResponseBody
@@ -314,5 +349,56 @@ public class FileController {
 			}
 		}
 		return b;
+	}
+	
+
+	//搜索文件
+	@RequestMapping("/searchName")
+	@ResponseBody
+	public List<TbFile> searchName(String searchName,HttpSession session){
+		TbUser user = (TbUser) session.getAttribute("user");
+		String groupBy = (String)session.getAttribute("groupBy");
+		if(groupBy==null) {
+			groupBy = "fname";
+		}
+		List<TbFile> searchByName = fileService.searchByName(searchName, user.getUid(),groupBy);
+		return searchByName;
+	}
+	
+	//分类
+	@RequestMapping(value="/group")
+	@ResponseBody
+	public List<TbFile> group(HttpSession session,String group,String searchName){
+		System.out.println(searchName);
+		if(group.equals("fileName")) {
+			session.setAttribute("groupBy", "fname");
+		}else if(group.equals("fileSize")) {
+			session.setAttribute("groupBy", "fsize");
+		}else if(group.equals("fileDate")) {
+			session.setAttribute("groupBy", "updatetime");
+		}
+		TbUser user = (TbUser) session.getAttribute("user");
+		String groupBy = (String)session.getAttribute("groupBy");
+		if(searchName.equals("")) {
+			String pid = (String)session.getAttribute("fparentId");
+			List<TbFile> listFiles = fileService.funFileByParentId(pid, user.getUid(), groupBy);
+			return listFiles;
+		}else {
+			List<TbFile> searchByName = fileService.searchByName(searchName, user.getUid(), groupBy);
+			return searchByName;
+		}
+	}
+	
+	//容量计算
+	@RequestMapping("/capacity")
+	@ResponseBody
+	public double capacity(HttpSession session) {
+		TbUser user = (TbUser) session.getAttribute("user");
+		String capacity = fileService.capacity(user.getUid());
+		if(capacity==null) {
+			return 0;
+		}else {
+			return Double.parseDouble(capacity);
+		}
 	}
 }

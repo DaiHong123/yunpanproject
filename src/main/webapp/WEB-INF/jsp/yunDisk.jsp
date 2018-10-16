@@ -13,8 +13,7 @@
 <link rel="stylesheet" href="../../static/css/breviary.css" />
 <link href="../../static/css/index_1.css" rel="stylesheet" />
 <!-- 点击复制直接复制到粘贴板 -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.js"></script>
 
 <style>
 a:visited {
@@ -131,7 +130,7 @@ body::-webkit-scrollbar-track-piece {
 			</div>
 			<div class="contRightCapacityInfo">
 				<p class="left">
-					<span class="UsedAmount">75.78</span>G/<span class="allAmount">2055</span>G
+					<span class="UsedAmount">2055</span>G/<span class="allAmount">2055</span>G
 				</p>
 				<a class="right" href="javascript:;">扩容</a>
 			</div>
@@ -148,33 +147,45 @@ body::-webkit-scrollbar-track-piece {
 	<section id="filesList"> <header class="filesListHeader">
 	<div class="filesListHeadBtnsR left">
 		<div class="filesListHeadChangBtn" id="filesListHeadChangBtn">
-			<span class="filesUpLoad"><i class="icon icon-upload"></i>上传</span> <span
-				class="filesCreate" onclick="createFile()"><i
-				class="icon icon-newfolder"></i>新建文件夹</span>
+
+			<span id="clickUpload" class="filesUpLoad">
+				<i class="icon icon-upload"></i>上传
+				<form id="formUpload" method="post" enctype="multipart/form-data">
+					<input id="fileUpload" type="file" name="uploadFile" style="display: none">
+				</form>
+			</span>
+			<span id="clickUploadDir" class="filesUpLoad"  >
+					<i class="icon icon-upload"></i>上传文件夹
+					<form id="formUploadDir" method="post" enctype="multipart/form-data">
+						<input id="fileUploadDir" type="file" name="uploadFileDir" style="display: none" webkitdirectory>
+					</form>
+			</span>
+			<span class="filesCreate" onclick="createFile()">
+			 	<i class="icon icon-newfolder"></i>新建文件夹
+			</span>
 		</div>
 		<div class="filesListHeadChangChose" id="filesListHeadChangChose">
-			<span class="headShare" onclick="shareFile()"><i
-				class="icon icon-share"></i>分享</span> <span class="headDownLoad"><i
-				class="icon icon-download"></i>下载</span> <span class="headDelete"
-				onclick="deletefile()"><i class="icon icon-delete"></i>删除</span> <span
-				class="headResetName" id="headResetName" onclick="check()">重命名</span>
+			<span class="headShare" onclick="shareFile()"><i class="icon icon-share"></i>分享</span> 
+			<span class="headDownLoad" onclick="downFiles()"><i class="icon icon-download"></i>下载</span> 
+			<span class="headDelete" onclick="deletefile()"> <i class="icon icon-delete"></i>删除</span> 
+			<span class="headResetName" id="headResetName" onclick="check()">重命名</span> 
 			<span class="headCopy" onclick="breviary(),isCopyOrMove('复制到')">复制到</span>
 			<span class="headCopy" onclick="breviary(),isCopyOrMove('移动到')">移动到</span>
-
 		</div>
 	</div>
 	<div class="filesListHeadBtnsL right">
 		<form id="fileSearch">
-			<input class="txt" type="text" /> <a class="submit icon icon-search"
-				href="javascript:;" onclick="search()"></a>
+			<input class="txt" type="text" name="searchName"/> <a class="submit icon icon-search" id="searcher"
+				href="javascript:;" ></a>
 		</form>
+
 		<span class="filesSort icon icon-order" id="filesSortId"> <span
-			class="filesSortList"> <span> <i
-					class="show icon icon-sort-select"></i> 文件名
-			</span> <span> <i class="icon icon-sort-select"></i> 大小
-			</span> <span> <i class="icon icon-sort-select"></i> 修改日期
-			</span>
+			class="filesSortList"> 
+			<span > <i class="show icon icon-sort-select"  title="fileName"></i> 文件名</span> 
+					<span > <i class="icon icon-sort-select" title="fileSize"></i> 大小</span> 
+					<span > <i class="icon icon-sort-select" title="fileDate"></i> 修改日期</span>
 		</span>
+
 		</span>
 		<!--<span class="filesShowStyle icon icon-grid"></span>-->
 		<span id="showList" class="filesShowStyle icon icon-grid"></span>

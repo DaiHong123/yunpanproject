@@ -239,7 +239,6 @@ function allcheck() {
 		}
 	}
 	if (s == cks.length) {
-
 		document.getElementById('allChecks').checked = true;
 	} else {
 		document.getElementById('allChecks').checked = false;
@@ -291,6 +290,33 @@ function getNowFormatDate() {
 	return currentdate;
 }
 
+//下载文件
+
+function downFiles(){
+	var fids = [];
+	var i = 0;
+	 $("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
+		 fids[i] = $(this).val();
+		 i++;
+         n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
+     });
+	 $.ajax({
+			url : "/file/downFiles",
+			type : "get",
+			async : true,
+			contentType : "application/x-www-form-urlencoded",
+			data : {
+				 fids
+			}, 
+			success : function(data) {
+				if(data=='200')
+					alert('下载成功,请在桌面查看');
+				else{
+					alert('下载失败!!!');
+				}
+			}
+		});	
+}
 
 //删除文件
 function deletefile(){
@@ -400,6 +426,9 @@ function sure(){
 						alert("移动成功");
 						document.getElementById('module-canvas').style.display='none';
 						document.getElementById('fileTreeDialog').style.display='none';
+						document.getElementById('allChecks').checked = false;
+						document.getElementById('filesListHeadChangChose').style.display='none';
+						document.getElementById('filesListHeadChangBtn').style.display='block';
 						 $("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
 					         n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
 					         $("table.files").find("tr:eq("+n+")").remove();
@@ -459,6 +488,7 @@ function moveLocation(obj){
 
 //分享
 function shareFile() {
+	alert("dsfsdf")
 	var str ="";
 	str+="<span class='dialog-header-title'><em class='select-text' >创建分享</em></span>";
 	$('#bb').html(str);
