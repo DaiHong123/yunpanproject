@@ -115,18 +115,23 @@ a:visited {
 				<form id="formUpload" method="post" enctype="multipart/form-data">
 					<input id="fileUpload" type="file" name="uploadFile" style="display: none">
 				</form>
-			</span> 
+			</span>
+			<span id="clickUploadDir" class="filesUpLoad"  >
+					<i class="icon icon-upload"></i>上传文件夹
+					<form id="formUploadDir" method="post" enctype="multipart/form-data">
+						<input id="fileUploadDir" type="file" name="uploadFileDir" style="display: none" webkitdirectory>
+					</form>
+			</span>
 			<span class="filesCreate" onclick="createFile()">
 			 	<i class="icon icon-newfolder"></i>新建文件夹
 			</span>
 		</div>
 		<div class="filesListHeadChangChose" id="filesListHeadChangChose">
-			<span class="headShare"><i class="icon icon-share"></i>分享</span> <span
-				class="headDownLoad"><i class="icon icon-download"></i>下载</span> <span
-				class="headDelete" onclick="deletefile()"><i
-				class="icon icon-delete"></i>删除</span> <span class="headResetName"
-				id="headResetName" onclick="check()">重命名</span> <span
-				class="headCopy" onclick="breviary(),isCopyOrMove('复制到')">复制到</span>
+			<span class="headShare"><i class="icon icon-share"></i>分享</span> 
+			<span class="headDownLoad" onclick="downFiles()"><i class="icon icon-download"></i>下载</span> 
+			<span class="headDelete" onclick="deletefile()"> <i class="icon icon-delete"></i>删除</span> 
+			<span class="headResetName" id="headResetName" onclick="check()">重命名</span> 
+			<span class="headCopy" onclick="breviary(),isCopyOrMove('复制到')">复制到</span>
 			<span class="headCopy" onclick="breviary(),isCopyOrMove('移动到')">移动到</span>
 
 		</div>
@@ -136,13 +141,12 @@ a:visited {
 			<input class="txt" type="text" /> <a class="submit icon icon-search"
 				href="javascript:;" onclick="search()"></a>
 		</form>
-		<span class="filesSort icon icon-order" id="filesSortId"> <span
-			class="filesSortList"> <span> <i
-					class="show icon icon-sort-select"></i> 文件名
-			</span> <span> <i class="icon icon-sort-select"></i> 大小
-			</span> <span> <i class="icon icon-sort-select"></i> 修改日期
-			</span>
-		</span>
+		<span class="filesSort icon icon-order" id="filesSortId">
+		   <span class="filesSortList">
+			   <span> <i class="show icon icon-sort-select"></i> 文件名 </span> 
+			   <span> <i class="icon icon-sort-select"></i> 大小</span> 
+			   <span> <i class="icon icon-sort-select"></i> 修改日期</span>
+		  </span>
 		</span>
 		<!--<span class="filesShowStyle icon icon-grid"></span>-->
 		<span id="showList" class="filesShowStyle icon icon-grid"></span>
