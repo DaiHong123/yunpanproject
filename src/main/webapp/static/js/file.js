@@ -290,6 +290,33 @@ function getNowFormatDate() {
 	return currentdate;
 }
 
+//下载文件
+
+function downFiles(){
+	var fids = [];
+	var i = 0;
+	 $("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
+		 fids[i] = $(this).val();
+		 i++;
+         n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
+     });
+	 $.ajax({
+			url : "/file/downFiles",
+			type : "get",
+			async : true,
+			contentType : "application/x-www-form-urlencoded",
+			data : {
+				 fids
+			}, 
+			success : function(data) {
+				if(data=='200')
+					alert('下载成功,请在桌面查看');
+				else{
+					alert('下载失败!!!');
+				}
+			}
+		});	
+}
 
 //删除文件
 function deletefile(){

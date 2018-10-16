@@ -1,11 +1,13 @@
 package cn.qst.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.qst.service.FileService;
 
@@ -234,12 +236,26 @@ public class FileController {
 		}
 	}
 
+	// 文件夹上传
+	@RequestMapping("/uploadFileDir")
+	@ResponseBody
+	public TbFile picUploadDir(HttpServletRequest request , HttpSession session) throws Exception {
+		//获取上传用户
+		TbUser user = (TbUser) session.getAttribute("user");
+		//获取文件父ID
+		String parentId = (String) session.getAttribute("fparentId");
+		//获取文件列表
+		MultipartHttpServletRequest params = (MultipartHttpServletRequest) request;
+		List<MultipartFile> files = params.getFiles("uploadFileDir");
+		return fileService.saveDir(files,user,parentId);
+	}
+	
 	// 文件下载
 	@RequestMapping("/downlowd")
 	@ResponseBody
     public Integer downlowd(String fileurl,@RequestParam(defaultValue="default")String fileName,@RequestParam(defaultValue="txt")String suffix,@RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop")String savePath) throws Exception {
 		fileName = fileName+UUID.randomUUID().toString().substring(0, 8)+"."+suffix;
-		return fileService.downFile(fileurl,fileName,suffix,savePath);
+		return fileService.downFile(fileurl,fileName,savePath);
     }
 	
 	//文件夹下载
@@ -248,6 +264,14 @@ public class FileController {
 	public Integer dirDownload(String fid , @RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop")String savePath) {
 		return fileService.downDir(fid, savePath);
 	}
+	//多文件下载
+	@RequestMapping("/downFiles" )
+	@ResponseBody
+	public Integer downFiles(@RequestParam(value = "fids[]") String[] fids , @RequestParam(defaultValue="C:\\Users\\Administrator\\Desktop\\云下载")String savePath) {
+		savePath = savePath+UUID.randomUUID().toString().substring(0, 8);
+		return fileService.downFiles(fids, savePath);
+	}
+	
 	// 删除文件
 	@RequestMapping("/deleteFile")
 	@ResponseBody

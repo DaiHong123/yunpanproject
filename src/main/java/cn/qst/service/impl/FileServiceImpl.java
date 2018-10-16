@@ -16,12 +16,15 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-
+import cn.qst.comman.fastdfs.FileUploadUtils;
 import cn.qst.mapper.TbFileMapper;
 import cn.qst.pojo.TbFile;
 import cn.qst.pojo.TbFileExample;
 import cn.qst.pojo.TbFileExample.Criteria;
+import cn.qst.pojo.TbUser;
 import cn.qst.service.FileService;
 
 /**
@@ -225,7 +228,7 @@ public class FileServiceImpl implements FileService {
 	
 	//文件下载
 	@Override
-	public int downFile(String fileurl, String fileName,String suffix, String savePath) throws Exception {
+	public int downFile(String fileurl, String fileName, String savePath) throws Exception {
 		URL httpUrl = new URL(IMAGE_SERVER_URL+fileurl);  
 		HttpURLConnection conn = (HttpURLConnection)httpUrl.openConnection();  
                 //设置超时间为3秒
@@ -236,8 +239,7 @@ public class FileServiceImpl implements FileService {
 		//得到输入流
 		InputStream inputStream = conn.getInputStream();  
 		//获取字节数组
-		byte[] getData = readInputStream(inputStream);    
- 
+		byte[] getData = readInputStream(inputStream);
 		//文件保存位置
 		File saveDir = new File(savePath);
 		if(!saveDir.exists()){
@@ -264,9 +266,9 @@ public class FileServiceImpl implements FileService {
 		//获取文件信息
 		TbFile file = fileMapper.selectByPrimaryKey(fid);
 		//文件保存位置
-		File saveDir = new File(savePath);
+		File saveDir = new File(savePath+"\\"+file.getFname());
 		if(!saveDir.exists()){
-			saveDir.mkdir();
+			saveDir.mkdirs();
 		}
 		//查询所有的子类
 		TbFileExample example = new TbFileExample();
@@ -276,10 +278,11 @@ public class FileServiceImpl implements FileService {
 		//遍历集合
 		for (TbFile tbFile : list) {
 			if(tbFile.getIsdir()) {
-				downDir(tbFile.getFid(), savePath+file.getFname());
+				downDir(tbFile.getFid(), savePath+"\\"+file.getFname());
 			}else {
 				try {
-					downFile(tbFile.getFurl(),tbFile.getFname(), tbFile.getSuffix(), savePath);
+					
+					downFile(tbFile.getFurl(),tbFile.getFname()+"."+tbFile.getSuffix(), savePath+"\\"+file.getFname());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -290,6 +293,31 @@ public class FileServiceImpl implements FileService {
 		return 200;
 	}
 	
+	//多文件下载
+	@Override
+	public Integer downFiles(String[] fids, String savePath) {
+		//文件保存位置
+		File saveDir = new File(savePath);
+		if(!saveDir.exists()) {
+			saveDir.mkdirs();
+		}
+		for (String fid : fids) {
+			TbFile file = fileMapper.selectByPrimaryKey(fid);
+			if(file.getIsdir()) {
+				downDir(fid, savePath);
+			}else {
+				try {
+					downFile(file.getFurl(),file.getFname()+"."+file.getSuffix(), savePath);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return 500;
+				}
+			}
+		}
+		return 200;
+	}
+
 	//读取文件
 	private  byte[] readInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[1024];
@@ -324,6 +352,7 @@ public class FileServiceImpl implements FileService {
 		return strings;
 	}
 
+
 	
 	//搜索
 	@Override
@@ -352,4 +381,87 @@ public class FileServiceImpl implements FileService {
 	
 	
 	
+
+	//文件夹上传
+	@Override
+	public TbFile saveDir(List<MultipartFile> files, TbUser user, String parentId) throws Exception {
+		if(files==null) {
+			return null;
+		}else {
+			String upDirName = "";
+			for (MultipartFile f : files) {
+				if (f instanceof CommonsMultipartFile) {
+					CommonsMultipartFile f2 = (CommonsMultipartFile) f;
+					//切割路径
+					String[] strings = f2.getFileItem().getName().split("/");
+					upDirName = strings[0];
+					//父id
+					String pid = parentId;
+					//创建文件结构
+					for (int i=0;i<strings.length-1;i++) {
+						//判断路径是否存在
+						TbFileExample example = new TbFileExample();
+						Criteria criteria = example.createCriteria();
+						criteria.andParentidEqualTo(pid);
+						criteria.andFnameEqualTo(strings[i]);
+						List<TbFile> list = fileMapper.selectByExample(example);
+						if(list.isEmpty()) {
+							//创建目录结构
+							TbFile file = new TbFile();
+							//获取id
+							String fid = UUID.randomUUID().toString().replace("-", "");
+							file.setFid(fid);
+							file.setFname(strings[i]);
+							file.setFurl("-");
+							file.setIsdir(true);
+							file.setParentid(pid);
+							file.setUid(user.getUid());
+							Date date = new Date();
+							file.setUpdatetime(date);
+							file.setUploadtime(date);
+							//插入数据
+							fileMapper.insertSelective(file);
+							//更新父id
+							pid = fid;
+						}else {
+							pid = list.get(0).getFid();
+						}
+					}
+					//上传文件 返回服务器URL
+					String furl = FileUploadUtils.fileUpload(f);
+					//保存文件数据
+					TbFile file = new TbFile();
+					file.setFid(UUID.randomUUID().toString().replace("-", ""));
+					//截取文件名和后缀
+					String originalFilename = f.getOriginalFilename();
+					String fileName = originalFilename.substring(0, originalFilename.lastIndexOf('.'));
+					String suffix = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+					file.setFname(fileName);
+					file.setFurl(furl);
+					file.setSuffix(suffix);
+					file.setIsdir(false);
+					// 获取文件大小
+					Double size = f.getSize() * 1.0;
+					file.setFsize(size);
+					file.setParentid(pid);
+					Date date = new Date();
+					file.setUpdatetime(date);
+					file.setUploadtime(date);
+					file.setUid(user.getUid());
+					//插入数据
+					fileMapper.insert(file);
+				}
+			}
+			//获取顶层文件夹
+			TbFileExample example = new TbFileExample();
+			Criteria criteria = example.createCriteria();
+			criteria.andParentidEqualTo(parentId);
+			criteria.andFnameEqualTo(upDirName);
+			List<TbFile> list = fileMapper.selectByExample(example);
+			if(list.isEmpty()) {
+				return null;
+			}
+			return list.get(0);
+		}
+	}
 }

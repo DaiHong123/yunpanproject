@@ -1,8 +1,10 @@
 package cn.qst.service;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.qst.pojo.TbFile;
+import cn.qst.pojo.TbUser;
 
 public interface FileService {
 
@@ -38,12 +40,18 @@ public interface FileService {
 
 
 
-	int downFile(String fileurl, String fileName, String suffix, String savePath) throws Exception;
+	int downFile(String fileurl, String fileName,  String savePath) throws Exception;
 
 	Integer downDir(String fid , String savePath);
+
 	
 	List<TbFile> searchByName(String searchName,String uid,String groupBy);
 	
 	String capacity(String uid);
+
+
+	Integer downFiles(String[] fids, String savePath);
+
+	TbFile saveDir(List<MultipartFile> files, TbUser user, String parentId) throws Exception;
 
 }
