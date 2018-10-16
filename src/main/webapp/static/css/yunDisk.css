@@ -3,16 +3,23 @@ body, h1, p, form {
 	margin: 0;
 }
 
-#musicPlqy{
+.videoPlay {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#musicPlay{
 	position: absolute;
-	top: 300px;
-	left: 100px;
+	top: 520px;
+	left: 940px;
 	z-index: 100;
 	background-color: #E0E5E5;
-	overflow: auto;
 	/* 外阴影 */
 	box-shadow: 0px 0px 10px #000;
-	display: block;
+	display: none;
 }
 
 #inform {
