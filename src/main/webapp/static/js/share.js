@@ -37,6 +37,7 @@ function cancel(id) {
 			contentType:"application/x-www-form-urlencoded",
 			data:{"sid":id},
 			success:function(data) {
+				data = JSON.parse(data);
 				alert(data);
 				window.location.href="/myshare"; 
 			},

@@ -70,9 +70,7 @@ function fundFileByParentId(parentId,isdir){
 			data:{"fid":parentId},
 			success:function(data) {
 				var file = data;
-				if(file.isdir){
-        			
-        		}else if(file.suffix == "jpg"){
+				if(file.suffix == "jpg"){
         			showImg(file.furl);
         		}else if(file.suffix == "txt"){
         			

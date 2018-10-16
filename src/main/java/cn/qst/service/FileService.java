@@ -6,9 +6,9 @@ import cn.qst.pojo.TbFile;
 
 public interface FileService {
 
-	List<TbFile> fundFileByType(String type , String uid);
+	List<TbFile> fundFileByType(String type , String uid,String groupBy);
 
-	List<TbFile> funFileByParentId(String parentId , String uid);
+	List<TbFile> funFileByParentId(String parentId , String uid,String groupBy);
 
 	List<TbFile> fundFileParentsById(String parentId);
 	
@@ -42,6 +42,6 @@ public interface FileService {
 
 	Integer downDir(String fid , String savePath);
 	
-	List<TbFile> searchByName(String searchName,String uid);
+	List<TbFile> searchByName(String searchName,String uid,String groupBy);
 
 }

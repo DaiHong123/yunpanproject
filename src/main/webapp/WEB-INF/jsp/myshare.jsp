@@ -58,7 +58,7 @@
 	<section class="wrap clear" id="tBody">
 	<div class="contRight">
 		<ul id="aside">
-			<a onclick="asideAll()" href="javascript:void(0);">
+			<a onclick="asideAll()" href="/yunDisk">
 				<li id="asideAll" class="asideAll active"><i
 					class="icon icon-disk"></i><span>全部文件</span></li>
 			</a>

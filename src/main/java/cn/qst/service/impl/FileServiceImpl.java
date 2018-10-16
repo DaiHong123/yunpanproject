@@ -44,9 +44,10 @@ public class FileServiceImpl implements FileService {
 	
 	//根据文件类型查询文件
 	@Override
-	public List<TbFile> fundFileByType(String type , String uid) {
+	public List<TbFile> fundFileByType(String type , String uid,String groupBy) {
 		if("All".equals(type)) {
 			TbFileExample example = new TbFileExample();
+			example.setOrderByClause(groupBy);
 			Criteria criteria = example.createCriteria();
 			criteria.andParentidEqualTo(TOP_PARERNT_ID);
 			criteria.andUidEqualTo(uid);
@@ -62,8 +63,9 @@ public class FileServiceImpl implements FileService {
 
 	//根据文件Id获取子文件
 	@Override
-	public List<TbFile> funFileByParentId(String parentId , String uid) {
+	public List<TbFile> funFileByParentId(String parentId , String uid,String groupBy) {
 		TbFileExample example = new TbFileExample();
+		example.setOrderByClause(groupBy);
 		Criteria criteria = example.createCriteria();
 		criteria.andParentidEqualTo(parentId);
 		criteria.andUidEqualTo(uid);
@@ -325,11 +327,11 @@ public class FileServiceImpl implements FileService {
 	
 	//搜索
 	@Override
-	public List<TbFile> searchByName(String searchName,String uid) {
+	public List<TbFile> searchByName(String searchName,String uid,String groupBy) {
 		// TODO Auto-generated method stub
 		
 		TbFileExample example = new TbFileExample();
-		example.setOrderByClause("updatetime");
+		example.setOrderByClause(groupBy);
 		Criteria criteria = example.createCriteria();
 		criteria.andFnameLike("%"+searchName+"%");
 		criteria.andUidEqualTo(uid);
