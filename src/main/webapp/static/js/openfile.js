@@ -1,4 +1,4 @@
-function cancel(id) {
+function cancel1(id) {
 	if(confirm("确认取消分享？")) {
 		$.ajax({
 			url:"/cancelShare",

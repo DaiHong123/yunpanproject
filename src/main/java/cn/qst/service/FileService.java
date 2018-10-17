@@ -1,4 +1,6 @@
 package cn.qst.service;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -55,5 +57,7 @@ public interface FileService {
 	TbFile saveDir(List<MultipartFile> files, TbUser user, String parentId) throws Exception;
 	
 	List<TbFile> getTbFiles(String uid);
+	
+	byte[] readInputStream(InputStream inputStream) throws IOException;
 
 }

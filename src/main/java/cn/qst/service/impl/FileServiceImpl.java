@@ -200,6 +200,7 @@ public class FileServiceImpl implements FileService {
 	public void copyFile(String fid, String pid,String uid) {
 		// TODO Auto-generated method stub	
 		//首先将查找到的fid的文件复制一份到数据库中指向pid
+		System.out.println(fid);
 		TbFileExample example = new TbFileExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andFidEqualTo(fid);
@@ -328,7 +329,7 @@ public class FileServiceImpl implements FileService {
 	}
 
 	//读取文件
-	private  byte[] readInputStream(InputStream inputStream) throws IOException {
+	public  byte[] readInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[1024];
         int len = 0;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

@@ -142,7 +142,7 @@
 							<td style="max-width:233px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="/openfile?code=${share.sid}" target="_blank">http://localhost:8080/openfile?code=${share.sid}</a></td>
 							<td style="width: 20%;">
 								<button class="btn btn-primary" data="${share.sid}" onclick="copy(this)">复制链接</button>
-								<button class="btn btn-delete" onclick="cancel('${share.sid}')">取消分享</button>
+								<button class="btn btn-delete" onclick="cancel1('${share.sid}')">取消分享</button>
 							</td>
 						</tr>
 					</c:forEach>

@@ -8,9 +8,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>查看分享文件</title>
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
+
 <link rel="stylesheet" href="../../static/css/openfile.css" />
-<script src="../../static/js/jquery-1.8.3.min.js"></script>
 <link rel="stylesheet" href="../../static/css/breviary.css" />
+<link href="../../static/css/index_1.css" rel="stylesheet" />
+<script src="../../static/js/jquery-1.8.3.min.js"></script>
 <script>
 	var urlcode= '${shareInfo.sid}';
 	console.log(urlcode);
@@ -80,7 +82,7 @@
 								<c:when test="${shareInfo.uid==user.uid}">
 									<a class="btn g-button">
 										<span class="ico icon icon-share-cancel"></span>
-										<span class="text" onclick="cancel('${shareInfo.sid}')">取消分享</span>
+										<span class="text" onclick="cancel1('${shareInfo.sid}')">取消分享</span>
 									</a>
 								</c:when>
 								<c:otherwise>
@@ -90,7 +92,7 @@
 									</a>
 								</c:otherwise>
 							</c:choose>
-							<a class="btn g-button">
+							<a class="btn g-button" onclick="downFiles()">
 								<em class="icon icon-download" title="下载"></em>
 								下载
 							</a>
@@ -153,7 +155,7 @@
 									<c:forEach var="file" items="${files}" varStatus="ind">
 										<tr data-file-id="1" class="active">
 											<td>
-												<input type="checkbox" class="checkstyle" value="1cd1c192acd74b53862759e03fb9cccd" onclick="allcheck(),display()">
+												<input type="checkbox" class="checkstyle" value="${file.fid}" onclick="allcheck(),display()">
 												<c:choose>
 													<c:when test="${file.isdir}">
 														<i class="fileIcon"></i>
@@ -183,8 +185,8 @@
 												</a>
 												<div class="filesFns right">
 													<a onclick="downFile('${file.parentid}','${file.fname}','null')" class="icon icon-download" href="javascript:;">下载</a>
-												</div>
-											</td>
+											</div>
+									</td>
 											<td>
 												<c:choose>
 													<c:when test="${file.fsize==null}">
@@ -251,4 +253,5 @@
 <script src="../../static/js/handledata.js"></script>
 <script src="../../static/js/file.js"></script>
 <script src="../../static/js/openfile.js"></script>
+<script src="../../static/js/yunDisk.js"></script>
 </html>
