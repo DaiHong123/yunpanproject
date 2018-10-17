@@ -348,7 +348,6 @@ body::-webkit-scrollbar-track-piece {
 </body>
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>
-<script src="../../static/js/search.js"></script>
 <script src="../../static/js/yunDisk.js"></script>
 <script src="../../static/js/file.js"></script>
 <script src="../../static/js/fileUpload.js"></script>
@@ -356,7 +355,7 @@ body::-webkit-scrollbar-track-piece {
 <script src="../../static/js/data.js"></script>
 <script src="../../static/js/tools.js"></script>
 <script src="../../static/js/handledata.js"></script>
+<script src="../../static/js/search.js"></script>
 <link href="../../static/jplyer/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../../static/jplyer/jquery.min.js"></script>
 <script type="text/javascript" src="../../static/jplyer/jquery.jplayer.min.js"></script>
 </html>

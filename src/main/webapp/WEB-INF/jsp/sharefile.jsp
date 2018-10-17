@@ -91,7 +91,7 @@
 									</a>
 								</c:otherwise>
 							</c:choose>
-							<a class="btn g-button">
+							<a class="btn g-button" onclick="downFiles()">
 								<em class="icon icon-download" title="下载"></em>
 								下载
 							</a>
@@ -252,4 +252,5 @@
 <script src="../../static/js/handledata.js"></script>
 <script src="../../static/js/file.js"></script>
 <script src="../../static/js/openfile.js"></script>
+<script src="../../static/js/yunDisk.js"></script>
 </html>

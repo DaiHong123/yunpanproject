@@ -27,7 +27,7 @@ function asideImg(){
 	$(".filesListRoute").find("a").remove();
 	$(".filesListRoute").find("span").remove();
 	$(".filesListRoute").append("<span>全部图片</span>");
-	fundFileByTyPe("jpg");
+	fundImg();
 }
 function asideText(){
 	document.getElementById('filesListHeadChangChose').style.display='none';
@@ -153,6 +153,40 @@ function fundFileByTyPe(type){
         }
 	});
 }
+
+function fundImg(){
+	$.ajax({
+	    url : "/file/fundFile", 
+		type: "post", 
+		async:true,
+		contentType:"application/x-www-form-urlencoded",
+		data: {"type":"jpg"},
+        success: function(data){//如果调用servlet成功，响应200。请求成功后回调函数。这个方法有两个参数：服务器返回数据，返回状态(可以缺省)。
+        	document.getElementById('allChecks').checked = false;
+        	$("#filesTab").find("tr").remove();
+        	$(".filesListCount").find("span").remove();
+        	$(".filesListCount").append("<span>已加载</span><span class='filesCount'>"+data.length+"</span><span>个</span>");
+        	$.each(data,function(i,file){
+        		var str="<tr data-file-id=\"1\" class=\"active\">";
+        		str+="<td><input type=\"checkbox\" class=\"checkstyle\"  onclick=\"allcheck(),display()\"  value="+file.fid+" />";
+        		str+="<a href=\"http://192.168.25.175/"+file.furl+"\" target=\"_new\" ><div  style=\" height:100px;width:100px;overflow:hidden;margin-bottom:10px \"><img src=\"http://192.168.25.175/"+file.furl+"\" style=\" height:100px;width:100px;\" /></div></a>";
+        		str+="<div class=\"filesFns right\" style=\"margin-top:-68px;margin-right:10px\">";
+        		str+="<a class=\"icon icon-share\" href=\"javascript:;\">分享</a>";
+        		str+="<a onclick=\"downFile(\'"+file.fid+"\',\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\',"+file.isdir+")\" class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
+        		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
+        		str+="</div></td><td><span>"
+        		if(file.fsize){
+        			str+=file.fsize+"</span></td>";
+        		}else{
+        			str+="——</span></td>";
+        		}
+        		str+="<td><span class=\"fileChangeDate\">"+dateFmt("yyyy-MM-dd",new Date(file.updatetime))+"</span></td></tr>";
+        		$("#filesTab").append(str);
+        	});
+        }
+	});
+}
+
 function dateFmt(fmt,date) 
 { //author: meizz   
   var o = {
@@ -267,22 +301,6 @@ $('#searcher').on('click',function(){
 	    	$.each(data,function(i,file){
 	    		var str="<tr data-file-id=\"1\" class=\"active\">";
 	    		str+="<td><input type=\"checkbox\" class=\"checkstyle\"  onclick=\"allcheck(),display()\"  value="+file.fid+" />";
-	    		if(file.isdir){
-	    			str+="<i class=\"fileIcon\"></i>";
-	    		}else if(file.suffix == "jpg"){
-	    			str+="<input id = \""+file.fname+"\" value = \""+file.furl+"\" style=\" display:none \">"
-	    			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'"+file.fname+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
-	    		}else if(file.suffix == "txt"){
-	    			str+="<i class=\"txtIcon\"></i>";
-	    		}else if(file.suffix == "mp4"){
-	    			str+="<i class=\"videoIcon\"></i>";
-	    		}else if(file.suffix == "seed"){
-	    			str+="<i class=\"seedIcon\"></i>";
-	    		}else if(file.suffix == "mp3"){
-	    			str+="<i class=\"musicIcon\"></i>";
-	    		}else{
-	    			str+="<i class=\"otherIcon\"></i>";
-	    		}
 	    		str+="<a onclick=\"fundFileByParentId(\'"+file.fid+"\',"+file.isdir+")\" href=\"javascript:void(0);\" ><span class=\"fileTitle\" title="+file.fname+">"+file.fname+"</span></a>";
 	    		str+="<div class=\"filesFns right\">";
 	    		str+="<a class=\"icon icon-share\" href=\"javascript:;\">分享</a>";
