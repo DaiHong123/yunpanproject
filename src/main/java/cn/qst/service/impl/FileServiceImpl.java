@@ -47,9 +47,10 @@ public class FileServiceImpl implements FileService {
 	
 	//根据文件类型查询文件
 	@Override
-	public List<TbFile> fundFileByType(String type , String uid) {
+	public List<TbFile> fundFileByType(String type , String uid,String groupBy) {
 		if("All".equals(type)) {
 			TbFileExample example = new TbFileExample();
+			example.setOrderByClause(groupBy);
 			Criteria criteria = example.createCriteria();
 			criteria.andParentidEqualTo(TOP_PARERNT_ID);
 			criteria.andUidEqualTo(uid);
@@ -65,8 +66,9 @@ public class FileServiceImpl implements FileService {
 
 	//根据文件Id获取子文件
 	@Override
-	public List<TbFile> funFileByParentId(String parentId , String uid) {
+	public List<TbFile> funFileByParentId(String parentId , String uid,String groupBy) {
 		TbFileExample example = new TbFileExample();
+		example.setOrderByClause(groupBy);
 		Criteria criteria = example.createCriteria();
 		criteria.andParentidEqualTo(parentId);
 		criteria.andUidEqualTo(uid);
@@ -358,6 +360,36 @@ public class FileServiceImpl implements FileService {
 		return strings;
 	}
 
+
+	
+	//搜索
+	@Override
+	public List<TbFile> searchByName(String searchName,String uid,String groupBy) {
+		// TODO Auto-generated method stub
+		
+		TbFileExample example = new TbFileExample();
+		example.setOrderByClause(groupBy);
+		Criteria criteria = example.createCriteria();
+		criteria.andFnameLike("%"+searchName+"%");
+		criteria.andUidEqualTo(uid);
+		
+		List<TbFile> selectByExample = fileMapper.selectByExample(example );
+		return selectByExample;
+	}
+
+	
+	//计算容量
+	@Override
+	public String capacity(String uid) {
+		// TODO Auto-generated method stub
+		
+		String capacity = fileMapper.capacity(uid);
+		return capacity;
+	}
+	
+	
+	
+
 	//文件夹上传
 	@Override
 	public TbFile saveDir(List<MultipartFile> files, TbUser user, String parentId) throws Exception {
@@ -439,5 +471,17 @@ public class FileServiceImpl implements FileService {
 			}
 			return list.get(0);
 		}
+	}
+
+	@Override
+	public List<TbFile> getTbFiles(String uid) {
+		// TODO Auto-generated method stub
+		
+		
+		TbFileExample example = new TbFileExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andUidEqualTo(uid);
+		fileMapper.selectByExample(example );
+		return null;
 	}
 }

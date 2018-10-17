@@ -36,6 +36,14 @@
     {
     	if(data !=null){
     		alert("上传成功");
+    		
+    		//更改加载的值
+    		var sum = $('.filesCount').text();
+   		 sum++;
+   		 $(".filesListCount").find("span").remove();
+        	$(".filesListCount").append("<span>已加载</span><span class='filesCount'>"+sum+"</span><span>个</span>");
+    		
+    		
     		var str="<tr data-file-id=\"1\" class=\"active\">";
     		str+="<td><input type=\"checkbox\" class=\"checkstyle\" value="+data.fid+" onclick=\"allcheck(),display()\"/>";
     		if(data.isdir){
@@ -66,6 +74,7 @@
     		}
     		str+="<td><span class=\"fileChangeDate\">"+dateFmt("yyyy-MM-dd",new Date(data.updatetime))+"</span></td></tr>";
     		$("#filesTab").append(str);
+    		capacity();
     	}else{
     		alert('上传失败!!!');
     	}

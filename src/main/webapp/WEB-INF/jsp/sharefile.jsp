@@ -75,12 +75,24 @@
 							<h2 class="file-name" title="${shareInfo.sname}">${shareInfo.sname}</h2>
 						</div>
 						<div class="slide-show-right">
-							<c:if test="${shareInfo.uid==user.uid}">
-								<a class="btn g-button">
-									<span class="text" onclick="cancel('${shareInfo.sid}')">取消分享</span>
-								</a>
-							</c:if>
-							<a class="btn g-button">下载</a>
+							<c:choose>
+								<c:when test="${shareInfo.uid==user.uid}">
+									<a class="btn g-button">
+										<span class="ico icon icon-share-cancel"></span>
+										<span class="text" onclick="cancel('${shareInfo.sid}')">取消分享</span>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a class="btn g-button g-button-blue">
+										<em class="icon icon-save-disk" title="保存到网盘"></em>
+										<span class="text" onclick="javascript:;">保存到网盘</span>
+									</a>
+								</c:otherwise>
+							</c:choose>
+							<a class="btn g-button">
+								<em class="icon icon-download" title="下载"></em>
+								下载
+							</a>
 						</div>
 						<div class="cb"></div>
 						<div class="slide-show-other-infos">
@@ -98,6 +110,11 @@
 							<div id="filesListHeadChangBtn" style="display:none;"></div>
 							<div class="filesListHeadBtnsR left">
 								<div class="filesListHeadChangChose" id="filesListHeadChangChose">
+									<c:if test="${shareInfo.uid!=user.uid}">
+										<span class="headDownLoad">
+											<i class="icon icon-save-disk"></i>保存到网盘
+										</span>
+									</c:if>
 									<span class="headDownLoad">
 										<i class="icon icon-download"></i>下载
 									</span>
@@ -135,8 +152,31 @@
 										<tr data-file-id="1" class="active">
 											<td>
 												<input type="checkbox" class="checkstyle" value="1cd1c192acd74b53862759e03fb9cccd" onclick="allcheck(),display()">
-												<i class="fileIcon"></i>
-												<a onclick="fundFileByParentId('1cd1c192acd74b53862759e03fb9cccd',true)" href="javascript:void(0);">
+												<c:choose>
+													<c:when test="${file.isdir}">
+														<i class="fileIcon"></i>
+													</c:when>
+													<c:when test="${file.suffix==\"jpg\"}">
+														<input id = "${file.fid}" value = "${file.furl}" style="display:none "/>
+														<i id="btn" onMouseOver="showInform(event,'${file.fname}')" onMouseOut="hiddenInform(event)" class="imgIcon"></i>
+													</c:when>
+													<c:when test="${file.suffix == \"txt\"}">
+														<i class="txtIcon"></i>
+													</c:when>
+													<c:when test="${file.suffix == \"mp4\"}">
+														<i class="videoIcon"></i>
+													</c:when>													
+													<c:when test="${file.suffix == \"seed\"}">
+														<i class="seedIcon"></i>
+													</c:when>													
+													<c:when test="${file.suffix == \"mp3\"}">
+														<i class="musicIcon"></i>
+													</c:when>
+													<c:otherwise>
+														<i class="otherIcon"></i>
+													</c:otherwise>
+												</c:choose>
+												<a onclick="fundFileByParentId('${file.fid}', ${file.isdir})" href="javascript:void(0);">
 													<span class="fileTitle" title="${file.fname}">${file.fname}</span>
 												</a>
 												<div class="filesFns right">

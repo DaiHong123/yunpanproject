@@ -27,4 +27,6 @@ public interface TbFileMapper {
     int updateByPrimaryKeySelective(TbFile record);
 
     int updateByPrimaryKey(TbFile record);
+    
+    String capacity(String uid);
 }

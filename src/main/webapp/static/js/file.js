@@ -239,7 +239,6 @@ function allcheck() {
 		}
 	}
 	if (s == cks.length) {
-
 		document.getElementById('allChecks').checked = true;
 	} else {
 		document.getElementById('allChecks').checked = false;
@@ -332,7 +331,7 @@ function deletefile(){
 	 $.ajax({
 			url : "/file/deleteFile",
 			type : "get",
-			async : true,
+			async : false,
 			contentType : "application/x-www-form-urlencoded",
 			data : {
 				 fids
@@ -347,7 +346,8 @@ function deletefile(){
 				document.getElementById('filesListHeadChangBtn').style.display='block';
 				alert("删除成功");
 			}
-		});	
+		});
+	 capacity();
 }
 
 
@@ -405,6 +405,7 @@ function sure(){
 					
 				}
 			});
+		 capacity();
 	}else{
 		var fids = [];
 		var i = 0;
@@ -427,6 +428,9 @@ function sure(){
 						alert("移动成功");
 						document.getElementById('module-canvas').style.display='none';
 						document.getElementById('fileTreeDialog').style.display='none';
+						document.getElementById('allChecks').checked = false;
+						document.getElementById('filesListHeadChangChose').style.display='none';
+						document.getElementById('filesListHeadChangBtn').style.display='block';
 						 $("input[class='checkstyle']:checked").each(function() { // 遍历选中的checkbox
 					         n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
 					         $("table.files").find("tr:eq("+n+")").remove();
@@ -486,6 +490,7 @@ function moveLocation(obj){
 
 //分享
 function shareFile() {
+	alert("dsfsdf")
 	var str ="";
 	str+="<span class='dialog-header-title'><em class='select-text' >创建分享</em></span>";
 	$('#bb').html(str);
