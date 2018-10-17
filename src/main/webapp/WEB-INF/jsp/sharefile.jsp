@@ -119,7 +119,7 @@
 											<i class="icon icon-save-disk"></i>保存到网盘
 										</span>
 									</c:if>
-									<span class="headDownLoad">
+									<span class="headDownLoad" onclick="downFiles()">
 										<i class="icon icon-download"></i>下载
 									</span>
 								</div>
@@ -246,12 +246,10 @@
 </body>
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>
-<script src="../../static/js/search.js"></script>
 <script src="../../static/js/sharefile.js"></script>
 <script src="../../static/js/breviary.js"></script>
 <script src="../../static/js/tools.js"></script>
 <script src="../../static/js/handledata.js"></script>
 <script src="../../static/js/file.js"></script>
 <script src="../../static/js/openfile.js"></script>
-<script src="../../static/js/yunDisk.js"></script>
 </html>

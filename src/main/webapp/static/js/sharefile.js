@@ -50,9 +50,7 @@ function fundFileByParentId(parentId,isdir){
 	        		}
 	        		str+="<a onclick=\"fundFileByParentId(\'"+file.fid+"\',"+file.isdir+")\" href=\"javascript:void(0);\" ><span class=\"fileTitle\" title="+file.fname+">"+file.fname+"</span></a>";
 	        		str+="<div class=\"filesFns right\">";
-	        		str+="<a class=\"icon icon-share\" href=\"javascript:;\">分享</a>";
 	        		str+="<a onclick=\"downFile(\'"+file.fid+"\',\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\',"+file.isdir+")\" class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
-	        		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
 	        		str+="</div></td><td><span>"
 	        		if(file.fsize){
 	        			str+=file.fsize+"</span></td>";
@@ -193,4 +191,45 @@ function hiddenInform(event) {
 		document.getElementById('inform').style.display = 'none';
 		$("#thum_Img").attr("src", "../../static/thum_img/blankBg.png"); 
 	}
+}
+
+//音乐播放=====
+
+//显示播放控件
+function showJplayMusic(furl, fname) {
+	document.getElementById("musicPlay").style.display = 'block';
+	jplayMusic(furl, fname);
+}
+//隐藏播放控件，并停止播放
+function noShowJplayMusic() {
+	document.getElementById("musicPlay").style.display = 'none';
+}
+
+//播放控件
+function jplayMusic(furl, fname) {
+	fname = fname + "(点击这里隐藏)";
+	$(document).ready(function(){
+		$("#jquery_jplayer_1").jPlayer({
+			ready: function (event) {
+				$(this).jPlayer("setMedia", {
+					title: fname,
+					mp3:furl,
+					oga:furl
+				});
+			},
+			swfPath: "../../jplayer",
+			supplied: "m4a, oga",
+			wmode: "window",
+			useStateClassSkin: true,
+			autoBlur: false,
+			smoothPlayBar: true,
+			keyEnabled: true,
+			remainingDuration: true,
+			toggleDuration: true
+		});
+	});
+}
+//视频控件
+function playVideo(furl, fname) {
+	window.open("/file/videoPlay?furl="+furl+"&fname="+fname);
 }
