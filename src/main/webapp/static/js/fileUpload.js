@@ -161,6 +161,7 @@
     		}
     		str+="<td><span class=\"fileChangeDate\">"+dateFmt("yyyy-MM-dd",new Date(data.updatetime))+"</span></td></tr>";
     		$("#filesTab").append(str);
+    		capacity();
     	}else{
     		alert('文件夹为空或上传失败!!!');
     	}

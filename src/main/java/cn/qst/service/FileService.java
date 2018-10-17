@@ -36,7 +36,7 @@ public interface FileService {
 	List<String> fundChildren(String pid);
 	
 	
-	void copyFile(String fid,String pid);
+	void copyFile(String fid,String pid,String uid);
 	
 	boolean moveFile(String fid,String pid);
 

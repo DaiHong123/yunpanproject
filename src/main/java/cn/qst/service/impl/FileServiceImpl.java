@@ -71,7 +71,7 @@ public class FileServiceImpl implements FileService {
 		example.setOrderByClause(groupBy);
 		Criteria criteria = example.createCriteria();
 		criteria.andParentidEqualTo(parentId);
-		criteria.andUidEqualTo(uid);
+		if( uid != null ) criteria.andUidEqualTo(uid);
 		return fileMapper.selectByExample(example);
 	}
 	
@@ -197,7 +197,7 @@ public class FileServiceImpl implements FileService {
 	
 	//复制文件
 	@Override
-	public void copyFile(String fid, String pid) {
+	public void copyFile(String fid, String pid,String uid) {
 		// TODO Auto-generated method stub	
 		//首先将查找到的fid的文件复制一份到数据库中指向pid
 		TbFileExample example = new TbFileExample();
@@ -209,6 +209,7 @@ public class FileServiceImpl implements FileService {
 		tbFile.setParentid(pid);
 		tbFile.setUploadtime(new Date());
 		tbFile.setUpdatetime(new Date());
+		tbFile.setUid(uid);
 		 fileMapper.insertSelective(tbFile);
 		 
 		 //查找其fid下的所有子文件
@@ -218,7 +219,7 @@ public class FileServiceImpl implements FileService {
 		List<TbFile> selectByExample = fileMapper.selectByExample(example3);
 		//递归查找其子文件再复制
 		for(TbFile file:selectByExample) {
-			copyFile(file.getFid(), tbFile.getFid());
+			copyFile(file.getFid(), tbFile.getFid(),uid);
 		}		
 	}
 
