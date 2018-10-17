@@ -11,11 +11,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import cn.qst.service.FileService;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.awt.image.BufferedImage;
 import net.coobird.thumbnailator.Thumbnails;
 
 import java.io.BufferedInputStream;
-
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -100,82 +101,8 @@ public class FileController {
 	public TbFile findFileByFid(String fid) {
 		return fileService.findFileByFid(fid);
 	}
-
-	/**
-	 * 接受图片url地址，生成图片缩略图，并返回缩略图url
-	 * 
-	 * @param session
-	 * @param request
-	 * @param url
-	 * @return
-	 * @throws IOException
-	 */
-	@ResponseBody
-	@RequestMapping("/thumbnail")
-	public String thumbnail(HttpSession session, HttpServletRequest request, String furl , String type)
-			throws IOException {
-		// 初始化缩略图的路径
-		String uploadPath = "/static/thum_img";
-		String realUploadPath = session.getServletContext().getRealPath(uploadPath);
-		URL httpUrl = new URL("http://192.168.25.175/"+furl);  
-		HttpURLConnection conn = (HttpURLConnection)httpUrl.openConnection();  
-                //设置超时间为3秒
-		conn.setConnectTimeout(3*1000);
-		//防止屏蔽程序抓取而返回403错误
-		conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
-		//得到输入流
-		InputStream inputStream = conn.getInputStream();
-		
-		String des = null;
-		String thumbImageUrl = null;
-		if ("thum".equals(type)) {
-			des = realUploadPath + "/thum_1";
-			thumbImageUrl = uploadPath + "/thum_1";
-		} else {
-			des = realUploadPath + "/big_thum_1";
-			thumbImageUrl = uploadPath + "/big_thum_1";
-		}
-		BufferedImage sourceImg = null;
-		try {
-			sourceImg = ImageIO.read(inputStream);
-			Integer width = sourceImg.getWidth();
-			Integer height = sourceImg.getHeight();
-			if ("thum".equals(type)) {
-				if (width > 100 || height > 100) {
-					width = width / 2;
-					height = height / 2;
-				} else if (width > 450 || height > 450) {
-					width = width / 3;
-					height = height / 3;
-				} else if (width > 800 || height > 800) {
-					width = width / 4;
-					height = height / 4;
-				}
-			} else {
-				if (width < 100 || height < 100) {
-					width = width * 4;
-					height = height * 4;
-				} else if (width < 350 || height < 350) {
-					width = width * 2;
-					height = height * 2;
-				}
-			}
-			Thumbnails.of(new BufferedInputStream(inputStream)).size(width, height).toFile(des);
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}	finally {
-			if(inputStream!=null) {
-				inputStream.close();
-			}
-		}
-		
-		return thumbImageUrl;
-	}
-
+	
+	
 	/**
 	 * 视频url， 名字转发
 	 * @param furl

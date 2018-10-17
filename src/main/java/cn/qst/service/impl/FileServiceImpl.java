@@ -327,7 +327,7 @@ public class FileServiceImpl implements FileService {
 	}
 
 	//读取文件
-	private  byte[] readInputStream(InputStream inputStream) throws IOException {
+	public  byte[] readInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[1024];
         int len = 0;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
