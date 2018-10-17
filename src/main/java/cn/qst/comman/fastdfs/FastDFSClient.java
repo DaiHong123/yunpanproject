@@ -1,14 +1,17 @@
 package cn.qst.comman.fastdfs;
 
+import java.io.IOException;
+
+import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.ClientGlobal;
 import org.csource.fastdfs.StorageClient1;
 import org.csource.fastdfs.StorageServer;
 import org.csource.fastdfs.TrackerClient;
-import org.csource.fastdfs.TrackerServer;
+import org.csource.fastdfs.TrackerServer;;
 
 /**
- * 图片服务器客户端
+ * 文件服务器客户端
  * @author Administrator
  *
  */
@@ -77,5 +80,33 @@ public class FastDFSClient {
 	
 	public String uploadFile(byte[] fileContent, String extName) throws Exception {
 		return uploadFile(fileContent, extName, null);
+	}
+	
+	//删除文件方法
+	public Integer deleteFile(String file_id) {
+		try {
+			return storageClient.delete_file1(file_id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		} catch (MyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public byte[] fileDown(String url) {
+		try {
+			return  storageClient.download_file1(url);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

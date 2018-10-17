@@ -147,20 +147,28 @@ public class FileServiceImpl implements FileService {
 	//文件删除
 	@Override
 	public void deleteFile(String fid) {
-		// TODO Auto-generated method stub		
-		TbFileExample example = new TbFileExample();
-		Criteria criteria = example.createCriteria();
-		criteria.andParentidEqualTo(fid);
-		List<TbFile> files = fileMapper.selectByExample(example);
-		//如果存在子菜单
-				if(files!=null&&files.size()>0) {
-					//递归删除
-					for (TbFile file : files) {
-						this.deleteFile(file.getFid());
-					}
+		//获取文件信息
+		TbFile tbFile = fileMapper.selectByPrimaryKey(fid);
+		if(tbFile.getIsdir()) {
+			TbFileExample example = new TbFileExample();
+			Criteria criteria = example.createCriteria();
+			criteria.andParentidEqualTo(fid);
+			List<TbFile> files = fileMapper.selectByExample(example);
+			//如果存在子菜单
+			if(files!=null&&files.size()>0) {
+				//递归删除
+				for (TbFile file : files) {
+					this.deleteFile(file.getFid());
 				}
-				//删除改菜单
-				fileMapper.deleteByPrimaryKey(fid);		
+			}
+			//删除改菜单
+			fileMapper.deleteByPrimaryKey(fid);		
+		}else {
+			//删除服务器保存的文件
+			FileUploadUtils.fileDelete(tbFile.getFurl());
+			//删除数据库保存的数据
+			fileMapper.deleteByPrimaryKey(fid);
+		}
 	}
 
 	@Override

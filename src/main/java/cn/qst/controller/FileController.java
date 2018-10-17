@@ -1,7 +1,7 @@
 package cn.qst.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,13 +15,17 @@ import java.io.FileNotFoundException;
 import java.awt.image.BufferedImage;
 import net.coobird.thumbnailator.Thumbnails;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -47,7 +51,8 @@ public class FileController {
 
 	@Autowired
 	private FileService fileService;
-
+	
+	
 	// 右侧功能栏搜索,根据类型查询文件
 	@RequestMapping("/fundFile")
 	@ResponseBody
@@ -101,67 +106,67 @@ public class FileController {
 	 */
 	@ResponseBody
 	@RequestMapping("/thumbnail")
-	public String thumbnail(HttpSession session, HttpServletRequest request, String furl, String type)
+	public String thumbnail(HttpSession session, HttpServletRequest request, String furl , String type)
 			throws IOException {
 		// 初始化缩略图的路径
 		String uploadPath = "/static/thum_img";
 		String realUploadPath = session.getServletContext().getRealPath(uploadPath);
-		File file = new File(furl);
+		URL httpUrl = new URL("http://192.168.25.175/"+furl);  
+		HttpURLConnection conn = (HttpURLConnection)httpUrl.openConnection();  
+                //设置超时间为3秒
+		conn.setConnectTimeout(3*1000);
+		//防止屏蔽程序抓取而返回403错误
+		conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+		//得到输入流
+		InputStream inputStream = conn.getInputStream();
+		
 		String des = null;
 		String thumbImageUrl = null;
 		if ("thum".equals(type)) {
-			des = realUploadPath + "/thum_" + file.getName();
-			thumbImageUrl = uploadPath + "/thum_" + file.getName();
+			des = realUploadPath + "/thum_1";
+			thumbImageUrl = uploadPath + "/thum_1";
 		} else {
-			des = realUploadPath + "/big_thum_" + file.getName();
-			thumbImageUrl = uploadPath + "/big_thum_" + file.getName();
+			des = realUploadPath + "/big_thum_1";
+			thumbImageUrl = uploadPath + "/big_thum_1";
 		}
-		if (new File(des).exists()) {
-			return thumbImageUrl;
-		} else {
-			BufferedImage sourceImg = null;
-			FileInputStream fileInputStream = null;
-			try {
-				fileInputStream = new FileInputStream(file);
-				sourceImg = ImageIO.read(fileInputStream);
-				Integer width = sourceImg.getWidth();
-				Integer height = sourceImg.getHeight();
-				if ("thum".equals(type)) {
-					if (width > 100 || height > 100) {
-						width = width / 2;
-						height = height / 2;
-					} else if (width > 450 || height > 450) {
-						width = width / 3;
-						height = height / 3;
-					} else if (width > 800 || height > 800) {
-						width = width / 4;
-						height = height / 4;
-					}
-				} else {
-					if (width < 100 || height < 100) {
-						width = width * 4;
-						height = height * 4;
-					} else if (width < 350 || height < 350) {
-						width = width * 2;
-						height = height * 2;
-					}
+		BufferedImage sourceImg = null;
+		try {
+			sourceImg = ImageIO.read(inputStream);
+			Integer width = sourceImg.getWidth();
+			Integer height = sourceImg.getHeight();
+			if ("thum".equals(type)) {
+				if (width > 100 || height > 100) {
+					width = width / 2;
+					height = height / 2;
+				} else if (width > 450 || height > 450) {
+					width = width / 3;
+					height = height / 3;
+				} else if (width > 800 || height > 800) {
+					width = width / 4;
+					height = height / 4;
 				}
-				Thumbnails.of(furl).size(width, height).toFile(des);
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} finally {
-				try {
-					fileInputStream.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			} else {
+				if (width < 100 || height < 100) {
+					width = width * 4;
+					height = height * 4;
+				} else if (width < 350 || height < 350) {
+					width = width * 2;
+					height = height * 2;
 				}
 			}
+			Thumbnails.of(new BufferedInputStream(inputStream)).size(width, height).toFile(des);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	finally {
+			if(inputStream!=null) {
+				inputStream.close();
+			}
 		}
+		
 		return thumbImageUrl;
 	}
 

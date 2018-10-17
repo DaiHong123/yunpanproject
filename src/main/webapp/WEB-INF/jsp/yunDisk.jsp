@@ -148,16 +148,16 @@ body::-webkit-scrollbar-track-piece {
 	<div class="filesListHeadBtnsR left">
 		<div class="filesListHeadChangBtn" id="filesListHeadChangBtn">
 			<span id="clickUpload" class="filesUpLoad">
-				<i class="icon icon-upload"></i>上传
+				<i class="icon icon-upload"></i>上传文件
 				<form id="formUpload" method="post" enctype="multipart/form-data">
-					<input id="fileUpload" type="file" name="uploadFile" style="display: none">
+					<input id="fileUpload" type="file" name="uploadFile" style="display: none" >
 				</form>
 			</span>
 			<span id="clickUploadDir" class="filesUpLoad"  >
-					<i class="icon icon-upload"></i>上传文件夹
-					<form id="formUploadDir" method="post" enctype="multipart/form-data">
-						<input id="fileUploadDir" type="file" name="uploadFileDir" style="display: none" webkitdirectory>
-					</form>
+				<i class="icon icon-upload"></i>上传文件夹
+				<form id="formUploadDir" method="post" enctype="multipart/form-data">
+					<input id="fileUploadDir" type="file" name="uploadFileDir" style="display: none" webkitdirectory >
+				</form>	
 			</span>
 			<span class="filesCreate" onclick="createFile()">
 			 	<i class="icon icon-newfolder"></i>新建文件夹
