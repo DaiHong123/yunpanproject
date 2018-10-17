@@ -95,6 +95,7 @@
 								下载
 							</a>
 						</div>
+						<div id="headResetName" style="display:none;"></div>
 						<div class="cb"></div>
 						<div class="slide-show-other-infos">
 							<div class="share-file-info">
@@ -246,6 +247,8 @@
 <script src="../../static/js/search.js"></script>
 <script src="../../static/js/sharefile.js"></script>
 <script src="../../static/js/breviary.js"></script>
+<script src="../../static/js/tools.js"></script>
+<script src="../../static/js/handledata.js"></script>
 <script src="../../static/js/file.js"></script>
 <script src="../../static/js/openfile.js"></script>
 <script src="../../static/js/yunDisk.js"></script>
