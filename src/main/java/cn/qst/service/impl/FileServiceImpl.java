@@ -71,7 +71,7 @@ public class FileServiceImpl implements FileService {
 		example.setOrderByClause(groupBy);
 		Criteria criteria = example.createCriteria();
 		criteria.andParentidEqualTo(parentId);
-		criteria.andUidEqualTo(uid);
+		if( uid != null ) criteria.andUidEqualTo(uid);
 		return fileMapper.selectByExample(example);
 	}
 	

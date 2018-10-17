@@ -16,3 +16,10 @@ function cancel(id) {
 		});
 	 }
 }
+
+function login(uid) {
+	if( uid == null || uid.trim() == '' ) {
+		alert("请先登录");
+		return false;
+	}
+}

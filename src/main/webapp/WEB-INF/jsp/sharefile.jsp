@@ -83,7 +83,7 @@
 									</a>
 								</c:when>
 								<c:otherwise>
-									<a class="btn g-button g-button-blue">
+									<a class="btn g-button g-button-blue" onclick="login('${user.uid}'),breviary(),isCopyOrMove('复制到')">
 										<em class="icon icon-save-disk" title="保存到网盘"></em>
 										<span class="text" onclick="javascript:;">保存到网盘</span>
 									</a>
@@ -111,7 +111,7 @@
 							<div class="filesListHeadBtnsR left">
 								<div class="filesListHeadChangChose" id="filesListHeadChangChose">
 									<c:if test="${shareInfo.uid!=user.uid}">
-										<span class="headDownLoad">
+										<span class="headDownLoad" onclick="login('${user.uid}'),breviary(),isCopyOrMove('复制到')">
 											<i class="icon icon-save-disk"></i>保存到网盘
 										</span>
 									</c:if>
@@ -200,6 +200,40 @@
 							</table>
 						</div>
 					</section>
+					<div class="module-canvas" id="module-canvas"
+							style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;"></div>
+						<div class="dialog dialog-fileTreeDialog dialog-gray"
+							id="fileTreeDialog"
+							style="width: 520px; top: 195px; bottom: auto; left: 400px; right: auto; display: none; visibility: visible; z-index: 53;"
+							onmousedown="moveLocation(this)">
+						<div class="dialog-header dialog-drag">
+							<h3 id="aa">
+								<span class="dialog-header-title"><em class="select-text"></em></span>
+							</h3>
+							<div class="dialog-control">
+								<span class="dialog-icon dialog-close ">
+									<span class="sicon" onclick="cancel()">x</span>
+								</span>
+							</div>
+						</div>
+						<div id="treeView" style="max-height: 300px; overflow: auto;"></div>
+						<div class="dialog-footer g-clearfix">
+							<a class="g-button g-button-large" data-button-id="b77"
+									data-button-index="" href="javascript:;" title="取消"
+									style="float: right; padding-left: 50px;">
+								<span class="g-button-right" style="padding-right: 50px;">
+									<span class="text" style="width: auto;" onclick="cancel()">取消</span>
+								</span>
+							</a>
+							<a class="g-button g-button-blue-large" data-button-id="b81"
+									data-button-index="" href="javascript:;" title="确定"
+									style="float: left; padding-left: 50px;" onclick="sure()">
+								<span class="g-button-right" style="padding-right: 50px;">
+									<span class="text" style="width: auto;">确定</span>
+								</span>
+							</a>
+						</div>
+					</div>
 				</div>
 			</c:if>
 		</section>
@@ -210,6 +244,7 @@
 <script src="../../static/js/myIndex.js"></script>
 <script src="../../static/js/search.js"></script>
 <script src="../../static/js/sharefile.js"></script>
+<script src="../../static/js/breviary.js"></script>
 <script src="../../static/js/file.js"></script>
 <script src="../../static/js/openfile.js"></script>
 </html>

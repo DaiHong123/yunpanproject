@@ -77,7 +77,7 @@ public class FileController {
 		}
 		
 		// 获取该文件夹的子文件
-		List<TbFile> fileList = fileService.funFileByParentId(parentId, user.getUid(),groupBy);
+		List<TbFile> fileList = fileService.funFileByParentId(parentId, user==null?null:user.getUid(),groupBy);
 		// 获取该文件的父文件
 		List<TbFile> parent = fileService.fundFileParentsById(parentId);
 		// 创建返回结果集
@@ -303,6 +303,7 @@ public class FileController {
 		Tree tree = new Tree();
 		List<TreeFile> files = new ArrayList<>();
 		TbUser user = (TbUser) session.getAttribute("user");
+		if( user == null ) return tree;
 		List<TbFile> TbFiles = fileService.treeFiles(user.getUid());
 		TreeFile treeFile1 = new TreeFile();
 		treeFile1.setId("-1");
