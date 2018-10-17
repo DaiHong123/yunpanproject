@@ -152,8 +152,31 @@
 										<tr data-file-id="1" class="active">
 											<td>
 												<input type="checkbox" class="checkstyle" value="1cd1c192acd74b53862759e03fb9cccd" onclick="allcheck(),display()">
-												<i class="fileIcon"></i>
-												<a onclick="fundFileByParentId('1cd1c192acd74b53862759e03fb9cccd',true)" href="javascript:void(0);">
+												<c:choose>
+													<c:when test="${file.isdir}">
+														<i class="fileIcon"></i>
+													</c:when>
+													<c:when test="${file.suffix==\"jpg\"}">
+														<input id = "${file.fid}" value = "${file.furl}" style="display:none "/>
+														<i id="btn" onMouseOver="showInform(event,'${file.fname}')" onMouseOut="hiddenInform(event)" class="imgIcon"></i>
+													</c:when>
+													<c:when test="${file.suffix == \"txt\"}">
+														<i class="txtIcon"></i>
+													</c:when>
+													<c:when test="${file.suffix == \"mp4\"}">
+														<i class="videoIcon"></i>
+													</c:when>													
+													<c:when test="${file.suffix == \"seed\"}">
+														<i class="seedIcon"></i>
+													</c:when>													
+													<c:when test="${file.suffix == \"mp3\"}">
+														<i class="musicIcon"></i>
+													</c:when>
+													<c:otherwise>
+														<i class="otherIcon"></i>
+													</c:otherwise>
+												</c:choose>
+												<a onclick="fundFileByParentId('${file.fid}', ${file.isdir})" href="javascript:void(0);">
 													<span class="fileTitle" title="${file.fname}">${file.fname}</span>
 												</a>
 												<div class="filesFns right">
