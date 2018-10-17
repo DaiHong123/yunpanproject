@@ -355,6 +355,7 @@ body::-webkit-scrollbar-track-piece {
 <script src="../../static/js/data.js"></script>
 <script src="../../static/js/tools.js"></script>
 <script src="../../static/js/handledata.js"></script>
+<script src="../../static/js/search.js"></script>
 <link href="../../static/jplyer/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../../static/jplyer/jquery.jplayer.min.js"></script>
 </html>
