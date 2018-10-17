@@ -53,5 +53,7 @@ public interface FileService {
 	Integer downFiles(String[] fids, String savePath);
 
 	TbFile saveDir(List<MultipartFile> files, TbUser user, String parentId) throws Exception;
+	
+	List<TbFile> getTbFiles(String uid);
 
 }

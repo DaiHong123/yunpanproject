@@ -331,7 +331,7 @@ function deletefile(){
 	 $.ajax({
 			url : "/file/deleteFile",
 			type : "get",
-			async : true,
+			async : false,
 			contentType : "application/x-www-form-urlencoded",
 			data : {
 				 fids
@@ -346,7 +346,8 @@ function deletefile(){
 				document.getElementById('filesListHeadChangBtn').style.display='block';
 				alert("删除成功");
 			}
-		});	
+		});
+	 capacity();
 }
 
 
@@ -404,6 +405,7 @@ function sure(){
 					
 				}
 			});
+		 capacity();
 	}else{
 		var fids = [];
 		var i = 0;

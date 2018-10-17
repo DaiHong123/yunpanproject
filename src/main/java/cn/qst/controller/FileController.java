@@ -401,4 +401,12 @@ public class FileController {
 			return Double.parseDouble(capacity);
 		}
 	}
+	
+	@RequestMapping("/getTbFiles")
+	@ResponseBody
+	public List<TbFile> getTbFiles(HttpSession session){
+		TbUser user = (TbUser) session.getAttribute("user");
+		List<TbFile> getTbFiles = fileService.getTbFiles(user.getUid());
+		return getTbFiles;
+	}
 }

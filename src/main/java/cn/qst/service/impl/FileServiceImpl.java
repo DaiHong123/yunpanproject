@@ -464,4 +464,16 @@ public class FileServiceImpl implements FileService {
 			return list.get(0);
 		}
 	}
+
+	@Override
+	public List<TbFile> getTbFiles(String uid) {
+		// TODO Auto-generated method stub
+		
+		
+		TbFileExample example = new TbFileExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andUidEqualTo(uid);
+		fileMapper.selectByExample(example );
+		return null;
+	}
 }
