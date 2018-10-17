@@ -176,6 +176,20 @@ public class FileController {
 		return thumbImageUrl;
 	}
 
+	/**
+	 * 视频url， 名字转发
+	 * @param furl
+	 * @param name
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/videoPlay")
+	public String videoPlay(String furl, String fname, HttpServletRequest request) {
+		request.setAttribute("furl", furl);
+		request.setAttribute("fname", fname);
+		return "videoPlay";
+	}
+	
 	// 添加文件夹
 	@RequestMapping("/createFile")
 	@ResponseBody

@@ -3,12 +3,29 @@ body, h1, p, form {
 	margin: 0;
 }
 
+.videoPlay {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#musicPlay{
+	position: absolute;
+	top: 520px;
+	left: 940px;
+	z-index: 100;
+	background-color: #E0E5E5;
+	/* 外阴影 */
+	box-shadow: 0px 0px 10px #000;
+	display: none;
+}
+
 #inform {
 	position: absolute;
 	top: 100px;
 	left: 100px;
-	/*max-height: 10000px;
-	 璁剧疆鏈�澶ч珮搴︼紝褰撻珮搴﹁揪鍒版鍊兼椂鍑虹幇婊氬姩鏉� */
 	z-index: 100;
 	background-color: #E0E5E5;
 	overflow: auto;
@@ -21,8 +38,6 @@ body, h1, p, form {
 
 #big_thum {
 	position: absolute;
-	/*max-height: 10000px;
-	 璁剧疆鏈�澶ч珮搴︼紝褰撻珮搴﹁揪鍒版鍊兼椂鍑虹幇婊氬姩鏉� */
 	background-color: #000000;
 	overflow: auto;
 	/* 澶栭槾褰� */

@@ -73,15 +73,15 @@ function fundFileByParentId(parentId,isdir){
 				if(file.suffix == "jpg"){
         			showImg(file.furl);
         		}else if(file.suffix == "txt"){
-        			
+        			window.open(file.furl);
         		}else if(file.suffix == "mp4"){
-        			
+        			playVideo(file.furl, file.fname);
         		}else if(file.suffix == "seed"){
         			
         		}else if(file.suffix == "mp3"){
-        			
-        		}else{
-        			
+        			showJplayMusic(file.furl, file.fname);
+        		}else if(file.suffix == "pdf"){
+        			window.open("../../static/pdfjs/web/viewer.html?file="+file.furl);
         		}
 			}
 		})
@@ -129,7 +129,7 @@ function downFile(fid,fileurl , fileName , suffix , isdir){
 	   });
 	}
 }
-
+//图片在线预览--
 function showImg(furl) {
 	$.ajax({
 		url : "/file/thumbnail", 
@@ -191,4 +191,54 @@ function hiddenInform(event) {
 		$("#thum_Img").attr("src", "../../static/thum_img/blankBg.png"); 
 	}
 }
+//图片在线预览--
+
+
+//音乐播放=====
+
+//显示播放控件
+function showJplayMusic(furl, fname) {
+	document.getElementById("musicPlay").style.display = 'block';
+	jplayMusic(furl, fname);
+}
+//隐藏播放控件，并停止播放
+function noShowJplayMusic() {
+	document.getElementById("musicPlay").style.display = 'none';
+}
+
+//播放控件
+function jplayMusic(furl, fname) {
+	fname = fname + "(点击这里隐藏)";
+	$(document).ready(function(){
+		$("#jquery_jplayer_1").jPlayer({
+			ready: function (event) {
+				$(this).jPlayer("setMedia", {
+					title: fname,
+					mp3:furl,
+					oga:furl
+				});
+			},
+			swfPath: "../../jplayer",
+			supplied: "m4a, oga",
+			wmode: "window",
+			useStateClassSkin: true,
+			autoBlur: false,
+			smoothPlayBar: true,
+			keyEnabled: true,
+			remainingDuration: true,
+			toggleDuration: true
+		});
+	});
+}
+//视频控件
+function playVideo(furl, fname) {
+	window.open("/file/videoPlay?furl="+furl+"&fname="+fname);
+}
+
+
+
+
+
+
+
 
