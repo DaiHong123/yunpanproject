@@ -490,7 +490,6 @@ function moveLocation(obj){
 
 //分享
 function shareFile() {
-	alert("dsfsdf")
 	var str ="";
 	str+="<span class='dialog-header-title'><em class='select-text' >创建分享</em></span>";
 	$('#bb').html(str);

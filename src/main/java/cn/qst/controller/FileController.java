@@ -408,6 +408,9 @@ public class FileController {
 	@ResponseBody
 	public double capacity(HttpSession session) {
 		TbUser user = (TbUser) session.getAttribute("user");
+		if(user==null) {
+			return 0;
+		}
 		String capacity = fileService.capacity(user.getUid());
 		if(capacity==null) {
 			return 0;
