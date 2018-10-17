@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
 <link rel="stylesheet" href="../../static/css/openfile.css" />
 <script src="../../static/js/jquery-1.8.3.min.js"></script>
+<link rel="stylesheet" href="../../static/css/breviary.css" />
 <script>
 	var urlcode= '${shareInfo.sid}';
 	console.log(urlcode);
