@@ -323,7 +323,8 @@ public class FileController {
 	// 复制文件
 	@RequestMapping("/copyFiles")
 	@ResponseBody
-	public boolean copyFiles(@RequestParam(value = "fids[]") String[] fids, String pid) {
+	public boolean copyFiles(@RequestParam(value = "fids[]") String[] fids, String pid,HttpSession session) {
+		TbUser user = (TbUser) session.getAttribute("user");
 		boolean b = true;
 		for (String fid : fids) {
 			String fname = fileService.selectNameByFid(fid);
@@ -336,7 +337,7 @@ public class FileController {
 			}
 		}
 		for (String fid : fids) {
-			fileService.copyFile(fid, pid);
+			fileService.copyFile(fid, pid,user.getUid());
 		}
 		return b;
 	}
