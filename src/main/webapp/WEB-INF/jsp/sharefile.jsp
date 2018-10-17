@@ -9,6 +9,8 @@
 <title>查看分享文件</title>
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
 <link rel="stylesheet" href="../../static/css/openfile.css" />
+<link rel="stylesheet" href="../../static/css/breviary.css" />
+<link href="../../static/css/index_1.css" rel="stylesheet" />
 <script src="../../static/js/jquery-1.8.3.min.js"></script>
 <script>
 	var urlcode= '${shareInfo.sid}';
