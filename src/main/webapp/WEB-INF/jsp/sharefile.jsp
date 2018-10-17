@@ -9,7 +9,8 @@
 <title>查看分享文件</title>
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
 <link rel="stylesheet" href="../../static/css/openfile.css" />
-<script src="../../static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../../static/js/jquery-1.8.3.min.js"></script>
+
 <script>
 	var urlcode= '${shareInfo.sid}';
 	console.log(urlcode);
@@ -89,7 +90,7 @@
 									</a>
 								</c:otherwise>
 							</c:choose>
-							<a class="btn g-button">
+							<a class="btn g-button" onclick="downFiles()">
 								<em class="icon icon-download" title="下载"></em>
 								下载
 							</a>
@@ -247,4 +248,5 @@
 <script src="../../static/js/breviary.js"></script>
 <script src="../../static/js/file.js"></script>
 <script src="../../static/js/openfile.js"></script>
+<script src="../../static/js/yunDisk.js"></script>
 </html>

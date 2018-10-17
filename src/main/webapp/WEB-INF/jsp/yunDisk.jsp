@@ -348,7 +348,6 @@ body::-webkit-scrollbar-track-piece {
 </body>
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>
-<script src="../../static/js/search.js"></script>
 <script src="../../static/js/yunDisk.js"></script>
 <script src="../../static/js/file.js"></script>
 <script src="../../static/js/fileUpload.js"></script>
