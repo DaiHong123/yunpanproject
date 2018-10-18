@@ -39,4 +39,18 @@
 	<context:component-scan base-package="cn.qst.controller"/>
 	<!-- 配置资源映射 -->
 	 <mvc:resources location="/static/" mapping="/static/**"/>
+	 <!--设置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--需要拦截的controller连接-->
+            <mvc:mapping path="/User/changUserInfo"/>
+            <mvc:mapping path="/User/upHeadImage"/>
+            <mvc:mapping path="/User/userCityInfo"/>
+            <mvc:mapping path="/User/allProvinceInfo"/>
+            <mvc:mapping path="/User/CityInfoById"/>
+            <mvc:mapping path="/User/personalInfo"/>
+            <mvc:mapping path="/yunDisk"/>
+            <bean class="cn.qst.intercept.UserLoginIntercept"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
