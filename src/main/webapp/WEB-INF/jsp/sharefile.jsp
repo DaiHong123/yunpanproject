@@ -15,7 +15,6 @@
 <script src="../../static/js/jquery-1.8.3.min.js"></script>
 <script>
 	var urlcode= '${shareInfo.sid}';
-	console.log(urlcode);
 </script>
 </head>
 <body>

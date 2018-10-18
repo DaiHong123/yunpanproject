@@ -301,6 +301,22 @@ $('#searcher').on('click',function(){
 	    	$.each(data,function(i,file){
 	    		var str="<tr data-file-id=\"1\" class=\"active\">";
 	    		str+="<td><input type=\"checkbox\" class=\"checkstyle\"  onclick=\"allcheck(),display()\"  value="+file.fid+" />";
+	    		if(file.isdir){
+	    			str+="<i class=\"fileIcon\"></i>";
+	    		}else if(file.suffix == "jpg"){
+	    			str+="<input id = \""+file.fname+"\" value = \""+file.furl+"\" style=\" display:none \">"
+	    			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'"+file.fname+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
+	    		}else if(file.suffix == "txt"){
+	    			str+="<i class=\"txtIcon\"></i>";
+	    		}else if(file.suffix == "mp4"){
+	    			str+="<i class=\"videoIcon\"></i>";
+	    		}else if(file.suffix == "seed"){
+	    			str+="<i class=\"seedIcon\"></i>";
+	    		}else if(file.suffix == "mp3"){
+	    			str+="<i class=\"musicIcon\"></i>";
+	    		}else{
+	    			str+="<i class=\"otherIcon\"></i>";
+	    		}
 	    		str+="<a onclick=\"fundFileByParentId(\'"+file.fid+"\',"+file.isdir+")\" href=\"javascript:void(0);\" ><span class=\"fileTitle\" title="+file.fname+">"+file.fname+"</span></a>";
 	    		str+="<div class=\"filesFns right\">";
 	    		str+="<a class=\"icon icon-share\" href=\"javascript:;\">分享</a>";
@@ -425,3 +441,6 @@ $('#filesSortId').on('click',function(){
 		}
 	})
 })
+
+
+

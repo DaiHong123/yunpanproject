@@ -200,13 +200,15 @@ public class FileServiceImpl implements FileService {
 	public void copyFile(String fid, String pid,String uid) {
 		// TODO Auto-generated method stub	
 		//首先将查找到的fid的文件复制一份到数据库中指向pid
-		System.out.println(fid);
 		TbFileExample example = new TbFileExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andFidEqualTo(fid);
 		List<TbFile> example2 = fileMapper.selectByExample(example );
 		TbFile tbFile = example2.get(0);
 		tbFile.setFid(UUID.randomUUID().toString().replaceAll("-", ""));
+		if(pid==null) {
+			pid = "-1";
+		}
 		tbFile.setParentid(pid);
 		tbFile.setUploadtime(new Date());
 		tbFile.setUpdatetime(new Date());
@@ -348,12 +350,16 @@ public class FileServiceImpl implements FileService {
 	
 	//通过父id查找其子类名字
 	@Override
-	public List<String> fundChildren(String pid) {
+	public List<String> fundChildren(String pid,String uid) {
 		// TODO Auto-generated method stub
 		List<String> strings = new ArrayList<>();
 		TbFileExample example = new TbFileExample();
 		Criteria criteria = example.createCriteria();
+		if(pid==null) {
+			pid = "-1";
+		}
 		criteria.andParentidEqualTo(pid);
+		criteria.andUidEqualTo(uid);
 		List<TbFile> selectByExample = fileMapper.selectByExample(example);
 		
 		for(TbFile file:selectByExample) {
