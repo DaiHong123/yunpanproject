@@ -66,15 +66,26 @@ public class FileServiceImpl implements FileService {
 
 	//根据文件Id获取子文件
 	@Override
-	public List<TbFile> funFileByParentId(String parentId , String uid,String groupBy) {
+	public List<TbFile> funFileByParentId(String parentId ,String groupBy) {
 		TbFileExample example = new TbFileExample();
 		example.setOrderByClause(groupBy);
 		Criteria criteria = example.createCriteria();
 		criteria.andParentidEqualTo(parentId);
-		if( uid != null ) criteria.andUidEqualTo(uid);
 		return fileMapper.selectByExample(example);
 	}
 	
+	
+	@Override
+	public List<TbFile> funFileByParentId(String parentId, String uid, String groupBy) {
+		// TODO Auto-generated method stub
+		TbFileExample example = new TbFileExample();
+		example.setOrderByClause(groupBy);
+		Criteria criteria = example.createCriteria();
+		criteria.andParentidEqualTo(parentId);
+		criteria.andUidEqualTo(uid);
+		return fileMapper.selectByExample(example);
+	}
+
 	@Override
 	public List<TbFile> fundFileParentsById(String parentId) {
 		// TODO Auto-generated method stub

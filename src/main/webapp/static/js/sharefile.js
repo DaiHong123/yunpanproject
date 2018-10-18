@@ -2,7 +2,7 @@ function fundFileByParentId(parentId,isdir){
 	if(isdir){
 		$.ajax({
 		    url : "/file/fundFileByParentId", 
-			type: "post", 
+			type: "post",
 			async:true,
 			contentType:"application/x-www-form-urlencoded",
 			data: {"parentId":parentId},
@@ -53,7 +53,7 @@ function fundFileByParentId(parentId,isdir){
 	        		str+="<a onclick=\"downFile(\'"+file.fid+"\',\'"+file.furl+"\',\'"+file.fname+"\',\'"+file.suffix+"\',"+file.isdir+")\" class=\"icon icon-download\" href=\"javascript:;\">下载</a>";
 	        		str+="</div></td><td><span>"
 	        		if(file.fsize){
-	        			str+=file.fsize+"</span></td>";
+	        			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
 	        		}else{
 	        			str+="——</span></td>";
 	        		}

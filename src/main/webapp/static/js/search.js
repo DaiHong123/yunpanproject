@@ -143,7 +143,7 @@ function fundFileByTyPe(type){
         		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
         		str+="</div></td><td><span>"
         		if(file.fsize){
-        			str+=file.fsize+"</span></td>";
+        			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
         		}else{
         			str+="——</span></td>";
         		}
@@ -176,7 +176,7 @@ function fundImg(){
         		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
         		str+="</div></td><td><span>"
         		if(file.fsize){
-        			str+=file.fsize+"</span></td>";
+        			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
         		}else{
         			str+="——</span></td>";
         		}
@@ -324,7 +324,7 @@ $('#searcher').on('click',function(){
 	    		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
 	    		str+="</div></td><td><span>"
 	    		if(file.fsize){
-	    			str+=file.fsize+"</span></td>";
+	    			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
 	    		}else{
 	    			str+="——</span></td>";
 	    		}
@@ -379,7 +379,7 @@ $('#fileSearch').ajaxForm({
     		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
     		str+="</div></td><td><span>"
     		if(file.fsize){
-    			str+=file.fsize+"</span></td>";
+    			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
     		}else{
     			str+="——</span></td>";
     		}
@@ -431,7 +431,7 @@ $('#filesSortId').on('click',function(){
 	        		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
 	        		str+="</div></td><td><span>"
 	        		if(file.fsize){
-	        			str+=file.fsize+"</span></td>";
+	        			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
 	        		}else{
 	        			str+="——</span></td>";
 	        		}

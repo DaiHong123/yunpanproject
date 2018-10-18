@@ -12,7 +12,9 @@ public interface FileService {
 
 	List<TbFile> fundFileByType(String type , String uid,String groupBy);
 
-	List<TbFile> funFileByParentId(String parentId , String uid,String groupBy);
+	List<TbFile> funFileByParentId(String parentId ,String groupBy);
+	
+	List<TbFile> funFileByParentId(String parentId ,String uid , String groupBy);
 
 	List<TbFile> fundFileParentsById(String parentId);
 	

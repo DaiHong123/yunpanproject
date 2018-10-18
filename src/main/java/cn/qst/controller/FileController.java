@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.qst.service.FileService;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -56,16 +55,13 @@ public class FileController {
 	@ResponseBody
 	public FileResult fundFileByParentId(String parentId, HttpSession session) {
 		session.setAttribute("fparentId", parentId);
-		TbUser user = (TbUser) session.getAttribute("user");
-		
-		
 		String groupBy = (String)session.getAttribute("groupBy");
 		if(groupBy==null) {
 			groupBy = "fname";
 		}
 		
 		// 获取该文件夹的子文件
-		List<TbFile> fileList = fileService.funFileByParentId(parentId, user==null?null:user.getUid(),groupBy);
+		List<TbFile> fileList = fileService.funFileByParentId(parentId,groupBy);
 		// 获取该文件的父文件
 		List<TbFile> parent = fileService.fundFileParentsById(parentId);
 		// 创建返回结果集
@@ -300,7 +296,7 @@ public class FileController {
 		return searchByName;
 	}
 	
-	//分类
+	//排序
 	@RequestMapping(value="/group")
 	@ResponseBody
 	public List<TbFile> group(HttpSession session,String group,String searchName){
@@ -316,7 +312,7 @@ public class FileController {
 		String groupBy = (String)session.getAttribute("groupBy");
 		if(searchName.equals("")) {
 			String pid = (String)session.getAttribute("fparentId");
-			List<TbFile> listFiles = fileService.funFileByParentId(pid, user.getUid(), groupBy);
+			List<TbFile> listFiles = fileService.funFileByParentId(pid,user.getUid(),groupBy);
 			return listFiles;
 		}else {
 			List<TbFile> searchByName = fileService.searchByName(searchName, user.getUid(), groupBy);

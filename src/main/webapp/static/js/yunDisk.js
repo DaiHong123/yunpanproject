@@ -51,7 +51,7 @@ function fundFileByParentId(parentId,isdir){
 	        		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
 	        		str+="</div></td><td><span>"
 	        		if(file.fsize){
-	        			str+=file.fsize+"</span></td>";
+	        			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
 	        		}else{
 	        			str+="——</span></td>";
 	        		}
