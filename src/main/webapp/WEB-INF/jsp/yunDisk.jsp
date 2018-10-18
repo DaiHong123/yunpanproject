@@ -182,8 +182,8 @@ body::-webkit-scrollbar-track-piece {
 
 		<span class="filesSort icon icon-order" id="filesSortId"> <span
 			class="filesSortList"> 
-			<span > <i class="show icon icon-sort-select"  title="fileName"></i> 文件名</span> 
-					<span > <i class="icon icon-sort-select" title="fileSize"></i> 大小</span> 
+			<span > <i class="show icon icon-sort-select "  title="fileName"></i> 文件名</span> 
+					<span > <i class=" icon icon-sort-select" title="fileSize"></i> 大小</span> 
 					<span > <i class="icon icon-sort-select" title="fileDate"></i> 修改日期</span>
 		</span>
 

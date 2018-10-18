@@ -256,8 +256,10 @@ public class FileController {
 		boolean b = true;
 		for (String fid : fids) {
 			String fname = fileService.selectNameByFid(fid);
-			System.out.println(fname);
-			List<String> fundChildren = fileService.fundChildren(pid);
+			if(pid==null) {
+				pid = "-1";
+			}
+			List<String> fundChildren = fileService.fundChildren(pid,user.getUid());
 			for (String name : fundChildren) {
 				if (fname.equals(name)) {
 					return false;
@@ -273,12 +275,13 @@ public class FileController {
 	// 移动文件
 	@RequestMapping("/moveFiles")
 	@ResponseBody
-	public boolean moveFiles(@RequestParam(value = "fids[]") String[] fids, String pid) {
+	public boolean moveFiles(@RequestParam(value = "fids[]") String[] fids, String pid,HttpSession session) {
+		TbUser user = (TbUser) session.getAttribute("user");
 		boolean b = true;
 		for (String fid : fids) {
 			String fname = fileService.selectNameByFid(fid);
 			System.out.println(fname);
-			List<String> fundChildren = fileService.fundChildren(pid);
+			List<String> fundChildren = fileService.fundChildren(pid,user.getUid());
 			for (String name : fundChildren) {
 				if (fname.equals(name)) {
 					return false;

@@ -33,7 +33,7 @@ public interface FileService {
 
 	List<TbFile> treeFiles(String uid);
 	
-	List<String> fundChildren(String pid);
+	List<String> fundChildren(String pid,String uid);
 	
 	
 	void copyFile(String fid,String pid,String uid);

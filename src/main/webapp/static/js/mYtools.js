@@ -11,7 +11,7 @@ var tools = (function(){
 		},
 		getByClass: function (className,parent) {
 			parent = parent? parent: document;
-			if (parent.getElementsByClassName(className)) {
+			if (parent.getElementsByClassName) {
 				return parent.getElementsByClassName(className);
 			} else {
 				var ele = parent.getElementsByTagName('*');
