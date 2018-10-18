@@ -228,21 +228,22 @@ function capacity(){
 				unit = "G";
 			}
 		var ss = Math.floor(data/(1024*1024*1024));
-		ss = Math.floor((ss/1024)*100);
+		var ss = Math.floor(data/(1024*1024));
+		var b =parseInt(((ss/1024)*100));
 		var str ="";
 		 str+="<div class='CapacityBar'>";
-		str+="<span>"+ss+"%</span>";
+		str+="<span>"+b+"%</span>";
 		str+="</div>";
 		str+="<div class='contRightCapacityInfo'>";
 		str+="<p class='left' style='font-size:15px'>";
-		str+="<span class='UsedAmount' >"+size+"</span>"+unit+"/<span class='allAmount'>1024</span>G";
+		str+="<span class='UsedAmount' >"+size+"</span>"+unit+"/<span class='allAmount'>1</span>G";
 		str+="</p>";
 		str+="<a class='right' href='javascript:;'>扩容</a>";
 		str+="</div>";
 		$('.contRightCapacity').find('div').remove();
 		
 		$('.contRightCapacity').append(str)
-		$('.CapacityBar').find('span').css('width',(ss*154)/100);
+		$('.CapacityBar').find('span').css('width',(b*154)/100);
 		}
 	})
 }
@@ -261,26 +262,23 @@ $(function(){
 			}else if(Math.floor(data/(1024*1024*1024))==0){
 				size = Math.floor(data/(1024*1024));
 				unit = "M";
-			}else if(Math.floor(data/(1024*1024*1024*1024))==0){
-				size = Math.floor(data/(1024*1024*1024));
-				unit = "G";
 			}
-		var ss = Math.floor(data/(1024*1024*1024));
-		ss = Math.floor((ss/1024)*100);
+		var ss = Math.floor(data/(1024*1024));
+		var b =parseInt(((ss/1024)*100));
 		var str ="";
 		 str+="<div class='CapacityBar'>";
-		str+="<span>"+ss+"%</span>";
+		str+="<span>"+b+"%</span>";
 		str+="</div>";
 		str+="<div class='contRightCapacityInfo'>";
 		str+="<p class='left' style='font-size:15px'>";
-		str+="<span class='UsedAmount' >"+size+"</span>"+unit+"/<span class='allAmount'>1024</span>G";
+		str+="<span class='UsedAmount' >"+size+"</span>"+unit+"/<span class='allAmount'>1</span>G";
 		str+="</p>";
 		str+="<a class='right' href='javascript:;'>扩容</a>";
 		str+="</div>";
 		$('.contRightCapacity').find('div').remove();
 		
 		$('.contRightCapacity').append(str)
-		$('.CapacityBar').find('span').css('width',(ss*154)/100);
+		$('.CapacityBar').find('span').css('width',(b*154)/100);
 		}
 	})
 })
