@@ -136,7 +136,7 @@ body::-webkit-scrollbar-track-piece {
 					src="../../static/img/logo.png"></a>
 			</div>
 			<div
-				style="background: url(../../static/img/bg.jpg) no-repeat; background-size: cover; width: 1345px;">
+				style="background: url(../../static/img/bg.png) no-repeat; background-size: cover; width: 1345px;">
 				<div class="loginbox registbox"
 					style="padding-top: 50px; margin-right: 45px;">
 					<div class="login-content reg-content">
