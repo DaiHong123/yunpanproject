@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.qst.service.FileService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -55,13 +56,18 @@ public class FileController {
 	@ResponseBody
 	public FileResult fundFileByParentId(String parentId, HttpSession session) {
 		session.setAttribute("fparentId", parentId);
+		TbUser user = (TbUser) session.getAttribute("user");
 		String groupBy = (String)session.getAttribute("groupBy");
 		if(groupBy==null) {
 			groupBy = "fname";
 		}
-		
+		List<TbFile> fileList = null;
 		// 获取该文件夹的子文件
-		List<TbFile> fileList = fileService.funFileByParentId(parentId,groupBy);
+		if("-1".equals(parentId)) {
+			fileList = fileService.fundFileByType("All", user.getUid(),groupBy);
+		}else {
+			fileList = fileService.funFileByParentId(parentId,groupBy);
+		}
 		// 获取该文件的父文件
 		List<TbFile> parent = fileService.fundFileParentsById(parentId);
 		// 创建返回结果集
@@ -236,7 +242,7 @@ public class FileController {
 	// 复制文件
 	@RequestMapping("/copyFiles")
 	@ResponseBody
-	public boolean copyFiles(@RequestParam(value = "fids[]") String[] fids, String pid,HttpSession session) {
+	public boolean copyFiles(@RequestParam(value = "fids[]") String[] fids, String pid,HttpSession session) throws IOException {
 		TbUser user = (TbUser) session.getAttribute("user");
 		boolean b = true;
 		for (String fid : fids) {

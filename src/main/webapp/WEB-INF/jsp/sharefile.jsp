@@ -62,7 +62,7 @@
 
 	<section id="bd">
 		<section id="bd-main">
-			<c:if test="${shareInfo==null}">
+			<c:if test="${shareInfo==null || files==null}">
 				<div id="share_nofound_des">
 					<div class="error-img">
 						<img src="/static/img/errorImg.png">

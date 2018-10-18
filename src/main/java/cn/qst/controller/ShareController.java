@@ -54,8 +54,15 @@ public class ShareController {
 		if( share != null ) {
 			String[] ids = share.getFids().split(",");
 			List<TbFile> list = new ArrayList<>();
-			for(String id: ids) list.add(fileService.selectById(id));
-			map.addAttribute("files", list);
+			for(String id: ids) {
+				TbFile file = fileService.selectById(id);
+				if(file!=null) list.add(file);
+			}
+			if(list.size()==0) {
+				map.addAttribute("files",null);
+			}else {
+				map.addAttribute("files",list);
+			}
 		}
 		return "sharefile";
 	}

@@ -35,10 +35,7 @@ function fundFileByParentId(parentId,isdir){
 	        		if(file.isdir){
 	        			str+="<i class=\"fileIcon\"></i>";
 	        		}else if(file.suffix == "jpg"){
-	        			str+="<input id = \""+file.fname+"\" value = \""+file.furl+"\" style=\" display:none \">"
-	        			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'"+file.fname+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
-	        		}else if(file.suffix == "txt"){
-	        			str+="<i class=\"txtIcon\"></i>";
+	        			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'http://192.168.25.175/"+file.furl+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
 	        		}else if(file.suffix == "mp4"){
 	        			str+="<i class=\"videoIcon\"></i>";
 	        		}else if(file.suffix == "seed"){

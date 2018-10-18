@@ -38,7 +38,7 @@ public interface FileService {
 	List<String> fundChildren(String pid,String uid);
 	
 	
-	void copyFile(String fid,String pid,String uid);
+	void copyFile(String fid,String pid,String uid) throws IOException;
 	
 	boolean moveFile(String fid,String pid);
 

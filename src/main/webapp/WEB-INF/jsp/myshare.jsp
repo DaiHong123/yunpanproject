@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -124,7 +124,7 @@
 			<li style="width: 20%;"><span>链接地址</span></li>
 			<li style="width: 18%;"><span>操作</span></li>
 		</ul>
-		<table class="files" style="margin-left: 17px;">
+		<table class="files" style="margin-left: 17px;width:98%">
 			<tbody id="filesTab">
 				<c:if test="${shares==null}">
 					<div>
