@@ -166,7 +166,6 @@ public class UserController {
 		session.removeAttribute("username");
 		session.removeAttribute("imgstr");
 		session.removeAttribute("user");
-		session.removeAttribute("UserOnlineBindingListener");
 		return "login";
 	}
 
@@ -201,7 +200,6 @@ public class UserController {
 				session.setAttribute("imgstr", user.getImage());
 				session.setAttribute("user", user);
 				session.setAttribute("fparentId", "-1");
-				session.setAttribute("UserOnlineBindingListener", new UserOnlineBindingListener());
 				return true;
 			} else {
 				return null;

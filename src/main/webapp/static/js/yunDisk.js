@@ -136,7 +136,7 @@ function showImg(furl) {
 		type: "post", 
 		async:true,
 		contentType:"application/x-www-form-urlencoded",
-		data: {"furl":furl, "type":""},
+		data: {"furl":furl ,"type":""},
         success: function(data){
         	 $("#big_thum_img").attr("src", data);   
         }

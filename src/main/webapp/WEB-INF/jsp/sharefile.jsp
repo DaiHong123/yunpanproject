@@ -8,11 +8,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>查看分享文件</title>
 <link rel="stylesheet" href="../../static/css/yunDisk.css" />
+
 <link rel="stylesheet" href="../../static/css/openfile.css" />
+<link rel="stylesheet" href="../../static/css/breviary.css" />
+<link href="../../static/css/index_1.css" rel="stylesheet" />
 <script src="../../static/js/jquery-1.8.3.min.js"></script>
 <script>
 	var urlcode= '${shareInfo.sid}';
-	console.log(urlcode);
 </script>
 </head>
 <body>
@@ -79,21 +81,22 @@
 								<c:when test="${shareInfo.uid==user.uid}">
 									<a class="btn g-button">
 										<span class="ico icon icon-share-cancel"></span>
-										<span class="text" onclick="cancel('${shareInfo.sid}')">取消分享</span>
+										<span class="text" onclick="cancel1('${shareInfo.sid}')">取消分享</span>
 									</a>
 								</c:when>
 								<c:otherwise>
-									<a class="btn g-button g-button-blue">
+									<a class="btn g-button g-button-blue" onclick="login('${user.uid}'),breviary(),isCopyOrMove('复制到')">
 										<em class="icon icon-save-disk" title="保存到网盘"></em>
 										<span class="text" onclick="javascript:;">保存到网盘</span>
 									</a>
 								</c:otherwise>
 							</c:choose>
-							<a class="btn g-button">
+							<a class="btn g-button" onclick="downFiles()">
 								<em class="icon icon-download" title="下载"></em>
 								下载
 							</a>
 						</div>
+						<div id="headResetName" style="display:none;"></div>
 						<div class="cb"></div>
 						<div class="slide-show-other-infos">
 							<div class="share-file-info">
@@ -111,11 +114,11 @@
 							<div class="filesListHeadBtnsR left">
 								<div class="filesListHeadChangChose" id="filesListHeadChangChose">
 									<c:if test="${shareInfo.uid!=user.uid}">
-										<span class="headDownLoad">
+										<span class="headDownLoad" onclick="login('${user.uid}'),breviary(),isCopyOrMove('复制到')">
 											<i class="icon icon-save-disk"></i>保存到网盘
 										</span>
 									</c:if>
-									<span class="headDownLoad">
+									<span class="headDownLoad" onclick="downFiles()">
 										<i class="icon icon-download"></i>下载
 									</span>
 								</div>
@@ -151,15 +154,38 @@
 									<c:forEach var="file" items="${files}" varStatus="ind">
 										<tr data-file-id="1" class="active">
 											<td>
-												<input type="checkbox" class="checkstyle" value="1cd1c192acd74b53862759e03fb9cccd" onclick="allcheck(),display()">
-												<i class="fileIcon"></i>
-												<a onclick="fundFileByParentId('1cd1c192acd74b53862759e03fb9cccd',true)" href="javascript:void(0);">
+												<input type="checkbox" class="checkstyle" value="${file.fid}" onclick="allcheck(),display()">
+												<c:choose>
+													<c:when test="${file.isdir}">
+														<i class="fileIcon"></i>
+													</c:when>
+													<c:when test="${file.suffix==\"jpg\"}">
+														<input id = "${file.fid}" value = "${file.furl}" style="display:none "/>
+														<i id="btn" onMouseOver="showInform(event,'${file.fname}')" onMouseOut="hiddenInform(event)" class="imgIcon"></i>
+													</c:when>
+													<c:when test="${file.suffix == \"txt\"}">
+														<i class="txtIcon"></i>
+													</c:when>
+													<c:when test="${file.suffix == \"mp4\"}">
+														<i class="videoIcon"></i>
+													</c:when>													
+													<c:when test="${file.suffix == \"seed\"}">
+														<i class="seedIcon"></i>
+													</c:when>													
+													<c:when test="${file.suffix == \"mp3\"}">
+														<i class="musicIcon"></i>
+													</c:when>
+													<c:otherwise>
+														<i class="otherIcon"></i>
+													</c:otherwise>
+												</c:choose>
+												<a onclick="fundFileByParentId('${file.fid}', ${file.isdir})" href="javascript:void(0);">
 													<span class="fileTitle" title="${file.fname}">${file.fname}</span>
 												</a>
 												<div class="filesFns right">
 													<a onclick="downFile('${file.parentid}','${file.fname}','null')" class="icon icon-download" href="javascript:;">下载</a>
-												</div>
-											</td>
+											</div>
+									</td>
 											<td>
 												<c:choose>
 													<c:when test="${file.fsize==null}">
@@ -177,6 +203,40 @@
 							</table>
 						</div>
 					</section>
+					<div class="module-canvas" id="module-canvas"
+							style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0) none repeat scroll 0% 0%; opacity: 0.5; width: 100%; height: 100%; display: none;"></div>
+						<div class="dialog dialog-fileTreeDialog dialog-gray"
+							id="fileTreeDialog"
+							style="width: 520px; top: 195px; bottom: auto; left: 400px; right: auto; display: none; visibility: visible; z-index: 53;"
+							onmousedown="moveLocation(this)">
+						<div class="dialog-header dialog-drag">
+							<h3 id="aa">
+								<span class="dialog-header-title"><em class="select-text"></em></span>
+							</h3>
+							<div class="dialog-control">
+								<span class="dialog-icon dialog-close ">
+									<span class="sicon" onclick="cancel()">x</span>
+								</span>
+							</div>
+						</div>
+						<div id="treeView" style="max-height: 300px; overflow: auto;"></div>
+						<div class="dialog-footer g-clearfix">
+							<a class="g-button g-button-large" data-button-id="b77"
+									data-button-index="" href="javascript:;" title="取消"
+									style="float: right; padding-left: 50px;">
+								<span class="g-button-right" style="padding-right: 50px;">
+									<span class="text" style="width: auto;" onclick="cancel()">取消</span>
+								</span>
+							</a>
+							<a class="g-button g-button-blue-large" data-button-id="b81"
+									data-button-index="" href="javascript:;" title="确定"
+									style="float: left; padding-left: 50px;" onclick="sure()">
+								<span class="g-button-right" style="padding-right: 50px;">
+									<span class="text" style="width: auto;">确定</span>
+								</span>
+							</a>
+						</div>
+					</div>
 				</div>
 			</c:if>
 		</section>
@@ -185,8 +245,10 @@
 </body>
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>
-<script src="../../static/js/search.js"></script>
 <script src="../../static/js/sharefile.js"></script>
+<script src="../../static/js/breviary.js"></script>
+<script src="../../static/js/tools.js"></script>
+<script src="../../static/js/handledata.js"></script>
 <script src="../../static/js/file.js"></script>
 <script src="../../static/js/openfile.js"></script>
 </html>

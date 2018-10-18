@@ -11,7 +11,7 @@
   $('#clickUpload').on('click', function()
   {
     UploadFileOnSelect();
-    console.log('object on click');
+    console.log('打开文件选择框');
   });
  
   // 选需要上载的文件 上载完毕清除 form
@@ -102,27 +102,24 @@
   {
     // 当 file 框内容改变则提交 form
     $('#formUploadDir').submit();
-    console.log('formUploadDir to submit');
   });
  
   // 定义的热点被单击则打开文件选择框
   $('#clickUploadDir').on('click', function()
   {
-    UploadFileOnSelect();
-    console.log('object on click');
+    UploadFileOnSelectDir();
+    console.log('打开文件夹选择框');
   });
  
-  // 选需要上载的文件 上载完毕清除 form
-  function UploadFileOnSelect()
+  // 选需要上载的文件夹 上载完毕清除 form
+  function UploadFileOnSelectDir()
   {
 	
     // 打开文件选择框
-    console.log('select file');
     var input = document.getElementById("fileUploadDir");
     input.click();
     // 提交完毕后初始化 form
     $('#formUploadDir').resetForm();
-    console.log('selected file ' + input.value);
   }
  
   // jquery.form upload
@@ -164,6 +161,7 @@
     		}
     		str+="<td><span class=\"fileChangeDate\">"+dateFmt("yyyy-MM-dd",new Date(data.updatetime))+"</span></td></tr>";
     		$("#filesTab").append(str);
+    		capacity();
     	}else{
     		alert('文件夹为空或上传失败!!!');
     	}
@@ -172,12 +170,10 @@
     uploadProgress : function(event, position, total, percentComplete)
     {
       // 实时进度
-      console.log('uploadProgress: ', percentComplete + '%', position, 'max:', total);
+      //console.log('uploadProgress: ', percentComplete + '%', position, 'max:', total);
     },
     error : function(data)
     {
       alert("上传失败");
-      // 返回错误信息
-      console.log('error: ' + data);
     }
   });

@@ -71,7 +71,7 @@ public class FileServiceImpl implements FileService {
 		example.setOrderByClause(groupBy);
 		Criteria criteria = example.createCriteria();
 		criteria.andParentidEqualTo(parentId);
-		criteria.andUidEqualTo(uid);
+		if( uid != null ) criteria.andUidEqualTo(uid);
 		return fileMapper.selectByExample(example);
 	}
 	
@@ -149,20 +149,28 @@ public class FileServiceImpl implements FileService {
 	//文件删除
 	@Override
 	public void deleteFile(String fid) {
-		// TODO Auto-generated method stub		
-		TbFileExample example = new TbFileExample();
-		Criteria criteria = example.createCriteria();
-		criteria.andParentidEqualTo(fid);
-		List<TbFile> files = fileMapper.selectByExample(example);
-		//如果存在子菜单
-				if(files!=null&&files.size()>0) {
-					//递归删除
-					for (TbFile file : files) {
-						this.deleteFile(file.getFid());
-					}
+		//获取文件信息
+		TbFile tbFile = fileMapper.selectByPrimaryKey(fid);
+		if(tbFile.getIsdir()) {
+			TbFileExample example = new TbFileExample();
+			Criteria criteria = example.createCriteria();
+			criteria.andParentidEqualTo(fid);
+			List<TbFile> files = fileMapper.selectByExample(example);
+			//如果存在子菜单
+			if(files!=null&&files.size()>0) {
+				//递归删除
+				for (TbFile file : files) {
+					this.deleteFile(file.getFid());
 				}
-				//删除改菜单
-				fileMapper.deleteByPrimaryKey(fid);		
+			}
+			//删除改菜单
+			fileMapper.deleteByPrimaryKey(fid);		
+		}else {
+			//删除服务器保存的文件
+			FileUploadUtils.fileDelete(tbFile.getFurl());
+			//删除数据库保存的数据
+			fileMapper.deleteByPrimaryKey(fid);
+		}
 	}
 
 	@Override
@@ -189,7 +197,7 @@ public class FileServiceImpl implements FileService {
 	
 	//复制文件
 	@Override
-	public void copyFile(String fid, String pid) {
+	public void copyFile(String fid, String pid,String uid) {
 		// TODO Auto-generated method stub	
 		//首先将查找到的fid的文件复制一份到数据库中指向pid
 		TbFileExample example = new TbFileExample();
@@ -198,9 +206,13 @@ public class FileServiceImpl implements FileService {
 		List<TbFile> example2 = fileMapper.selectByExample(example );
 		TbFile tbFile = example2.get(0);
 		tbFile.setFid(UUID.randomUUID().toString().replaceAll("-", ""));
+		if(pid==null) {
+			pid = "-1";
+		}
 		tbFile.setParentid(pid);
 		tbFile.setUploadtime(new Date());
 		tbFile.setUpdatetime(new Date());
+		tbFile.setUid(uid);
 		 fileMapper.insertSelective(tbFile);
 		 
 		 //查找其fid下的所有子文件
@@ -210,7 +222,7 @@ public class FileServiceImpl implements FileService {
 		List<TbFile> selectByExample = fileMapper.selectByExample(example3);
 		//递归查找其子文件再复制
 		for(TbFile file:selectByExample) {
-			copyFile(file.getFid(), tbFile.getFid());
+			copyFile(file.getFid(), tbFile.getFid(),uid);
 		}		
 	}
 
@@ -319,7 +331,7 @@ public class FileServiceImpl implements FileService {
 	}
 
 	//读取文件
-	private  byte[] readInputStream(InputStream inputStream) throws IOException {
+	public  byte[] readInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[1024];
         int len = 0;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -338,12 +350,16 @@ public class FileServiceImpl implements FileService {
 	
 	//通过父id查找其子类名字
 	@Override
-	public List<String> fundChildren(String pid) {
+	public List<String> fundChildren(String pid,String uid) {
 		// TODO Auto-generated method stub
 		List<String> strings = new ArrayList<>();
 		TbFileExample example = new TbFileExample();
 		Criteria criteria = example.createCriteria();
+		if(pid==null) {
+			pid = "-1";
+		}
 		criteria.andParentidEqualTo(pid);
+		criteria.andUidEqualTo(uid);
 		List<TbFile> selectByExample = fileMapper.selectByExample(example);
 		
 		for(TbFile file:selectByExample) {

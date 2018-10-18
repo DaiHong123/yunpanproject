@@ -150,16 +150,16 @@ body::-webkit-scrollbar-track-piece {
 		<div class="filesListHeadChangBtn" id="filesListHeadChangBtn">
 
 			<span id="clickUpload" class="filesUpLoad">
-				<i class="icon icon-upload"></i>上传
+				<i class="icon icon-upload"></i>上传文件
 				<form id="formUpload" method="post" enctype="multipart/form-data">
-					<input id="fileUpload" type="file" name="uploadFile" style="display: none">
+					<input id="fileUpload" type="file" name="uploadFile" style="display: none" >
 				</form>
 			</span>
 			<span id="clickUploadDir" class="filesUpLoad"  >
-					<i class="icon icon-upload"></i>上传文件夹
-					<form id="formUploadDir" method="post" enctype="multipart/form-data">
-						<input id="fileUploadDir" type="file" name="uploadFileDir" style="display: none" webkitdirectory>
-					</form>
+				<i class="icon icon-upload"></i>上传文件夹
+				<form id="formUploadDir" method="post" enctype="multipart/form-data">
+					<input id="fileUploadDir" type="file" name="uploadFileDir" style="display: none" webkitdirectory >
+				</form>	
 			</span>
 			<span class="filesCreate" onclick="createFile()">
 			 	<i class="icon icon-newfolder"></i>新建文件夹
@@ -182,8 +182,8 @@ body::-webkit-scrollbar-track-piece {
 
 		<span class="filesSort icon icon-order" id="filesSortId"> <span
 			class="filesSortList"> 
-			<span > <i class="show icon icon-sort-select"  title="fileName"></i> 文件名</span> 
-					<span > <i class="icon icon-sort-select" title="fileSize"></i> 大小</span> 
+			<span > <i class="show icon icon-sort-select "  title="fileName"></i> 文件名</span> 
+					<span > <i class=" icon icon-sort-select" title="fileSize"></i> 大小</span> 
 					<span > <i class="icon icon-sort-select" title="fileDate"></i> 修改日期</span>
 		</span>
 
@@ -348,7 +348,6 @@ body::-webkit-scrollbar-track-piece {
 </body>
 <script src="../../static/js/mYtools.js"></script>
 <script src="../../static/js/myIndex.js"></script>
-<script src="../../static/js/search.js"></script>
 <script src="../../static/js/yunDisk.js"></script>
 <script src="../../static/js/file.js"></script>
 <script src="../../static/js/fileUpload.js"></script>
@@ -356,7 +355,7 @@ body::-webkit-scrollbar-track-piece {
 <script src="../../static/js/data.js"></script>
 <script src="../../static/js/tools.js"></script>
 <script src="../../static/js/handledata.js"></script>
+<script src="../../static/js/search.js"></script>
 <link href="../../static/jplyer/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../../static/jplyer/jquery.min.js"></script>
 <script type="text/javascript" src="../../static/jplyer/jquery.jplayer.min.js"></script>
 </html>

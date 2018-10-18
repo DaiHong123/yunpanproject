@@ -1,4 +1,4 @@
-function cancel(id) {
+function cancel1(id) {
 	if(confirm("确认取消分享？")) {
 		$.ajax({
 			url:"/cancelShare",
@@ -15,4 +15,11 @@ function cancel(id) {
 			}
 		});
 	 }
+}
+
+function login(uid) {
+	if( uid == null || uid.trim() == '' ) {
+		alert("请先登录");
+		return false;
+	}
 }

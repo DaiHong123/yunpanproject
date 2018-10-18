@@ -53,4 +53,32 @@ public class FileUploadUtils {
 			return null;
 		}
 	}
+	
+	//删除
+	public static void fileDelete(String url) {
+		//通过图片服务器的配置文件初始化文件上传客户端
+		try {
+			FastDFSClient fastDFSClient = new FastDFSClient("classpath:fastdfs/client.conf");
+			Integer result = fastDFSClient.deleteFile(url);
+			System.err.println(result);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	//下载
+	public static byte[] fileDown(String url) {
+		//通过图片服务器的配置文件初始化文件上传客户端
+		try {
+			FastDFSClient fastDFSClient = new FastDFSClient("classpath:fastdfs/client.conf");
+			return fastDFSClient.fileDown(url);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }

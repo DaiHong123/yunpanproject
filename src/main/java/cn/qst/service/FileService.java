@@ -1,4 +1,6 @@
 package cn.qst.service;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -31,10 +33,10 @@ public interface FileService {
 
 	List<TbFile> treeFiles(String uid);
 	
-	List<String> fundChildren(String pid);
+	List<String> fundChildren(String pid,String uid);
 	
 	
-	void copyFile(String fid,String pid);
+	void copyFile(String fid,String pid,String uid);
 	
 	boolean moveFile(String fid,String pid);
 
@@ -55,5 +57,7 @@ public interface FileService {
 	TbFile saveDir(List<MultipartFile> files, TbUser user, String parentId) throws Exception;
 	
 	List<TbFile> getTbFiles(String uid);
+	
+	byte[] readInputStream(InputStream inputStream) throws IOException;
 
 }
