@@ -120,7 +120,8 @@ $(document).ready(function(){
 			$(this).jPlayer("setMedia", {
 				title: fname,
 				mp4: furl,
-				ogv: furl
+				ogv: furl,
+				m4v: furl
 			});
 		},
 		swfPath: "../../dist/jplayer",
