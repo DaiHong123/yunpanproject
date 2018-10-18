@@ -10,26 +10,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.qst.service.FileService;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.awt.image.BufferedImage;
-import net.coobird.thumbnailator.Thumbnails;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 import java.util.Date;
 
 import java.util.List;
 import java.util.UUID;
-
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpSession;
@@ -109,9 +96,11 @@ public class FileController {
 	 * @param name
 	 * @param request
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping("/videoPlay")
-	public String videoPlay(String furl, String fname, HttpServletRequest request) {
+	public String videoPlay(String furl, String fname, HttpServletRequest request) throws Exception {
+		fname = new String(fname.getBytes("iso8859-1"),"UTF-8");
 		request.setAttribute("furl", furl);
 		request.setAttribute("fname", fname);
 		return "videoPlay";
@@ -134,7 +123,7 @@ public class FileController {
 		TbUser user = (TbUser) session.getAttribute("user");
 		try {
 			fname = new String(fname.getBytes("iso8859-1"), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -355,4 +344,6 @@ public class FileController {
 		List<TbFile> getTbFiles = fileService.getTbFiles(user.getUid());
 		return getTbFiles;
 	}
+	
+	
 }

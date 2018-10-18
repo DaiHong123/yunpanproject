@@ -62,33 +62,8 @@ function fundFileByParentId(parentId,isdir){
 	        	});
 	        }
 		});
-	}else{
-		$.ajax({
-			url:"/file/findFileByFid",
-			type:"post",
-			async:false,
-			contentType:"application/x-www-form-urlencoded",
-			data:{"fid":parentId},
-			success:function(data) {
-				var file = data;
-				if(file.suffix == "jpg"){
-        			showImg(file.furl);
-        		}else if(file.suffix == "txt"){
-        			
-        		}else if(file.suffix == "mp4"){
-        			
-        		}else if(file.suffix == "seed"){
-        			
-        		}else if(file.suffix == "mp3"){
-        			
-        		}else{
-        			
-        		}
-			}
-		})
 	}
 }
-
 
 //文件下载
 function downFile(fid,fileurl , fileName , suffix , isdir){
@@ -131,105 +106,21 @@ function downFile(fid,fileurl , fileName , suffix , isdir){
 	}
 }
 
-function showImg(furl) {
-	$.ajax({
-		url : "/file/thumbnail", 
-		type: "post", 
-		async:true,
-		contentType:"application/x-www-form-urlencoded",
-		data: {"furl":furl, "type":""},
-        success: function(data){
-        	 $("#big_thum_img").attr("src", data);   
-        }
-	}) 
-	document.getElementById("big_thum").style.display = 'block';
-	document.getElementById("div_img").style.display = 'block';
-}
-
-function noShowImg() {
-	document.getElementById("big_thum").style.display = 'none';
-	document.getElementById("div_img").style.display = 'none';
-}
-
-//显示悬浮层
-function showInform(event, fname) {
-	var fnames = "#" + fname;
-	var furl = $(fnames).val();
-	var info = document.getElementById("inform");
-	$.ajax({
-		url : "/file/thumbnail", 
-		type: "post", 
-		async:true,
-		contentType:"application/x-www-form-urlencoded",
-		data: {"furl":furl, "type":"thum"},
-        success: function(data){
-        	 $("#thum_Img").attr("src", data);   
-        }
-	})
-	var x = event.clientX / 10 + 15;
-	var y = event.clientY / 10 - 4;
-	var top = parseInt(info.offsetTop); 
-	var left = parseInt(info.offsetLeft); 
-	top = (y + top) * 10;
-	left = (x + left) * 10;
-	top = top + "px";
-	left = left + "px";
-	$("#inform").css({"top":top,"left":left});
-	info.style.display = 'block';
-}
-//隐藏悬浮层
-function hiddenInform(event) {
-	$("#inform").css({"top":"10px","left":"10px"});
-	var informDiv = document.getElementById('btn');
-	var x = event.clientX;
-	var y = event.clientY;
-	var divx1 = informDiv.offsetLeft;
-	var divy1 = informDiv.offsetTop;
-	var divx2 = informDiv.offsetLeft + informDiv.offsetWidth;
-	var divy2 = informDiv.offsetTop + informDiv.offsetHeight;
-	if(x < divx1 || x > divx2 || y < divy1 || y > divy2) {
-		document.getElementById('inform').style.display = 'none';
-		$("#thum_Img").attr("src", "../../static/thum_img/blankBg.png"); 
-	}
-}
-
-//音乐播放=====
-
-//显示播放控件
-function showJplayMusic(furl, fname) {
-	document.getElementById("musicPlay").style.display = 'block';
-	jplayMusic(furl, fname);
-}
-//隐藏播放控件，并停止播放
-function noShowJplayMusic() {
-	document.getElementById("musicPlay").style.display = 'none';
-}
-
-//播放控件
-function jplayMusic(furl, fname) {
-	fname = fname + "(点击这里隐藏)";
-	$(document).ready(function(){
-		$("#jquery_jplayer_1").jPlayer({
-			ready: function (event) {
-				$(this).jPlayer("setMedia", {
-					title: fname,
-					mp3:furl,
-					oga:furl
-				});
-			},
-			swfPath: "../../jplayer",
-			supplied: "m4a, oga",
-			wmode: "window",
-			useStateClassSkin: true,
-			autoBlur: false,
-			smoothPlayBar: true,
-			keyEnabled: true,
-			remainingDuration: true,
-			toggleDuration: true
-		});
-	});
-}
-//视频控件
-function playVideo(furl, fname) {
-	window.open("/file/videoPlay?furl="+furl+"&fname="+fname);
-}
+function dateFmt(fmt,date) 
+{ //author: meizz   
+  var o = {
+    "M+" : date.getMonth()+1,                 //月份   
+    "d+" : date.getDate(),                    //日   
+    "h+" : date.getHours(),                   //小时   
+    "m+" : date.getMinutes(),                 //分   
+    "s+" : date.getSeconds(),                 //秒   
+    "q+" : Math.floor((date.getMonth()+3)/3), //季度   
+    "S"  : date.getMilliseconds()             //毫秒   
+  };   
+  if(/(y+)/.test(fmt))   
+    fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));   
+  for(var k in o)   
+    if(new RegExp("("+ k +")").test(fmt))   
+  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+  return fmt;   
+} 

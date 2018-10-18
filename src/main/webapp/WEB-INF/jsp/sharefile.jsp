@@ -184,7 +184,7 @@
 													<span class="fileTitle" title="${file.fname}">${file.fname}</span>
 												</a>
 												<div class="filesFns right">
-													<a onclick="downFile('${file.parentid}','${file.fname}','null')" class="icon icon-download" href="javascript:;">下载</a>
+													<a onclick="downFile('${file.fid}','${file.furl}','${file.fname}','${file.suffix}',${file.isdir })" class="icon icon-download" href="javascript:;">下载</a>
 											</div>
 									</td>
 											<td>
