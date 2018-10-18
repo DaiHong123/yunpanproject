@@ -10,26 +10,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.qst.service.FileService;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.awt.image.BufferedImage;
-import net.coobird.thumbnailator.Thumbnails;
-
-import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 import java.util.Date;
 
 import java.util.List;
 import java.util.UUID;
-
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpSession;
@@ -70,15 +57,17 @@ public class FileController {
 	public FileResult fundFileByParentId(String parentId, HttpSession session) {
 		session.setAttribute("fparentId", parentId);
 		TbUser user = (TbUser) session.getAttribute("user");
-		
-		
 		String groupBy = (String)session.getAttribute("groupBy");
 		if(groupBy==null) {
 			groupBy = "fname";
 		}
-		
+		List<TbFile> fileList = null;
 		// 获取该文件夹的子文件
-		List<TbFile> fileList = fileService.funFileByParentId(parentId, user==null?null:user.getUid(),groupBy);
+		if("-1".equals(parentId)) {
+			fileList = fileService.fundFileByType("All", user.getUid(),groupBy);
+		}else {
+			fileList = fileService.funFileByParentId(parentId,groupBy);
+		}
 		// 获取该文件的父文件
 		List<TbFile> parent = fileService.fundFileParentsById(parentId);
 		// 创建返回结果集
@@ -109,9 +98,11 @@ public class FileController {
 	 * @param name
 	 * @param request
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping("/videoPlay")
-	public String videoPlay(String furl, String fname, HttpServletRequest request) {
+	public String videoPlay(String furl, String fname, HttpServletRequest request) throws Exception {
+		fname = new String(fname.getBytes("iso8859-1"),"UTF-8");
 		request.setAttribute("furl", furl);
 		request.setAttribute("fname", fname);
 		return "videoPlay";
@@ -134,7 +125,7 @@ public class FileController {
 		TbUser user = (TbUser) session.getAttribute("user");
 		try {
 			fname = new String(fname.getBytes("iso8859-1"), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -251,7 +242,7 @@ public class FileController {
 	// 复制文件
 	@RequestMapping("/copyFiles")
 	@ResponseBody
-	public boolean copyFiles(@RequestParam(value = "fids[]") String[] fids, String pid,HttpSession session) {
+	public boolean copyFiles(@RequestParam(value = "fids[]") String[] fids, String pid,HttpSession session) throws IOException {
 		TbUser user = (TbUser) session.getAttribute("user");
 		boolean b = true;
 		for (String fid : fids) {
@@ -311,7 +302,7 @@ public class FileController {
 		return searchByName;
 	}
 	
-	//分类
+	//排序
 	@RequestMapping(value="/group")
 	@ResponseBody
 	public List<TbFile> group(HttpSession session,String group,String searchName){
@@ -327,7 +318,7 @@ public class FileController {
 		String groupBy = (String)session.getAttribute("groupBy");
 		if(searchName.equals("")) {
 			String pid = (String)session.getAttribute("fparentId");
-			List<TbFile> listFiles = fileService.funFileByParentId(pid, user.getUid(), groupBy);
+			List<TbFile> listFiles = fileService.funFileByParentId(pid,user.getUid(),groupBy);
 			return listFiles;
 		}else {
 			List<TbFile> searchByName = fileService.searchByName(searchName, user.getUid(), groupBy);
@@ -358,4 +349,6 @@ public class FileController {
 		List<TbFile> getTbFiles = fileService.getTbFiles(user.getUid());
 		return getTbFiles;
 	}
+	
+	
 }

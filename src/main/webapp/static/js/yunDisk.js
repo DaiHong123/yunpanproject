@@ -32,8 +32,7 @@ function fundFileByParentId(parentId,isdir){
 	        		if(file.isdir){
 	        			str+="<i class=\"fileIcon\"></i>";
 	        		}else if(file.suffix == "jpg"){
-	        			str+="<input id = \""+file.fname+"\" value = \""+file.furl+"\" style=\" display:none \">"
-	        			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'"+file.fname+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
+	        			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'http://192.168.25.175/"+file.furl+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
 	        		}else if(file.suffix == "txt"){
 	        			str+="<i class=\"txtIcon\"></i>";
 	        		}else if(file.suffix == "mp4"){
@@ -52,7 +51,7 @@ function fundFileByParentId(parentId,isdir){
 	        		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
 	        		str+="</div></td><td><span>"
 	        		if(file.fsize){
-	        			str+=file.fsize+"</span></td>";
+	        			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
 	        		}else{
 	        			str+="——</span></td>";
 	        		}
@@ -73,15 +72,15 @@ function fundFileByParentId(parentId,isdir){
 				if(file.suffix == "jpg"){
         			showImg(file.furl);
         		}else if(file.suffix == "txt"){
-        			window.open(file.furl);
+        			window.open("http://192.168.25.175/"+file.furl);
         		}else if(file.suffix == "mp4"){
         			playVideo(file.furl, file.fname);
         		}else if(file.suffix == "seed"){
         			
         		}else if(file.suffix == "mp3"){
-        			showJplayMusic(file.furl, file.fname);
+        			showJplayMusic("http://192.168.25.175/"+file.furl, file.fname);
         		}else if(file.suffix == "pdf"){
-        			window.open("../../static/pdfjs/web/viewer.html?file="+file.furl);
+        			window.open("http://192.168.25.175/"+file.furl);
         		}
 			}
 		})
@@ -129,42 +128,10 @@ function downFile(fid,fileurl , fileName , suffix , isdir){
 	   });
 	}
 }
-//图片在线预览--
-function showImg(furl) {
-	$.ajax({
-		url : "/file/thumbnail", 
-		type: "post", 
-		async:true,
-		contentType:"application/x-www-form-urlencoded",
-		data: {"furl":furl ,"type":""},
-        success: function(data){
-        	 $("#big_thum_img").attr("src", data);   
-        }
-	}) 
-	document.getElementById("big_thum").style.display = 'block';
-	document.getElementById("div_img").style.display = 'block';
-}
-
-function noShowImg() {
-	document.getElementById("big_thum").style.display = 'none';
-	document.getElementById("div_img").style.display = 'none';
-}
-
 //显示悬浮层
-function showInform(event, fname) {
-	var fnames = "#" + fname;
-	var furl = $(fnames).val();
+function showInform(event, furl) {
 	var info = document.getElementById("inform");
-	$.ajax({
-		url : "/file/thumbnail", 
-		type: "post", 
-		async:true,
-		contentType:"application/x-www-form-urlencoded",
-		data: {"furl":furl, "type":"thum"},
-        success: function(data){
-        	 $("#thum_Img").attr("src", data);   
-        }
-	})
+    $("#thum_Img").attr("src", furl);   
 	var x = event.clientX / 10 + 15;
 	var y = event.clientY / 10 - 4;
 	var top = parseInt(info.offsetTop); 
@@ -191,9 +158,20 @@ function hiddenInform(event) {
 		$("#thum_Img").attr("src", "../../static/thum_img/blankBg.png"); 
 	}
 }
-//图片在线预览--
 
+//图片显示
+function showImg(furl) {
+	var url ="http://192.168.25.175/"+furl;
+    $("#big_thum_img").attr("src", url);   
+	document.getElementById("big_thum").style.display = 'block';
+	document.getElementById("div_img").style.display = 'block';
+}
 
+//显示小图片
+function noShowImg() {
+	document.getElementById("big_thum").style.display = 'none';
+	document.getElementById("div_img").style.display = 'none';
+}
 //音乐播放=====
 
 //显示播放控件
@@ -232,7 +210,8 @@ function jplayMusic(furl, fname) {
 }
 //视频控件
 function playVideo(furl, fname) {
-	window.open("/file/videoPlay?furl="+furl+"&fname="+fname);
+	var url ="http://192.168.25.175/"+furl;
+	window.open("/file/videoPlay?furl="+url+"&fname="+fname);
 }
 
 

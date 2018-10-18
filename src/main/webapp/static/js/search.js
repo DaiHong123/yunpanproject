@@ -123,8 +123,7 @@ function fundFileByTyPe(type){
         		if(file.isdir){
         			str+="<i class=\"fileIcon\"></i>";
         		}else if(file.suffix == "jpg"){
-        			str+="<input id = \""+file.fname+"\" value = \""+file.furl+"\" style=\" display:none \">"
-        			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'"+file.fname+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
+        			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'http://192.168.25.175/"+file.furl+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
         		}else if(file.suffix == "txt"){
         			str+="<i class=\"txtIcon\"></i>";
         		}else if(file.suffix == "mp4"){
@@ -143,7 +142,7 @@ function fundFileByTyPe(type){
         		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
         		str+="</div></td><td><span>"
         		if(file.fsize){
-        			str+=file.fsize+"</span></td>";
+        			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
         		}else{
         			str+="——</span></td>";
         		}
@@ -176,7 +175,7 @@ function fundImg(){
         		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
         		str+="</div></td><td><span>"
         		if(file.fsize){
-        			str+=file.fsize+"</span></td>";
+        			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
         		}else{
         			str+="——</span></td>";
         		}
@@ -302,8 +301,7 @@ $('#searcher').on('click',function(){
 	    		if(file.isdir){
 	    			str+="<i class=\"fileIcon\"></i>";
 	    		}else if(file.suffix == "jpg"){
-	    			str+="<input id = \""+file.fname+"\" value = \""+file.furl+"\" style=\" display:none \">"
-	    			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'"+file.fname+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
+	    			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'http://192.168.25.175/"+file.furl+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
 	    		}else if(file.suffix == "txt"){
 	    			str+="<i class=\"txtIcon\"></i>";
 	    		}else if(file.suffix == "mp4"){
@@ -322,7 +320,7 @@ $('#searcher').on('click',function(){
 	    		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
 	    		str+="</div></td><td><span>"
 	    		if(file.fsize){
-	    			str+=file.fsize+"</span></td>";
+	    			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
 	    		}else{
 	    			str+="——</span></td>";
 	    		}
@@ -357,8 +355,7 @@ $('#fileSearch').ajaxForm({
     		if(file.isdir){
     			str+="<i class=\"fileIcon\"></i>";
     		}else if(file.suffix == "jpg"){
-    			str+="<input id = \""+file.fname+"\" value = \""+file.furl+"\" style=\" display:none \">"
-    			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'"+file.fname+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
+    			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'http://192.168.25.175/"+file.furl+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
     		}else if(file.suffix == "txt"){
     			str+="<i class=\"txtIcon\"></i>";
     		}else if(file.suffix == "mp4"){
@@ -377,7 +374,7 @@ $('#fileSearch').ajaxForm({
     		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
     		str+="</div></td><td><span>"
     		if(file.fsize){
-    			str+=file.fsize+"</span></td>";
+    			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
     		}else{
     			str+="——</span></td>";
     		}
@@ -409,8 +406,7 @@ $('#filesSortId').on('click',function(){
 	        		if(file.isdir){
 	        			str+="<i class=\"fileIcon\"></i>";
 	        		}else if(file.suffix == "jpg"){
-	        			str+="<input id = \""+file.fname+"\" value = \""+file.furl+"\" style=\" display:none \">"
-	        			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'"+file.fname+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
+	        			str+="<i id=\"btn\" onMouseOver=\"showInform(event,\'http://192.168.25.175/"+file.furl+"\')\" onMouseOut=\"hiddenInform(event)\" class=\"imgIcon\"></i>";
 	        		}else if(file.suffix == "txt"){
 	        			str+="<i class=\"txtIcon\"></i>";
 	        		}else if(file.suffix == "mp4"){
@@ -429,7 +425,7 @@ $('#filesSortId').on('click',function(){
 	        		str+="<a class=\"icon icon-more\" href=\"javascript:;\">更多</a>";
 	        		str+="</div></td><td><span>"
 	        		if(file.fsize){
-	        			str+=file.fsize+"</span></td>";
+	        			str+=(file.fsize/(1024*1024)).toFixed(2)+"M</span></td>";
 	        		}else{
 	        			str+="——</span></td>";
 	        		}

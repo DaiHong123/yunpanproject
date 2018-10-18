@@ -40,11 +40,6 @@ import java.util.UUID;
 @RequestMapping("/User")
 public class UserController {
 
-	/**
-	 * 服务器ip地址
-	 */
-	@Value("${IMAGE_SERVER_URL}")
-	private String IMAGE_SERVER_URL;
 
 	@Autowired
 	private UserService userService;
@@ -90,24 +85,21 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping("/upHeadImage")
-	public Boolean upHeadImage(String imgDate, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		TbUser user = new TbUser();
-		String uname = (String) (session.getAttribute("username"));
-		if (uname == null) {
-			return false;
-		}
-		user.setUname(uname);
+	public Boolean upHeadImage(String imgDate, HttpServletRequest request ,HttpSession session) {
+		TbUser user = (TbUser) session.getAttribute("user");
+		//删除原图像
+		FileUploadUtils.fileDelete(user.getImage());
 		String str = imgDate.substring(imgDate.indexOf(",") + 1);
 		byte[] bs = Base64.GenerateImage(str);
 		if (bs == null) {
 			return false;
 		}
 		// jpg图片后缀,以及上传图片的不带ip地址的url
-		 String path = FileUploadUtils.fileUpload(bs, "jgp");
+		String path = FileUploadUtils.fileUpload(bs, "jpg");
 		// 拼接ip和地址
-		 String url = IMAGE_SERVER_URL + path;
-		user.setImage("");
+		String url = "http://192.168.25.175/" + path;
+		System.err.println(url);
+		user.setImage(path);
 		// 将图片存入数据库
 		int flag = userService.upHeadImage(user);
 		// 更新session中的图片的数据
@@ -197,7 +189,7 @@ public class UserController {
 		if (user != null) {
 			if (user.getStatus()) {
 				session.setAttribute("username", user.getUname());
-				session.setAttribute("imgstr", user.getImage());
+				session.setAttribute("imgstr", "http://192.168.25.175/"+user.getImage());
 				session.setAttribute("user", user);
 				session.setAttribute("fparentId", "-1");
 				return true;

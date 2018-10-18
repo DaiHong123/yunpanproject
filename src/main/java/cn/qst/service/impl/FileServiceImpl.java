@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,15 +67,26 @@ public class FileServiceImpl implements FileService {
 
 	//根据文件Id获取子文件
 	@Override
-	public List<TbFile> funFileByParentId(String parentId , String uid,String groupBy) {
+	public List<TbFile> funFileByParentId(String parentId ,String groupBy) {
 		TbFileExample example = new TbFileExample();
 		example.setOrderByClause(groupBy);
 		Criteria criteria = example.createCriteria();
 		criteria.andParentidEqualTo(parentId);
-		if( uid != null ) criteria.andUidEqualTo(uid);
 		return fileMapper.selectByExample(example);
 	}
 	
+	
+	@Override
+	public List<TbFile> funFileByParentId(String parentId, String uid, String groupBy) {
+		// TODO Auto-generated method stub
+		TbFileExample example = new TbFileExample();
+		example.setOrderByClause(groupBy);
+		Criteria criteria = example.createCriteria();
+		criteria.andParentidEqualTo(parentId);
+		criteria.andUidEqualTo(uid);
+		return fileMapper.selectByExample(example);
+	}
+
 	@Override
 	public List<TbFile> fundFileParentsById(String parentId) {
 		// TODO Auto-generated method stub
@@ -197,23 +209,36 @@ public class FileServiceImpl implements FileService {
 	
 	//复制文件
 	@Override
-	public void copyFile(String fid, String pid,String uid) {
+	public void copyFile(String fid, String pid,String uid) throws IOException {
 		// TODO Auto-generated method stub	
 		//首先将查找到的fid的文件复制一份到数据库中指向pid
-		TbFileExample example = new TbFileExample();
-		Criteria criteria = example.createCriteria();
-		criteria.andFidEqualTo(fid);
-		List<TbFile> example2 = fileMapper.selectByExample(example );
-		TbFile tbFile = example2.get(0);
+		TbFile tbFile = fileMapper.selectByPrimaryKey(fid);
+		String path = tbFile.getFurl();
+		if(!tbFile.getIsdir()) {
+			//copy文件
+			URL httpUrl = new URL(IMAGE_SERVER_URL+tbFile.getFurl());  
+			HttpURLConnection conn = (HttpURLConnection)httpUrl.openConnection();  
+	                //设置超时间为3秒
+			conn.setConnectTimeout(3*1000);
+			//防止屏蔽程序抓取而返回403错误
+			conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+	 
+			//得到输入流
+			InputStream inputStream = conn.getInputStream();  
+			//获取字节数组
+			byte[] getData = readInputStream(inputStream);
+			path = FileUploadUtils.fileUpload(getData, tbFile.getSuffix());
+		}
 		tbFile.setFid(UUID.randomUUID().toString().replaceAll("-", ""));
 		if(pid==null) {
 			pid = "-1";
 		}
+		tbFile.setFurl(path);
 		tbFile.setParentid(pid);
 		tbFile.setUploadtime(new Date());
 		tbFile.setUpdatetime(new Date());
 		tbFile.setUid(uid);
-		 fileMapper.insertSelective(tbFile);
+		fileMapper.insertSelective(tbFile);
 		 
 		 //查找其fid下的所有子文件
 		TbFileExample example3 = new TbFileExample();
@@ -223,10 +248,8 @@ public class FileServiceImpl implements FileService {
 		//递归查找其子文件再复制
 		for(TbFile file:selectByExample) {
 			copyFile(file.getFid(), tbFile.getFid(),uid);
-		}		
+		}
 	}
-
-	
 	//移动文件
 	@Override
 	public boolean moveFile(String fid, String pid) {

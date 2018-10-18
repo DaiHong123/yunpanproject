@@ -62,7 +62,7 @@
 
 	<section id="bd">
 		<section id="bd-main">
-			<c:if test="${shareInfo==null}">
+			<c:if test="${shareInfo==null || files==null}">
 				<div id="share_nofound_des">
 					<div class="error-img">
 						<img src="/static/img/errorImg.png">
@@ -183,7 +183,7 @@
 													<span class="fileTitle" title="${file.fname}">${file.fname}</span>
 												</a>
 												<div class="filesFns right">
-													<a onclick="downFile('${file.parentid}','${file.fname}','null')" class="icon icon-download" href="javascript:;">下载</a>
+													<a onclick="downFile('${file.fid}','${file.furl}','${file.fname}','${file.suffix}',${file.isdir })" class="icon icon-download" href="javascript:;">下载</a>
 											</div>
 									</td>
 											<td>
